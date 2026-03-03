@@ -4,54 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بن وعطارة زغلولة | الأصل في البحيرة</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root { --coffee: #3E2723; --orange: #D84315; --bg: #FDFBF7; --white: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: #2c2c2c; }
-        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
-        
-        /* Header */
-        header { background: var(--white); padding: 15px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--coffee); text-decoration: none; }
-        .cart-btn { position: relative; cursor: pointer; font-size: 1.5rem; }
-        .badge { position: absolute; top: -10px; right: -10px; background: var(--orange); color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.7rem; }
 
-        /* Hero Section */
-        .hero { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('zaghlola.png') center/cover; 
-            height: 350px; display: flex; align-items: center; justify-content: center; color: white; text-align: center; border-radius: 0 0 40px 40px; 
+    <style>
+        :root {
+            --coffee: #3E2723;
+            --orange: #D84315;
+            --bg: #FDFBF7;
+            --white: #ffffff;
         }
 
-        /* Branches */
-        .section-title { text-align: center; margin: 40px 0 20px; color: var(--coffee); }
-        .branches { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .branch-card { background: white; padding: 20px; border-radius: 15px; border-right: 5px solid var(--orange); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--bg); color: #2c2c2c; line-height: 1.6; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
 
-        /* Products */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin: 30px 0; }
-        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
+        /* Welcome Popup */
+        #welcome-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            display: flex; align-items: center; justify-content: center; z-index: 2000;
+        }
+        .modal-box {
+            background: var(--white); padding: 40px; border-radius: 30px; text-align: center;
+            max-width: 500px; border: 4px solid var(--coffee); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .modal-box h2 { color: var(--coffee); margin-bottom: 15px; }
+        .btn-enter { background: var(--orange); color: white; padding: 12px 40px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem; margin-top: 20px; }
+
+        /* Header */
+        header { background: var(--white); padding: 15px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--coffee); text-decoration: none; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.6rem; color: var(--coffee); }
+        .badge { position: absolute; top: -8px; right: -8px; background: var(--orange); color: white; padding: 2px 7px; border-radius: 50%; font-size: 0.75rem; }
+
+        /* Hero */
+        .hero { 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('zaghlola.png') center/cover; 
+            height: 380px; display: flex; align-items: center; justify-content: center; color: white; text-align: center; border-radius: 0 0 50px 50px; 
+        }
+
+        /* Description Section */
+        .about-section { padding: 50px 0; text-align: center; background: white; margin: 30px 0; border-radius: 30px; }
+        .about-text { max-width: 850px; margin: 0 auto; font-size: 1.15rem; color: #444; padding: 0 15px; }
+
+        /* Product Grid */
+        .section-title { text-align: center; margin: 40px 0 25px; color: var(--coffee); font-size: 1.8rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; border: 1px solid #eee; }
         .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card img { width: 100%; height: 230px; object-fit: cover; }
         .card-body { padding: 20px; }
-        .price { color: var(--orange); font-weight: 700; font-size: 1.2rem; margin: 10px 0; }
-        .btn { background: var(--coffee); color: white; width: 100%; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .price { color: var(--orange); font-weight: 900; font-size: 1.3rem; margin: 10px 0; }
+        .btn-add { background: var(--coffee); color: white; width: 100%; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; }
 
-        /* Checkout Form */
-        #checkout { display: none; background: white; padding: 30px; border-radius: 20px; margin-top: 40px; border: 2px solid var(--coffee); }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; }
-        .btn-wa { background: #25d366; color: white; width: 100%; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
+        /* Checkout Section */
+        #checkout { display: none; background: white; padding: 30px; border-radius: 25px; border: 2px solid var(--coffee); margin: 40px 0; }
+        input, textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
+        .btn-send { background: #25d366; color: white; width: 100%; border: none; padding: 16px; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
 
-        footer { text-align: center; padding: 40px; background: var(--coffee); color: white; margin-top: 50px; }
+        footer { text-align: center; padding: 40px; background: var(--coffee); color: white; }
     </style>
 </head>
 <body>
 
+    <div id="welcome-modal">
+        <div class="modal-box">
+            <div style="font-size: 3.5rem; margin-bottom: 10px;">🌸</div>
+            <h2>أهلاً بيك في بن وعطارة زغلولة</h2>
+            <p style="font-size: 1.2rem; font-weight: bold; color: var(--orange); margin-bottom: 10px;">حيث الجودة والراحة!</p>
+            <p>إحنا موجودين هنا عشان نختصر عليك المشوار ونوصلك طلبك بضغطة زرار. هدفنا دايمًا إننا نكون أقرب ليك.</p>
+            <button class="btn-enter" onclick="closeModal()">نورتنا.. ادخل اتفرج</button>
+        </div>
+    </div>
+
     <header>
         <div class="container nav">
-            <div class="cart-btn" onclick="showCart()">
+            <div class="cart-icon" onclick="showCart()">
                 <i class="fas fa-shopping-basket"></i>
                 <span class="badge" id="count">0</span>
             </div>
@@ -60,75 +90,85 @@
     </header>
 
     <section class="hero">
-        <div>
-            <h1>أهلاً بك في عالم زغلولة</h1>
-            <p>أصل البن والعطارة في البحيرة</p>
+        <div class="container">
+            <h1>مزاجك عندنا وأسرار أكلك هنا</h1>
+            <p>أجود أنواع البن والعطارة من قلب البحيرة</p>
         </div>
     </section>
 
     <main class="container">
-        <h2 class="section-title">فروعنا</h2>
-        <div class="branches">
-            <div class="branch-card"><h4>المحمودية</h4><p>أمام المستشفى العام</p></div>
-            <div class="branch-card"><h4>المحمودية</h4><p>برج سما</p></div>
-            <div class="branch-card"><h4>إيتاي البارود</h4><p>شارع مجلس المدينة</p></div>
-        </div>
+        
+        <section class="about-section">
+            <h2 style="color: var(--coffee); margin-bottom: 15px;">ليه تختار زغلولة؟ ✨</h2>
+            <div class="about-text">
+                <p>لأننا بنهتم بالتفاصيل اللي بتصنع يومك، من أول ريحة البن المحوج اللي بتصحصحك، لحد خلطات العطارة اللي بتخلي لأكلك طعم مميز. هدفنا إننا نوصلك الجودة الأصلية لحد عندك بأسهل طريقة ممكنة، عشان كدة عملنا لك الموقع ده يسهل عليك الطلب وأنت في مكانك.</p>
+            </div>
+        </section>
 
-        <h2 class="section-title">منتجاتنا</h2>
+        <h2 class="section-title">قائمة منتجاتنا</h2>
         <div class="grid">
             <div class="card">
                 <img src="zaghlola.png" alt="بن زغلولة">
                 <div class="card-body">
-                    <h3>توليفة بن زغلولة</h3>
+                    <h3>توليفة بن زغلولة الخاصة</h3>
                     <p class="price">150 EGP</p>
-                    <button class="btn" onclick="add('بن زغلولة', 150)">إضافة للسلة</button>
+                    <button class="btn-add" onclick="addToCart('بن زغلولة', 150)">إضافة للسلة</button>
                 </div>
             </div>
             <div class="card">
                 <img src="images.jpg" alt="بهارات">
                 <div class="card-body">
-                    <h3>خلطة بهارات لحم</h3>
+                    <h3>بهارات لحم مشكل</h3>
                     <p class="price">40 EGP</p>
-                    <button class="btn" onclick="add('بهارات لحم', 40)">إضافة للسلة</button>
+                    <button class="btn-add" onclick="addToCart('بهارات لحم', 40)">إضافة للسلة</button>
                 </div>
             </div>
         </div>
 
         <div id="checkout">
-            <h3>مراجعة طلبك</h3>
-            <div id="items-list" style="margin: 15px 0;"></div>
-            <input type="text" id="cust-name" placeholder="الاسم بالكامل">
-            <input type="text" id="cust-phone" placeholder="رقم الهاتف">
-            <textarea id="cust-address" placeholder="العنوان بالتفصيل"></textarea>
-            <button class="btn-wa" onclick="send()">إرسال الطلب واتساب <i class="fab fa-whatsapp"></i></button>
+            <h2 style="margin-bottom: 15px; color: var(--coffee);">طلباتك في السلة:</h2>
+            <div id="cart-details" style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;"></div>
+            <input type="text" id="name" placeholder="الاسم الكريم">
+            <input type="text" id="address" placeholder="العنوان أو الفرع للاستلام">
+            <button class="btn-send" onclick="sendToWA()">تأكيد الطلب عبر واتساب <i class="fab fa-whatsapp"></i></button>
         </div>
+
     </main>
 
-    <footer><p>جميع الحقوق محفوظة لـ زغلولة © 2024</p></footer>
+    <footer>
+        <p>بن وعطارة زغلولة © 2024 - البحيرة</p>
+    </footer>
 
     <script>
         let cart = [];
-        function add(n, p) {
-            cart.push({name: n, price: p});
+        function closeModal() { document.getElementById('welcome-modal').style.display = 'none'; }
+        
+        function addToCart(name, price) {
+            cart.push({name, price});
             document.getElementById('count').innerText = cart.length;
-            alert('تمت الإضافة للسلة');
+            alert('تمت إضافة ' + name + ' بنجاح');
         }
+
         function showCart() {
-            if(cart.length == 0) return alert('السلة فارغة');
-            let html = ''; let total = 0;
-            cart.forEach(i => { html += `<p>• ${i.name} - ${i.price} EGP</p>`; total += i.price; });
-            html += `<strong>الإجمالي: ${total} EGP</strong>`;
-            document.getElementById('items-list').innerHTML = html;
+            if(cart.length === 0) return alert('السلة لسه فاضية يا غالي');
+            let total = 0;
+            let list = cart.map(i => { total += i.price; return `• ${i.name} - ${i.price} EGP`; }).join('<br>');
+            document.getElementById('cart-details').innerHTML = list + `<br><hr><br><strong>الإجمالي: ${total} EGP</strong>`;
             document.getElementById('checkout').style.display = 'block';
             window.location.hash = 'checkout';
         }
-        function send() {
-            const n = document.getElementById('cust-name').value;
-            const a = document.getElementById('cust-address').value;
-            if(!n || !a) return alert('كمل البيانات يا غالي');
-            let text = `*طلب جديد من زغلولة*%0Aالاسم: ${n}%0Aالعنوان: ${a}%0Aالطلبات:%0A`;
-            cart.forEach(i => text += `- ${i.name}%0A`);
-            window.open(`https://wa.me/201008836269?text=${text}`, '_blank');
+
+        function sendToWA() {
+            const n = document.getElementById('name').value;
+            const a = document.getElementById('address').value;
+            if(!n || !a) return alert('من فضلك اكتب الاسم والعنوان');
+            
+            let msg = `*طلب جديد من موقع زغلولة*%0A*الاسم:* ${n}%0A*العنوان:* ${a}%0A%0A*الطلبات:*%0A`;
+            let total = 0;
+            cart.forEach(i => { msg += `- ${i.name} (${i.price} جنيه)%0A`; total += i.price; });
+            msg += `%0A*الإجمالي:* ${total} جنيه`;
+            
+            window.open(`https://wa.me/201008836269?text=${msg}`, '_blank');
         }
     </script>
 </body>
