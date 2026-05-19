@@ -3,173 +3,903 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بن وعطارة زغلولة | الأصل في البحيرة</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <meta name="description" content="زغلولة - أجود أنواع القهوة والبن المصري الفاخر. توليفات، بن خام، نسكافيه، كابتشينو وأكثر.">
+    <meta name="keywords" content="قهوة, بن, زغلولة, نسكافيه, كابتشينو, قهوة مصرية, بن خام">
+    <title>زغلولة | أجود أنواع القهوة الفاخرة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+                    colors: {
+                        coffee: {
+                            50: '#f8f1e8', 100: '#ecdcc8', 200: '#d9bf9b',
+                            300: '#c9a574', 400: '#b88f5a', 500: '#8b6535',
+                            600: '#6d4d28', 700: '#4a331a', 800: '#2e1f12',
+                            900: '#1a120b', 950: '#0f0b07'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --coffee: #3E2723;
-            --orange: #D84315;
-            --bg: #FDFBF7;
-            --white: #ffffff;
-        }
+        * { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
+        body { background: #0f0b07; color: #ecdcc8; overflow-x: hidden; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: #2c2c2c; line-height: 1.6; }
-        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f0b07; }
+        ::-webkit-scrollbar-thumb { background: #4a331a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6d4d28; }
 
-        /* Welcome Popup */
-        #welcome-modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-            display: flex; align-items: center; justify-content: center; z-index: 2000;
-        }
-        .modal-box {
-            background: var(--white); padding: 40px; border-radius: 30px; text-align: center;
-            max-width: 500px; border: 4px solid var(--coffee); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .modal-box h2 { color: var(--coffee); margin-bottom: 15px; }
-        .btn-enter { background: var(--orange); color: white; padding: 12px 40px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem; margin-top: 20px; }
+        /* Loading Screen */
+        #loader { position: fixed; inset: 0; z-index: 9999; background: #0f0b07; display: flex; align-items: center; justify-content: center; flex-direction: column; transition: opacity 0.8s, visibility 0.8s; }
+        #loader.hidden { opacity: 0; visibility: hidden; }
+        .loader-bean { width: 60px; height: 80px; position: relative; animation: beanBounce 1.2s ease-in-out infinite; }
+        .loader-bean svg { fill: #c9a574; }
+        @keyframes beanBounce { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(10deg); } }
+        .loader-text { margin-top: 24px; font-size: 1.5rem; color: #c9a574; font-weight: 700; animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        /* Header */
-        header { background: var(--white); padding: 15px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--coffee); text-decoration: none; }
-        .cart-icon { position: relative; cursor: pointer; font-size: 1.6rem; color: var(--coffee); }
-        .badge { position: absolute; top: -8px; right: -8px; background: var(--orange); color: white; padding: 2px 7px; border-radius: 50%; font-size: 0.75rem; }
+        /* Watermark */
+        .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 40vw; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(201,165,116,0.03); pointer-events: none; z-index: 0; user-select: none; white-space: nowrap; }
 
-        /* Hero */
-        .hero { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('zaghlola.png') center/cover; 
-            height: 380px; display: flex; align-items: center; justify-content: center; color: white; text-align: center; border-radius: 0 0 50px 50px; 
-        }
+        /* Floating Beans */
+        .floating-bean { position: fixed; pointer-events: none; z-index: 1; opacity: 0.06; animation: floatBean linear infinite; }
+        @keyframes floatBean { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.06; } 90% { opacity: 0.06; } 100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; } }
 
-        /* Description Section */
-        .about-section { padding: 50px 0; text-align: center; background: white; margin: 30px 0; border-radius: 30px; }
-        .about-text { max-width: 850px; margin: 0 auto; font-size: 1.15rem; color: #444; padding: 0 15px; }
+        /* Smoke Effect */
+        .smoke { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,165,116,0.04) 0%, transparent 70%); animation: smokeRise 8s ease-in-out infinite; pointer-events: none; }
+        @keyframes smokeRise { 0% { transform: translateY(0) scale(1); opacity: 0.25; } 50% { transform: translateY(-80px) scale(1.5); opacity: 0.08; } 100% { transform: translateY(-160px) scale(2); opacity: 0; } }
 
-        /* Product Grid */
-        .section-title { text-align: center; margin: 40px 0 25px; color: var(--coffee); font-size: 1.8rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 50px; }
-        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; border: 1px solid #eee; }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 230px; object-fit: cover; }
-        .card-body { padding: 20px; }
-        .price { color: var(--orange); font-weight: 900; font-size: 1.3rem; margin: 10px 0; }
-        .btn-add { background: var(--coffee); color: white; width: 100%; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+        /* Hero Parallax */
+        .hero-bg { transition: transform 0.1s linear; }
 
-        /* Checkout Section */
-        #checkout { display: none; background: white; padding: 30px; border-radius: 25px; border: 2px solid var(--coffee); margin: 40px 0; }
-        input, textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
-        .btn-send { background: #25d366; color: white; width: 100%; border: none; padding: 16px; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
+        /* Section Reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        footer { text-align: center; padding: 40px; background: var(--coffee); color: white; }
+        /* Product Card */
+        .product-card { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(201,165,116,0.08); }
+        .product-card:hover .product-img { transform: scale(1.08); }
+        .product-img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        /* Category Button */
+        .cat-btn { transition: all 0.3s ease; }
+        .cat-btn.active { background: linear-gradient(135deg, #c9a574, #8b6535); color: #0f0b07; box-shadow: 0 4px 20px rgba(201,165,116,0.2); }
+
+        /* Cart Sidebar */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 100; opacity: 0; visibility: hidden; transition: all 0.35s; backdrop-filter: blur(4px); }
+        .cart-overlay.open { opacity: 1; visibility: visible; }
+        .cart-sidebar { position: fixed; top: 0; right: -100%; width: 100%; max-width: 420px; height: 100vh; background: #1a120b; z-index: 101; transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; border-left: 1px solid rgba(201,165,116,0.08); }
+        .cart-sidebar.open { right: 0; }
+
+        /* Checkout Modal */
+        .checkout-modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.35s; }
+        .checkout-modal.open { opacity: 1; visibility: visible; }
+        .checkout-modal .modal-bg { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+        .checkout-modal .modal-content { position: relative; z-index: 1; background: #1a120b; border: 1px solid rgba(201,165,116,0.1); border-radius: 1rem; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; transform: scale(0.9) translateY(20px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .checkout-modal.open .modal-content { transform: scale(1) translateY(0); }
+
+        /* WhatsApp Float */
+        .wa-float { position: fixed; bottom: 28px; left: 28px; z-index: 90; display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
+        .wa-float-btn { width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(37,211,102,0.35); transition: transform 0.3s, box-shadow 0.3s; }
+        .wa-float:hover .wa-float-btn { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.45); }
+        .wa-float-pulse { position: absolute; width: 58px; height: 58px; border-radius: 50%; background: rgba(37,211,102,0.25); animation: waPulse 2s ease-out infinite; }
+        @keyframes waPulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.8); opacity: 0; } }
+        .wa-float-label { background: #1a120b; border: 1px solid rgba(201,165,116,0.1); color: #ecdcc8; padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: all 0.3s; opacity: 0; transform: translateX(10px); }
+        .wa-float:hover .wa-float-label { opacity: 1; transform: translateX(0); }
+
+        /* Size Button */
+        .size-btn { transition: all 0.2s; }
+        .size-btn.active { background: #c9a574; color: #0f0b07; border-color: #c9a574; }
+
+        /* FAQ */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
+        .faq-item.open .faq-answer { max-height: 200px; padding-top: 12px; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .faq-icon { transition: transform 0.3s; }
+
+        /* Navbar scroll */
+        .navbar { transition: all 0.3s; }
+        .navbar.scrolled { background: rgba(15,11,7,0.92); backdrop-filter: blur(20px); box-shadow: 0 2px 20px rgba(0,0,0,0.2); border-bottom: 1px solid rgba(201,165,116,0.05); }
+
+        /* Hero gradient overlay */
+        .hero-gradient { background: linear-gradient(to bottom, rgba(15,11,7,0.2) 0%, rgba(15,11,7,0.55) 50%, rgba(15,11,7,0.98) 100%); }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); background: linear-gradient(135deg, #c9a574, #8b6535); color: #0f0b07; padding: 12px 28px; border-radius: 10px; font-weight: 700; z-index: 300; opacity: 0; transition: all 0.4s; pointer-events: none; box-shadow: 0 4px 20px rgba(201,165,116,0.3); }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* Mobile menu */
+        .mobile-menu { position: fixed; inset: 0; background: rgba(15,11,7,0.98); z-index: 99; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .mobile-menu.open { transform: translateX(0); }
+
+        /* Testimonial card */
+        .testimonial-card { background: linear-gradient(145deg, rgba(46,31,18,0.5), rgba(26,18,11,0.7)); border: 1px solid rgba(201,165,116,0.06); }
+
+        /* Input style */
+        .form-input { background: rgba(46,31,18,0.5); border: 1px solid rgba(201,165,116,0.12); color: #ecdcc8; border-radius: 0.75rem; padding: 14px 18px; width: 100%; transition: border-color 0.3s, box-shadow 0.3s; outline: none; font-size: 14px; }
+        .form-input:focus { border-color: #c9a574; box-shadow: 0 0 0 3px rgba(201,165,116,0.08); }
+        .form-input::placeholder { color: rgba(236,220,200,0.25); }
+
+        /* Category icon glow */
+        .cat-icon-wrap { transition: all 0.3s; }
+        .cat-card:hover .cat-icon-wrap { background: linear-gradient(135deg, #c9a574, #8b6535); box-shadow: 0 4px 20px rgba(201,165,116,0.2); }
+        .cat-card:hover .cat-icon-wrap iconify-icon { color: #0f0b07; }
+        .cat-card { transition: all 0.3s; cursor: pointer; }
+        .cat-card:hover { transform: translateY(-4px); border-color: rgba(201,165,116,0.12); }
+
+        /* Cart item */
+        .cart-item { transition: background 0.2s; border-radius: 12px; padding: 14px; }
+        .cart-item:hover { background: rgba(201,165,116,0.03); }
+
+        /* Qty button */
+        .qty-btn { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; transition: all 0.2s; cursor: pointer; border: none; }
+        .qty-minus { background: rgba(201,165,116,0.08); color: #c9a574; }
+        .qty-minus:hover { background: rgba(201,165,116,0.15); }
+        .qty-plus { background: rgba(201,165,116,0.08); color: #c9a574; }
+        .qty-plus:hover { background: rgba(201,165,116,0.15); }
     </style>
 </head>
 <body>
 
-    <div id="welcome-modal">
-        <div class="modal-box">
-            <div style="font-size: 3.5rem; margin-bottom: 10px;">🌸</div>
-            <h2>أهلاً بيك في بن وعطارة زغلولة</h2>
-            <p style="font-size: 1.2rem; font-weight: bold; color: var(--orange); margin-bottom: 10px;">حيث الجودة والراحة!</p>
-            <p>إحنا موجودين هنا عشان نختصر عليك المشوار ونوصلك طلبك بضغطة زرار. هدفنا دايمًا إننا نكون أقرب ليك.</p>
-            <button class="btn-enter" onclick="closeModal()">نورتنا.. ادخل اتفرج</button>
+<!-- Loading Screen -->
+<div id="loader">
+    <div class="loader-bean">
+        <svg viewBox="0 0 40 60"><ellipse cx="20" cy="30" rx="15" ry="25" fill="#c9a574"/><path d="M20 5 Q14 30 20 55" stroke="#0f0b07" fill="none" stroke-width="2.5"/></svg>
+    </div>
+    <div class="loader-text">زغلولة</div>
+</div>
+
+<!-- Watermark -->
+<div class="watermark">زغلولة</div>
+
+<!-- Floating Beans Container -->
+<div id="beans-container"></div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast">تمت الإضافة للسلة ✓</div>
+
+<!-- Navbar -->
+<nav class="navbar fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <a href="#hero" class="text-2xl md:text-3xl font-bold text-coffee-300 hover:text-coffee-200 transition-colors">زغلولة</a>
+        <div class="hidden md:flex items-center gap-8">
+            <a href="#hero" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">الرئيسية</a>
+            <a href="#categories" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">الأقسام</a>
+            <a href="#products" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">المنتجات</a>
+            <a href="#testimonials" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">آراء العملاء</a>
+            <a href="#faq" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">الأسئلة الشائعة</a>
+            <a href="#contact" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">تواصل معنا</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="openCart()" class="relative p-2 text-coffee-100/50 hover:text-coffee-300 transition-colors">
+                <iconify-icon icon="lucide:shopping-bag" width="24"></iconify-icon>
+                <span id="cart-count" class="absolute -top-1 -right-1 min-w-[20px] h-[20px] bg-coffee-300 text-coffee-950 text-[11px] font-bold rounded-full flex items-center justify-center hidden">0</span>
+            </button>
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-coffee-100/50 hover:text-coffee-300 transition-colors">
+                <iconify-icon icon="lucide:menu" width="24"></iconify-icon>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu flex flex-col items-center justify-center gap-8">
+    <button onclick="toggleMobileMenu()" class="absolute top-6 left-6 text-coffee-100/50 hover:text-coffee-300">
+        <iconify-icon icon="lucide:x" width="28"></iconify-icon>
+    </button>
+    <a href="#hero" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">الرئيسية</a>
+    <a href="#categories" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">الأقسام</a>
+    <a href="#products" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">المنتجات</a>
+    <a href="#testimonials" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">آراء العملاء</a>
+    <a href="#faq" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">الأسئلة الشائعة</a>
+    <a href="#contact" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">تواصل معنا</a>
+</div>
+
+<!-- Hero Section -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="hero-bg absolute inset-0">
+        <img src="https://picsum.photos/seed/zag-hero-premium/1920/1080.jpg" alt="خلفية قهوة" class="w-full h-full object-cover opacity-35">
+    </div>
+    <div class="hero-gradient absolute inset-0"></div>
+
+    <!-- Smoke Effects -->
+    <div class="smoke" style="top:20%;right:10%;animation-delay:0s;"></div>
+    <div class="smoke" style="top:30%;right:60%;animation-delay:3s;"></div>
+    <div class="smoke" style="top:40%;right:30%;animation-delay:5s;"></div>
+
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <div class="mb-6 inline-block">
+            <span class="text-coffee-300/70 text-sm md:text-base font-medium tracking-widest border border-coffee-300/20 px-5 py-2 rounded-full">☕ منذ الأزل</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
+            <span class="bg-gradient-to-l from-coffee-200 via-coffee-300 to-coffee-400 bg-clip-text text-transparent">زغلولة</span>
+        </h1>
+        <p class="text-lg md:text-2xl text-coffee-100/55 mb-4 font-light max-w-2xl mx-auto">أجود أنواع القهوة والبن الفاخر</p>
+        <p class="text-base md:text-lg text-coffee-100/35 mb-10 max-w-xl mx-auto">نقدم لك أفضل توليفات القهوة المختارة بعناية من أشهر مزارع العالم</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="#products" class="bg-gradient-to-l from-coffee-300 to-coffee-400 text-coffee-950 px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-coffee-400/15 transition-all hover:-translate-y-1">
+                تسوق الآن
+            </a>
+            <a href="#categories" class="border border-coffee-300/20 text-coffee-300 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-coffee-300/5 transition-all hover:-translate-y-1">
+                تصفح الأقسام
+            </a>
         </div>
     </div>
 
-    <header>
-        <div class="container nav">
-            <div class="cart-icon" onclick="showCart()">
-                <i class="fas fa-shopping-basket"></i>
-                <span class="badge" id="count">0</span>
-            </div>
-            <a href="#" class="logo">بن وعطارة زغلولة</a>
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+        <span class="text-coffee-300/30 text-xs">اكتشف المزيد</span>
+        <iconify-icon icon="lucide:chevron-down" width="20" class="text-coffee-300/30"></iconify-icon>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section id="categories" class="relative py-20 md:py-28 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-14 reveal">
+            <span class="text-coffee-300/60 text-sm font-medium tracking-widest">تصفح حسب النوع</span>
+            <h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">أقسام المنتجات</h2>
         </div>
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            <h1>مزاجك عندنا وأسرار أكلك هنا</h1>
-            <p>أجود أنواع البن والعطارة من قلب البحيرة</p>
-        </div>
-    </section>
-
-    <main class="container">
-        
-        <section class="about-section">
-            <h2 style="color: var(--coffee); margin-bottom: 15px;">ليه تختار زغلولة؟ ✨</h2>
-            <div class="about-text">
-                <p>لأننا بنهتم بالتفاصيل اللي بتصنع يومك، من أول ريحة البن المحوج اللي بتصحصحك، لحد خلطات العطارة اللي بتخلي لأكلك طعم مميز. هدفنا إننا نوصلك الجودة الأصلية لحد عندك بأسهل طريقة ممكنة، عشان كدة عملنا لك الموقع ده يسهل عليك الطلب وأنت في مكانك.</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal">
+            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('توليفات')">
+                <div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center">
+                    <iconify-icon icon="lucide:flame" width="28" class="text-coffee-300"></iconify-icon>
+                </div>
+                <h3 class="font-semibold text-coffee-100">توليفات</h3>
+                <p class="text-xs text-coffee-100/30 mt-1">6 منتجات</p>
             </div>
-        </section>
+            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('بن خام')">
+                <div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center">
+                    <iconify-icon icon="lucide:bean" width="28" class="text-coffee-300"></iconify-icon>
+                </div>
+                <h3 class="font-semibold text-coffee-100">بن خام</h3>
+                <p class="text-xs text-coffee-100/30 mt-1">9 منتجات</p>
+            </div>
+            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('قهوة')">
+                <div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center">
+                    <iconify-icon icon="lucide:coffee" width="28" class="text-coffee-300"></iconify-icon>
+                </div>
+                <h3 class="font-semibold text-coffee-100">قهوة</h3>
+                <p class="text-xs text-coffee-100/30 mt-1">3 منتجات</p>
+            </div>
+            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('نسكافيه')">
+                <div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center">
+                    <iconify-icon icon="lucide:cup-soda" width="28" class="text-coffee-300"></iconify-icon>
+                </div>
+                <h3 class="font-semibold text-coffee-100">نسكافيه</h3>
+                <p class="text-xs text-coffee-100/30 mt-1">5 منتجات</p>
+            </div>
+            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('كابتشينو')">
+                <div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center">
+                    <iconify-icon icon="lucide:glass-water" width="28" class="text-coffee-300"></iconify-icon>
+                </div>
+                <h3 class="font-semibold text-coffee-100">كابتشينو</h3>
+                <p class="text-xs text-coffee-100/30 mt-1">3 منتجات</p>
+            </div>
+            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('منتجات خاصة')">
+                <div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center">
+                    <iconify-icon icon="lucide:sparkles" width="28" class="text-coffee-300"></iconify-icon>
+                </div>
+                <h3 class="font-semibold text-coffee-100">منتجات خاصة</h3>
+                <p class="text-xs text-coffee-100/30 mt-1">2 منتجات</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-        <h2 class="section-title">قائمة منتجاتنا</h2>
-        <div class="grid">
-            <div class="card">
-                <img src="zaghlola.png" alt="بن زغلولة">
-                <div class="card-body">
-                    <h3>توليفة بن زغلولة الخاصة</h3>
-                    <p class="price">150 EGP</p>
-                    <button class="btn-add" onclick="addToCart('بن زغلولة', 150)">إضافة للسلة</button>
+<!-- Products Section -->
+<section id="products" class="relative py-20 md:py-28 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-10 reveal">
+            <span class="text-coffee-300/60 text-sm font-medium tracking-widest">تشكيلة فاخرة</span>
+            <h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">منتجاتنا</h2>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+            <button class="cat-btn active px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15" onclick="filterCategory('الكل')">الكل</button>
+            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('توليفات')">توليفات</button>
+            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('بن خام')">بن خام</button>
+            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('قهوة')">قهوة</button>
+            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('نسكافيه')">نسكافيه</button>
+            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('كابتشينو')">كابتشينو</button>
+            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('منتجات خاصة')">منتجات خاصة</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="relative py-20 md:py-28 px-4" style="background: rgba(26,18,11,0.3);">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-14 reveal">
+            <span class="text-coffee-300/60 text-sm font-medium tracking-widest">ماذا يقول عملاؤنا</span>
+            <h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">آراء العملاء</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+            <div class="testimonial-card rounded-xl p-6">
+                <div class="flex items-center gap-1 mb-4">
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                </div>
+                <p class="text-coffee-100/50 text-sm leading-relaxed mb-4">"أحسن قهوة جربتها! التوليفه البرازيلي مذاقها فوق الممتاز والتوصيل سريع جداً. أنا زبون دائم إن شاء الله."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-coffee-300/10 flex items-center justify-center"><iconify-icon icon="lucide:user" width="18" class="text-coffee-300/50"></iconify-icon></div>
+                    <div>
+                        <p class="font-semibold text-coffee-100 text-sm">أحمد محمد</p>
+                        <p class="text-xs text-coffee-100/30">القاهرة</p>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <img src="images.jpg" alt="بهارات">
-                <div class="card-body">
-                    <h3>بهارات لحم مشكل</h3>
-                    <p class="price">40 EGP</p>
-                    <button class="btn-add" onclick="addToCart('بهارات لحم', 40)">إضافة للسلة</button>
+            <div class="testimonial-card rounded-xl p-6">
+                <div class="flex items-center gap-1 mb-4">
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                </div>
+                <p class="text-coffee-100/50 text-sm leading-relaxed mb-4">"البن اليمني الخام عظيم جداً، ريحته تملأ المكان. جودة عالية وأسعار مناسبة مقارنة بالسوق. شكراً زغلولة!"</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-coffee-300/10 flex items-center justify-center"><iconify-icon icon="lucide:user" width="18" class="text-coffee-300/50"></iconify-icon></div>
+                    <div>
+                        <p class="font-semibold text-coffee-100 text-sm">سارة علي</p>
+                        <p class="text-xs text-coffee-100/30">الإسكندرية</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card rounded-xl p-6">
+                <div class="flex items-center gap-1 mb-4">
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                    <iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon>
+                </div>
+                <p class="text-coffee-100/50 text-sm leading-relaxed mb-4">"النسكافيه جولد عندهم حاجة تانية خالص! طعمه غني ومركز. والكابتشينو بندق أولادي بيطلبوه كل يوم. من أفضل المتاجر."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-coffee-300/10 flex items-center justify-center"><iconify-icon icon="lucide:user" width="18" class="text-coffee-300/50"></iconify-icon></div>
+                    <div>
+                        <p class="font-semibold text-coffee-100 text-sm">محمد حسن</p>
+                        <p class="text-xs text-coffee-100/30">الجيزة</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</section>
 
-        <div id="checkout">
-            <h2 style="margin-bottom: 15px; color: var(--coffee);">طلباتك في السلة:</h2>
-            <div id="cart-details" style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;"></div>
-            <input type="text" id="name" placeholder="الاسم الكريم">
-            <input type="text" id="address" placeholder="العنوان أو الفرع للاستلام">
-            <button class="btn-send" onclick="sendToWA()">تأكيد الطلب عبر واتساب <i class="fab fa-whatsapp"></i></button>
+<!-- FAQ Section -->
+<section id="faq" class="relative py-20 md:py-28 px-4">
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-14 reveal">
+            <span class="text-coffee-300/60 text-sm font-medium tracking-widest">إجابات سريعة</span>
+            <h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">الأسئلة الشائعة</h2>
+        </div>
+        <div class="space-y-4 reveal">
+            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right">
+                    <span class="font-semibold text-coffee-100">كيف يمكنني الطلب؟</span>
+                    <iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon>
+                </button>
+                <div class="faq-answer px-5 pb-5">
+                    <p class="text-coffee-100/45 text-sm leading-relaxed">يمكنك اختيار المنتجات وإضافتها للسلة، ثم ملء بياناتك والتأكيد. سيتم تحويلك مباشرة للواتساب لإرسال طلبك. أو يمكنك التواصل معنا مباشرة عبر الواتساب.</p>
+                </div>
+            </div>
+            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right">
+                    <span class="font-semibold text-coffee-100">ما هي طرق الدفع المتاحة؟</span>
+                    <iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon>
+                </button>
+                <div class="faq-answer px-5 pb-5">
+                    <p class="text-coffee-100/45 text-sm leading-relaxed">الدفع عند الاستلام فقط. نؤكد طلبك عبر الواتساب ويدفع المندوب عند التوصيل. لا نوفر الدفع الإلكتروني حالياً.</p>
+                </div>
+            </div>
+            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right">
+                    <span class="font-semibold text-coffee-100">كم تستغرق مدة التوصيل؟</span>
+                    <iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon>
+                </button>
+                <div class="faq-answer px-5 pb-5">
+                    <p class="text-coffee-100/45 text-sm leading-relaxed">التوصيل خلال 24-48 ساعة داخل القاهرة والجيزة. المحافظات الأخرى من 2-4 أيام عمل حسب موقعك.</p>
+                </div>
+            </div>
+            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right">
+                    <span class="font-semibold text-coffee-100">ما هي مناطق التوصيل؟</span>
+                    <iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon>
+                </button>
+                <div class="faq-answer px-5 pb-5">
+                    <p class="text-coffee-100/45 text-sm leading-relaxed">نوصل لجميع محافظات مصر. تكلفة التوصيل تختلف حسب المحافظة وسيتم إبلاغك بها عند تأكيد الطلب عبر الواتساب.</p>
+                </div>
+            </div>
+            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right">
+                    <span class="font-semibold text-coffee-100">هل المنتجات طازجة؟</span>
+                    <iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon>
+                </button>
+                <div class="faq-answer px-5 pb-5">
+                    <p class="text-coffee-100/45 text-sm leading-relaxed">نعم! جميع منتجاتنا طازجة ومحمصة حديثاً. نحرص على توفير أجود أنواع البن المختار بعناية من أفضل المزارع العالمية.</p>
+                </div>
+            </div>
+            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right">
+                    <span class="font-semibold text-coffee-100">هل يمكنني إرجاع المنتجات؟</span>
+                    <iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon>
+                </button>
+                <div class="faq-answer px-5 pb-5">
+                    <p class="text-coffee-100/45 text-sm leading-relaxed">في حالة وجود أي مشكلة بالمنتج، تواصل معنا خلال 24 ساعة من الاستلام وسنقوم بحل المشكلة فوراً أو استبدال المنتج.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact" class="relative border-t border-coffee-700/10 py-16 px-4" style="background: rgba(15,11,7,0.8);">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div class="md:col-span-2">
+                <h3 class="text-3xl font-bold text-coffee-300 mb-4">زغلولة</h3>
+                <p class="text-coffee-100/35 text-sm leading-relaxed max-w-md">علامة تجارية مصرية متخصصة في أجود أنواع القهوة والبن الفاخر. نختار لكم أفضل المحاصيل من أشهر المزارع حول العالم لنقدم لكم تجربة قهوة لا تُنسى.</p>
+                <div class="flex items-center gap-4 mt-6">
+                    <a href="https://wa.me/201008836269" target="_blank" class="w-10 h-10 rounded-full bg-coffee-800/40 flex items-center justify-center hover:bg-coffee-300/15 transition-colors">
+                        <iconify-icon icon="lucide:message-circle" width="18" class="text-coffee-300/60"></iconify-icon>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-coffee-800/40 flex items-center justify-center hover:bg-coffee-300/15 transition-colors">
+                        <iconify-icon icon="lucide:instagram" width="18" class="text-coffee-300/60"></iconify-icon>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-coffee-800/40 flex items-center justify-center hover:bg-coffee-300/15 transition-colors">
+                        <iconify-icon icon="lucide:facebook" width="18" class="text-coffee-300/60"></iconify-icon>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-coffee-100 mb-4">روابط سريعة</h4>
+                <ul class="space-y-3">
+                    <li><a href="#hero" class="text-coffee-100/35 hover:text-coffee-300 transition-colors text-sm">الرئيسية</a></li>
+                    <li><a href="#products" class="text-coffee-100/35 hover:text-coffee-300 transition-colors text-sm">المنتجات</a></li>
+                    <li><a href="#categories" class="text-coffee-100/35 hover:text-coffee-300 transition-colors text-sm">الأقسام</a></li>
+                    <li><a href="#faq" class="text-coffee-100/35 hover:text-coffee-300 transition-colors text-sm">الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-coffee-100 mb-4">تواصل معنا</h4>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-2 text-coffee-100/35 text-sm">
+                        <iconify-icon icon="lucide:phone" width="16" class="text-coffee-300/40"></iconify-icon>
+                        <span dir="ltr">01008836269</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-coffee-100/35 text-sm">
+                        <iconify-icon icon="lucide:message-circle" width="16" class="text-coffee-300/40"></iconify-icon>
+                        <span>واتساب</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-coffee-100/35 text-sm">
+                        <iconify-icon icon="lucide:map-pin" width="16" class="text-coffee-300/40"></iconify-icon>
+                        <span>مصر</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-coffee-100/35 text-sm">
+                        <iconify-icon icon="lucide:clock" width="16" class="text-coffee-300/40"></iconify-icon>
+                        <span>السبت - الخميس: 9ص - 10م</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-coffee-700/10 pt-8 text-center">
+            <p class="text-coffee-100/20 text-sm">© 2025 زغلولة. جميع الحقوق محفوظة ☕</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Cart Overlay -->
+<div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
+
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" class="cart-sidebar">
+    <!-- Cart Header -->
+    <div class="p-6 border-b border-coffee-300/8 flex items-center justify-between" style="background: rgba(201,165,116,0.03);">
+        <div class="flex items-center gap-3">
+            <iconify-icon icon="lucide:shopping-bag" width="22" class="text-coffee-300"></iconify-icon>
+            <h3 class="text-xl font-bold text-coffee-100">سلة التسوق</h3>
+        </div>
+        <button onclick="closeCart()" class="w-9 h-9 rounded-full bg-coffee-800/40 flex items-center justify-center text-coffee-100/30 hover:text-coffee-300 hover:bg-coffee-800/60 transition-all">
+            <iconify-icon icon="lucide:x" width="18"></iconify-icon>
+        </button>
+    </div>
+
+    <!-- Cart Items -->
+    <div id="cart-items" class="flex-1 p-4"></div>
+
+    <!-- Cart Footer -->
+    <div id="cart-footer" class="p-6 border-t border-coffee-300/8 hidden" style="background: rgba(201,165,116,0.03);">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-coffee-100/40 text-sm">المجموع الفرعي</span>
+            <span id="cart-subtotal" class="text-coffee-100/60 font-semibold">0 ج.م</span>
+        </div>
+        <div class="flex items-center justify-between mb-5">
+            <span class="text-coffee-100 font-bold">الإجمالي</span>
+            <span id="cart-total" class="text-2xl font-black text-coffee-300">0 ج.م</span>
+        </div>
+        <button onclick="openCheckout()" class="w-full bg-gradient-to-l from-coffee-300 to-coffee-400 text-coffee-950 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-coffee-300/15 transition-all flex items-center justify-center gap-2">
+            <iconify-icon icon="lucide:credit-card" width="20"></iconify-icon>
+            إتمام الطلب
+        </button>
+        <a href="https://wa.me/201008836269" target="_blank" class="w-full mt-3 border border-green-500/20 text-green-400 py-3 rounded-xl font-semibold text-sm hover:bg-green-500/5 transition-all flex items-center justify-center gap-2">
+            <iconify-icon icon="lucide:message-circle" width="18"></iconify-icon>
+            أو اطلب عبر واتساب مباشرة
+        </a>
+    </div>
+</div>
+
+<!-- Checkout Modal -->
+<div id="checkout-modal" class="checkout-modal">
+    <div class="modal-bg" onclick="closeCheckout()"></div>
+    <div class="modal-content p-6 md:p-8">
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-coffee-300/10 flex items-center justify-center">
+                    <iconify-icon icon="lucide:clipboard-list" width="20" class="text-coffee-300"></iconify-icon>
+                </div>
+                <h3 class="text-xl font-bold text-coffee-100">تأكيد الطلب</h3>
+            </div>
+            <button onclick="closeCheckout()" class="w-9 h-9 rounded-full bg-coffee-800/40 flex items-center justify-center text-coffee-100/30 hover:text-coffee-300 hover:bg-coffee-800/60 transition-all">
+                <iconify-icon icon="lucide:x" width="18"></iconify-icon>
+            </button>
         </div>
 
-    </main>
+        <!-- Order Summary -->
+        <div class="mb-6 p-4 rounded-xl border border-coffee-300/8" style="background: rgba(46,31,18,0.4);">
+            <h4 class="font-semibold text-coffee-300/60 mb-3 text-xs tracking-wide">ملخص الطلب</h4>
+            <div id="checkout-items" class="space-y-2.5 text-sm"></div>
+            <div class="mt-4 pt-4 border-t border-coffee-300/8 flex justify-between items-center">
+                <span class="font-bold text-coffee-100">الإجمالي</span>
+                <span id="checkout-total" class="text-lg font-black text-coffee-300">0 ج.م</span>
+            </div>
+        </div>
 
-    <footer>
-        <p>بن وعطارة زغلولة © 2024 - البحيرة</p>
-    </footer>
+        <!-- Checkout Form -->
+        <form id="checkout-form" class="space-y-4" onsubmit="return false;">
+            <div>
+                <label class="block text-sm font-semibold text-coffee-100/50 mb-2">الاسم الكامل *</label>
+                <input type="text" id="cust-name" class="form-input" placeholder="أدخل اسمك بالكامل" required>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-coffee-100/50 mb-2">رقم الهاتف *</label>
+                <input type="tel" id="cust-phone" class="form-input" placeholder="01xxxxxxxxx" dir="ltr" required>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-coffee-100/50 mb-2">العنوان بالتفصيل *</label>
+                <input type="text" id="cust-address" class="form-input" placeholder="المحافظة - المنطقة - الشارع - رقم العمارة" required>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-coffee-100/50 mb-2">ملاحظات <span class="text-coffee-100/25">(اختياري)</span></label>
+                <textarea id="cust-notes" class="form-input" rows="2" placeholder="أي ملاحظات إضافية..."></textarea>
+            </div>
+            <button type="button" onclick="submitOrder()" class="w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/15">
+                <iconify-icon icon="lucide:message-circle" width="22"></iconify-icon>
+                تأكيد الطلب عبر واتساب
+            </button>
+            <p class="text-xs text-coffee-100/20 text-center">سيتم تحويلك للواتساب لإرسال تفاصيل الطلب • الدفع عند الاستلام</p>
+        </form>
+    </div>
+</div>
 
-    <script>
-        let cart = [];
-        function closeModal() { document.getElementById('welcome-modal').style.display = 'none'; }
-        
-        function addToCart(name, price) {
-            cart.push({name, price});
-            document.getElementById('count').innerText = cart.length;
-            alert('تمت إضافة ' + name + ' بنجاح');
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/201008836269" target="_blank" class="wa-float">
+    <div class="wa-float-label">تواصل معنا</div>
+    <div style="position:relative;">
+        <div class="wa-float-pulse"></div>
+        <div class="wa-float-btn">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+    </div>
+</a>
+
+<script>
+// ===== Products Data =====
+const products = [
+    { id:1, name:'توليفه اندونيسي', category:'توليفات', prices:{'1 كيلو':480,'1/4 كيلو':120,'1/8 كيلو':60}, img:'https://picsum.photos/seed/zag-ind1/400/400.jpg' },
+    { id:2, name:'توليفه برازيلي', category:'توليفات', prices:{'1 كيلو':560,'1/4 كيلو':140,'1/8 كيلو':70}, img:'https://picsum.photos/seed/zag-bra2/400/400.jpg' },
+    { id:3, name:'توليفه كولومبي', category:'توليفات', prices:{'1 كيلو':680,'1/4 كيلو':170,'1/8 كيلو':85}, img:'https://picsum.photos/seed/zag-col3/400/400.jpg' },
+    { id:4, name:'اسبيشيل', category:'توليفات', prices:{'1 كيلو':640,'1/4 كيلو':160,'1/8 كيلو':80}, img:'https://picsum.photos/seed/zag-spec4/400/400.jpg' },
+    { id:5, name:'بن محوج برازيلي', category:'توليفات', prices:{'1 كيلو':600,'1/4 كيلو':150,'1/8 كيلو':75}, img:'https://picsum.photos/seed/zag-mah5/400/400.jpg' },
+    { id:6, name:'اسبريسو', category:'توليفات', prices:{'1 كيلو':640,'1/4 كيلو':160,'1/8 كيلو':80}, img:'https://picsum.photos/seed/zag-esp6/400/400.jpg' },
+    { id:7, name:'بن اندونيسي خام', category:'بن خام', prices:{'1 كيلو':400,'1/4 كيلو':100,'1/8 كيلو':50}, img:'https://picsum.photos/seed/zag-ir7/400/400.jpg' },
+    { id:8, name:'بن برازيلي ريو', category:'بن خام', prices:{'1 كيلو':600,'1/4 كيلو':150,'1/8 كيلو':75}, img:'https://picsum.photos/seed/zag-rio8/400/400.jpg' },
+    { id:9, name:'بن برازيلي سانتوس', category:'بن خام', prices:{'1 كيلو':720,'1/4 كيلو':180,'1/8 كيلو':90}, img:'https://picsum.photos/seed/zag-san9/400/400.jpg' },
+    { id:10, name:'بن كولومبي خام', category:'بن خام', prices:{'1 كيلو':800,'1/4 كيلو':200,'1/8 كيلو':100}, img:'https://picsum.photos/seed/zag-cw10/400/400.jpg' },
+    { id:11, name:'بن فيتنامي خام', category:'بن خام', prices:{'1 كيلو':480,'1/4 كيلو':120,'1/8 كيلو':60}, img:'https://picsum.photos/seed/zag-vw11/400/400.jpg' },
+    { id:12, name:'بن هندي ارابيكا', category:'بن خام', prices:{'1 كيلو':760,'1/4 كيلو':190,'1/8 كيلو':95}, img:'https://picsum.photos/seed/zag-ia12/400/400.jpg' },
+    { id:13, name:'بن هندي AA', category:'بن خام', prices:{'1 كيلو':480,'1/4 كيلو':120,'1/8 كيلو':60}, img:'https://picsum.photos/seed/zag-iaa13/400/400.jpg' },
+    { id:14, name:'بن حبشي خام', category:'بن خام', prices:{'1 كيلو':600,'1/4 كيلو':150,'1/8 كيلو':75}, img:'https://picsum.photos/seed/zag-ew14/400/400.jpg' },
+    { id:15, name:'بن يمني خام', category:'بن خام', prices:{'1 كيلو':1600,'1/4 كيلو':400,'1/8 كيلو':200}, img:'https://picsum.photos/seed/zag-yw15/400/400.jpg' },
+    { id:16, name:'قهوه فرنساوي', category:'قهوة', prices:{'1 كيلو':400,'1/4 كيلو':100,'1/8 كيلو':50}, img:'https://picsum.photos/seed/zag-fr16/400/400.jpg' },
+    { id:17, name:'قهوه بندق', category:'قهوة', prices:{'1 كيلو':400,'1/4 كيلو':100,'1/8 كيلو':50}, img:'https://picsum.photos/seed/zag-hz17/400/400.jpg' },
+    { id:18, name:'قهوه عربي', category:'قهوة', prices:{'1 كيلو':680,'1/4 كيلو':170,'1/8 كيلو':85}, img:'https://picsum.photos/seed/zag-ar18/400/400.jpg' },
+    { id:19, name:'نسكافيه جولد', category:'نسكافيه', prices:{'1 كيلو':1200,'1/4 كيلو':300,'1/8 كيلو':150}, img:'https://picsum.photos/seed/zag-ng19/400/400.jpg' },
+    { id:20, name:'نسكافيه بالك', category:'نسكافيه', prices:{'1 كيلو':760,'1/4 كيلو':190,'1/8 كيلو':95}, img:'https://picsum.photos/seed/zag-nb20/400/400.jpg' },
+    { id:21, name:'نسكافيه 2x1', category:'نسكافيه', prices:{'1 كيلو':280,'1/4 كيلو':70,'1/8 كيلو':35}, img:'https://picsum.photos/seed/zag-n221/400/400.jpg' },
+    { id:22, name:'نسكافيه 3x1', category:'نسكافيه', prices:{'1 كيلو':280,'1/4 كيلو':70,'1/8 كيلو':35}, img:'https://picsum.photos/seed/zag-n322/400/400.jpg' },
+    { id:23, name:'مبيض قهوه', category:'نسكافيه', prices:{'1 كيلو':280,'1/4 كيلو':70,'1/8 كيلو':35}, img:'https://picsum.photos/seed/zag-cr23/400/400.jpg' },
+    { id:24, name:'كابتشينو فانيليا', category:'كابتشينو', prices:{'1 كيلو':240,'1/4 كيلو':60,'1/8 كيلو':30}, img:'https://picsum.photos/seed/zag-cv24/400/400.jpg' },
+    { id:25, name:'كابتشينو بندق', category:'كابتشينو', prices:{'1 كيلو':240,'1/4 كيلو':60,'1/8 كيلو':30}, img:'https://picsum.photos/seed/zag-ch25/400/400.jpg' },
+    { id:26, name:'هوت شوكلت', category:'كابتشينو', prices:{'1 كيلو':360,'1/4 كيلو':90,'1/8 كيلو':45}, img:'https://picsum.photos/seed/zag-hc26/400/400.jpg' },
+    { id:27, name:'جينسينج', category:'منتجات خاصة', prices:{'1 كيلو':6000,'1/4 كيلو':1500,'1/8 كيلو':750}, img:'https://picsum.photos/seed/zag-gn27/400/400.jpg' },
+    { id:28, name:'بن اخضر تخسيس', category:'منتجات خاصة', prices:{'1 كيلو':600,'1/4 كيلو':150,'1/8 كيلو':75}, img:'https://picsum.photos/seed/zag-dt28/400/400.jpg' }
+];
+
+// ===== Cart State =====
+let cart = [];
+let selectedSizes = {};
+
+// ===== Initialize =====
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 1500);
+    renderProducts('الكل');
+    createFloatingBeans();
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg) heroBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+    });
+});
+
+// ===== Floating Beans =====
+function createFloatingBeans() {
+    const container = document.getElementById('beans-container');
+    const beanSVG = `<svg viewBox="0 0 40 60" width="28" height="42"><ellipse cx="20" cy="30" rx="14" ry="24" fill="#c9a574"/><path d="M20 6 Q14 30 20 54" stroke="#6d4d28" fill="none" stroke-width="2"/></svg>`;
+    for (let i = 0; i < 8; i++) {
+        const bean = document.createElement('div');
+        bean.className = 'floating-bean';
+        bean.innerHTML = beanSVG;
+        bean.style.left = Math.random() * 100 + '%';
+        bean.style.animationDuration = (15 + Math.random() * 20) + 's';
+        bean.style.animationDelay = (Math.random() * 15) + 's';
+        container.appendChild(bean);
+    }
+}
+
+// ===== Render Products =====
+function renderProducts(category) {
+    const grid = document.getElementById('products-grid');
+    const filtered = category === 'الكل' ? products : products.filter(p => p.category === category);
+    grid.innerHTML = filtered.map(p => {
+        const defaultSize = '1/4 كيلو';
+        if (!selectedSizes[p.id]) selectedSizes[p.id] = defaultSize;
+        const currentPrice = p.prices[selectedSizes[p.id]];
+        return `
+        <div class="product-card bg-coffee-900/50 border border-coffee-700/10 rounded-xl overflow-hidden" data-category="${p.category}">
+            <div class="relative overflow-hidden h-48">
+                <img src="${p.img}" alt="${p.name}" class="product-img w-full h-full object-cover" loading="lazy">
+                <div class="absolute top-3 right-3 bg-coffee-950/60 backdrop-blur-sm text-coffee-300/70 text-xs px-3 py-1 rounded-full font-medium">${p.category}</div>
+            </div>
+            <div class="p-5">
+                <h3 class="font-bold text-coffee-100 text-lg mb-3">${p.name}</h3>
+                <div class="flex gap-2 mb-4">
+                    ${Object.keys(p.prices).map(size => `
+                        <button class="size-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-coffee-300/12 text-coffee-100/40 ${selectedSizes[p.id] === size ? 'active' : ''}"
+                            onclick="selectSize(${p.id}, '${size}')">${size.replace(' كيلو','')}</button>
+                    `).join('')}
+                </div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-2xl font-black text-coffee-300" id="price-${p.id}">${currentPrice}</span>
+                        <span class="text-sm text-coffee-100/25 mr-1">ج.م</span>
+                    </div>
+                    <button onclick="addToCart(${p.id})" class="bg-coffee-300/8 border border-coffee-300/12 text-coffee-300 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-coffee-300 hover:text-coffee-950 hover:border-coffee-300 transition-all flex items-center gap-2">
+                        <iconify-icon icon="lucide:plus" width="16"></iconify-icon>
+                        أضف للسلة
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ===== Select Size =====
+function selectSize(productId, size) {
+    selectedSizes[productId] = size;
+    const product = products.find(p => p.id === productId);
+    const priceEl = document.getElementById(`price-${productId}`);
+    if (priceEl) priceEl.textContent = product.prices[size];
+    const card = priceEl.closest('.product-card');
+    card.querySelectorAll('.size-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim() === size.replace(' كيلو',''));
+    });
+}
+
+// ===== Cart Functions =====
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const size = selectedSizes[productId];
+    const price = product.prices[size];
+    const existing = cart.find(item => item.id === productId && item.size === size);
+    if (existing) { existing.qty += 1; }
+    else { cart.push({ id: productId, name: product.name, size, price, qty: 1 }); }
+    updateCartUI();
+    showToast('تمت الإضافة للسلة ✓');
+}
+
+function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
+
+function updateQty(index, delta) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) cart.splice(index, 1);
+    updateCartUI();
+}
+
+function updateCartUI() {
+    const countEl = document.getElementById('cart-count');
+    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+    if (totalItems > 0) { countEl.textContent = totalItems; countEl.classList.remove('hidden'); }
+    else { countEl.classList.add('hidden'); }
+
+    const itemsEl = document.getElementById('cart-items');
+    const footerEl = document.getElementById('cart-footer');
+
+    if (cart.length === 0) {
+        itemsEl.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-20 text-center">
+                <div class="w-20 h-20 rounded-full bg-coffee-300/5 flex items-center justify-center mb-5">
+                    <iconify-icon icon="lucide:shopping-bag" width="36" class="text-coffee-300/20"></iconify-icon>
+                </div>
+                <p class="text-coffee-100/30 font-semibold mb-1">السلة فارغة</p>
+                <p class="text-coffee-100/15 text-sm">أضف منتجات للبدء</p>
+            </div>`;
+        footerEl.classList.add('hidden');
+    } else {
+        itemsEl.innerHTML = cart.map((item, i) => `
+            <div class="cart-item flex items-center gap-3 border-b border-coffee-300/5 last:border-0">
+                <div class="flex-1 min-w-0 py-3">
+                    <p class="font-bold text-coffee-100 text-sm truncate">${item.name}</p>
+                    <p class="text-xs text-coffee-100/25 mt-0.5">${item.size}</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="updateQty(${i}, -1)" class="qty-btn qty-minus">−</button>
+                    <span class="text-coffee-100 font-bold text-sm w-7 text-center">${item.qty}</span>
+                    <button onclick="updateQty(${i}, 1)" class="qty-btn qty-plus">+</button>
+                </div>
+                <div class="text-left min-w-[60px]">
+                    <p class="font-black text-coffee-300 text-sm">${item.price * item.qty}</p>
+                    <p class="text-[10px] text-coffee-100/20">ج.م</p>
+                </div>
+                <button onclick="removeFromCart(${i})" class="text-coffee-100/15 hover:text-red-400/60 transition-colors p-1">
+                    <iconify-icon icon="lucide:trash-2" width="14"></iconify-icon>
+                </button>
+            </div>
+        `).join('');
+        footerEl.classList.remove('hidden');
+    }
+
+    document.getElementById('cart-subtotal').textContent = totalPrice + ' ج.م';
+    document.getElementById('cart-total').textContent = totalPrice + ' ج.م';
+}
+
+// ===== Cart Open/Close =====
+function openCart() {
+    document.getElementById('cart-overlay').classList.add('open');
+    document.getElementById('cart-sidebar').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+    document.getElementById('cart-overlay').classList.remove('open');
+    document.getElementById('cart-sidebar').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// ===== Checkout =====
+function openCheckout() {
+    if (cart.length === 0) return;
+    closeCart();
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    document.getElementById('checkout-items').innerHTML = cart.map(item =>
+        `<div class="flex justify-between items-center text-coffee-100/45">
+            <span class="flex-1 text-xs">${item.name} (${item.size}) × ${item.qty}</span>
+            <span class="text-coffee-100/70 font-bold text-xs">${item.price * item.qty} ج.م</span>
+        </div>`
+    ).join('');
+    document.getElementById('checkout-total').textContent = totalPrice + ' ج.م';
+    setTimeout(() => {
+        document.getElementById('checkout-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }, 300);
+}
+function closeCheckout() {
+    document.getElementById('checkout-modal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function submitOrder() {
+    const name = document.getElementById('cust-name').value.trim();
+    const phone = document.getElementById('cust-phone').value.trim();
+    const address = document.getElementById('cust-address').value.trim();
+    const notes = document.getElementById('cust-notes').value.trim();
+    if (!name || !phone || !address) { showToast('من فضلك املأ جميع الحقول المطلوبة ⚠️'); return; }
+
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    let msg = `☕ *طلب جديد من زغلولة*\n\n`;
+    msg += `👤 *الاسم:* ${name}\n`;
+    msg += `📱 *الهاتف:* ${phone}\n`;
+    msg += `📍 *العنوان:* ${address}\n`;
+    if (notes) msg += `📝 *ملاحظات:* ${notes}\n`;
+    msg += `\n🛒 *المنتجات:*\n`;
+    msg += `━━━━━━━━━━━━━\n`;
+    cart.forEach(item => {
+        msg += `▪️ ${item.name}\n   الحجم: ${item.size} | الكمية: ${item.qty} | السعر: ${item.price * item.qty} ج.م\n`;
+    });
+    msg += `━━━━━━━━━━━━━\n`;
+    msg += `💰 *الإجمالي: ${totalPrice} ج.م*\n`;
+    msg += `\n💳 الدفع عند الاستلام`;
+
+    window.open(`https://wa.me/201008836269?text=${encodeURIComponent(msg)}`, '_blank');
+
+    cart = [];
+    updateCartUI();
+    closeCheckout();
+    document.getElementById('cust-name').value = '';
+    document.getElementById('cust-phone').value = '';
+    document.getElementById('cust-address').value = '';
+    document.getElementById('cust-notes').value = '';
+    showToast('تم إرسال الطلب بنجاح! 🎉');
+}
+
+// ===== Filter Category =====
+function filterCategory(category) {
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.add('text-coffee-100/40');
+        if (btn.textContent.trim() === category) {
+            btn.classList.add('active');
+            btn.classList.remove('text-coffee-100/40');
         }
+    });
+    renderProducts(category);
+    const productsSection = document.getElementById('products');
+    if (productsSection) productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-        function showCart() {
-            if(cart.length === 0) return alert('السلة لسه فاضية يا غالي');
-            let total = 0;
-            let list = cart.map(i => { total += i.price; return `• ${i.name} - ${i.price} EGP`; }).join('<br>');
-            document.getElementById('cart-details').innerHTML = list + `<br><hr><br><strong>الإجمالي: ${total} EGP</strong>`;
-            document.getElementById('checkout').style.display = 'block';
-            window.location.hash = 'checkout';
-        }
+// ===== FAQ Toggle =====
+function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+}
 
-        function sendToWA() {
-            const n = document.getElementById('name').value;
-            const a = document.getElementById('address').value;
-            if(!n || !a) return alert('من فضلك اكتب الاسم والعنوان');
-            
-            let msg = `*طلب جديد من موقع زغلولة*%0A*الاسم:* ${n}%0A*العنوان:* ${a}%0A%0A*الطلبات:*%0A`;
-            let total = 0;
-            cart.forEach(i => { msg += `- ${i.name} (${i.price} جنيه)%0A`; total += i.price; });
-            msg += `%0A*الإجمالي:* ${total} جنيه`;
-            
-            window.open(`https://wa.me/201008836269?text=${msg}`, '_blank');
-        }
-    </script>
+// ===== Mobile Menu =====
+function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
+
+// ===== Toast =====
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+
 </body>
 </html>
