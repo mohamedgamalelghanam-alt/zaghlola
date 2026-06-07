@@ -168,7 +168,6 @@
 <div id="beans-container"></div>
 <div id="toast" class="toast"></div>
 
-<!-- Navbar -->
 <nav class="navbar fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
         <a href="#hero" class="text-2xl md:text-3xl font-bold text-coffee-300 hover:text-coffee-200 transition-colors">زغلولة</a>
@@ -200,7 +199,6 @@
     <a href="#contact" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">تواصل معنا</a>
 </div>
 
-<!-- Hero -->
 <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
     <div class="hero-bg absolute inset-0"><img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1920&q=80" alt="" class="w-full h-full object-cover opacity-35"></div>
     <div class="hero-gradient absolute inset-0"></div>
@@ -220,7 +218,6 @@
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce"><span class="text-coffee-300/30 text-xs">اكتشف المزيد</span><iconify-icon icon="lucide:chevron-down" width="20" class="text-coffee-300/30"></iconify-icon></div>
 </section>
 
-<!-- Categories -->
 <section id="categories" class="relative py-20 md:py-28 px-4">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-14 reveal"><span class="text-coffee-300/60 text-sm font-medium tracking-widest">تصفح حسب النوع</span><h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">أقسام المنتجات</h2></div>
@@ -235,7 +232,6 @@
     </div>
 </section>
 
-<!-- Products -->
 <section id="products" class="relative py-20 md:py-28 px-4">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-10 reveal"><span class="text-coffee-300/60 text-sm font-medium tracking-widest">تشكيلة فاخرة</span><h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">منتجاتنا</h2></div>
@@ -252,7 +248,6 @@
     </div>
 </section>
 
-<!-- Testimonials -->
 <section id="testimonials" class="relative py-20 md:py-28 px-4" style="background:rgba(26,18,11,0.3);">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-14 reveal"><span class="text-coffee-300/60 text-sm font-medium tracking-widest">ماذا يقول عملاؤنا</span><h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">آراء العملاء</h2></div>
@@ -276,7 +271,6 @@
     </div>
 </section>
 
-<!-- FAQ -->
 <section id="faq" class="relative py-20 md:py-28 px-4">
     <div class="max-w-3xl mx-auto">
         <div class="text-center mb-14 reveal"><span class="text-coffee-300/60 text-sm font-medium tracking-widest">إجابات سريعة</span><h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">الأسئلة الشائعة</h2></div>
@@ -289,7 +283,6 @@
     </div>
 </section>
 
-<!-- Footer -->
 <footer id="contact" class="relative border-t border-coffee-700/10 py-16 px-4" style="background:rgba(15,11,7,0.8);">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
@@ -309,7 +302,6 @@
     </div>
 </footer>
 
-<!-- Cart Overlay & Sidebar -->
 <div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
 <div id="cart-sidebar" class="cart-sidebar">
     <div class="p-6 border-b border-coffee-300/8 flex items-center justify-between" style="background:rgba(201,165,116,0.03);">
@@ -325,7 +317,6 @@
     </div>
 </div>
 
-<!-- Checkout Modal -->
 <div id="checkout-modal" class="checkout-modal">
     <div class="modal-bg" onclick="closeCheckout()"></div>
     <div class="modal-content p-6 md:p-8">
@@ -338,18 +329,17 @@
             <div id="checkout-items" class="space-y-2.5 text-sm"></div>
             <div class="mt-4 pt-4 border-t border-coffee-300/8 flex justify-between items-center"><span class="font-bold text-coffee-100">الإجمالي</span><span id="checkout-total" class="text-lg font-black text-coffee-300">0 ج.م</span></div>
         </div>
-        <form class="space-y-4" onsubmit="return false;">
+        <form class="space-y-4" onsubmit="submitOrder(event); return false;">
             <div><label class="block text-sm font-semibold text-coffee-100/50 mb-2">الاسم الكامل *</label><input type="text" id="cust-name" class="form-input" placeholder="أدخل اسمك بالكامل" required></div>
             <div><label class="block text-sm font-semibold text-coffee-100/50 mb-2">رقم الهاتف *</label><input type="tel" id="cust-phone" class="form-input" placeholder="01xxxxxxxxx" dir="ltr" required></div>
             <div><label class="block text-sm font-semibold text-coffee-100/50 mb-2">العنوان بالتفصيل *</label><input type="text" id="cust-address" class="form-input" placeholder="المحافظة - المنطقة - الشارع - رقم العمارة" required></div>
             <div><label class="block text-sm font-semibold text-coffee-100/50 mb-2">ملاحظات <span class="text-coffee-100/25">(اختياري)</span></label><textarea id="cust-notes" class="form-input" rows="2" placeholder="أي ملاحظات إضافية..."></textarea></div>
-            <button type="button" onclick="submitOrder()" class="w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/15"><iconify-icon icon="lucide:message-circle" width="22"></iconify-icon>تأكيد الطلب عبر واتساب</button>
+            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/15"><iconify-icon icon="lucide:message-circle" width="22"></iconify-icon>تأكيد الطلب عبر واتساب</button>
             <p class="text-xs text-coffee-100/20 text-center">سيتم تحويلك للواتساب لإرسال تفاصيل الطلب • الدفع عند الاستلام</p>
         </form>
     </div>
 </div>
 
-<!-- WhatsApp Float -->
 <a href="https://wa.me/201008836269" target="_blank" class="wa-float">
     <div class="wa-float-label">تواصل معنا</div>
     <div style="position:relative;"><div class="wa-float-pulse"></div><div class="wa-float-btn"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div></div>
@@ -532,7 +522,7 @@ function updateCartUI() {
         ft.classList.remove('hidden');
     }
     document.getElementById('cart-subtotal').textContent=sum+' ج.م';
-    document.getElementById('cart-total').textContent=sum+' ج.م';
+    document.getElementById('cart-total').textContent=sum+' ج.m';
 }
 
 function openCart(){document.getElementById('cart-overlay').classList.add('open');document.getElementById('cart-sidebar').classList.add('open');document.body.style.overflow='hidden';}
@@ -547,26 +537,62 @@ function openCheckout(){
 }
 function closeCheckout(){document.getElementById('checkout-modal').classList.remove('open');document.body.style.overflow='';}
 
-function submitOrder(){
+// دالة تأكيد المبيعات المحدثة لربط جوجل شيت والواتساب معاً
+function submitOrder(event){
+    if(event) event.preventDefault(); // منع إعادة تحميل الصفحة لضمان عمل الـ Fetch
+
     const nm=document.getElementById('cust-name').value.trim();
     const ph=document.getElementById('cust-phone').value.trim();
     const ad=document.getElementById('cust-address').value.trim();
     const nt=document.getElementById('cust-notes').value.trim();
-    if(!nm||!ph||!ad){showToast('من فضلك املأ جميع الحقول المطلوبة ⚠️');return;}
+    
+    if(!nm||!ph||!ad){
+        return; // يتوقف في حال لم يكتمل الـ HTML Validation التلقائي
+    }
+    
     const sum=cart.reduce((a,i)=>a+i.price*i.qty,0);
-    let m=`☕ *طلب جديد من زغلولة*\n\n👤 *الاسم:* ${nm}\n📱 *الهاتف:* ${ph}\n📍 *العنوان:* ${ad}\n`;
-    if(nt)m+=`📝 *ملاحظات:* ${nt}\n`;
+    
+    // 1. صياغة قائمة المنتجات في سطر واحد مميز لتسجيله في الشيت
+    let productsList = cart.map(it => `${it.name} (${it.size}) x${it.qty}`).join(' - ');
+    
+    // 2. تجميع البيانات في FormData لإرسالها لـ Google Script API
+    const formData = new FormData();
+    formData.append('name', nm);
+    formData.append('phone', ph);
+    formData.append('address', ad);
+    formData.append('notes', nt);
+    formData.append('products', productsList);
+    formData.append('total', sum + ' ج.م');
+    
+    // 3. إرسال البيانات فوراً للشيت بالخلفية
+    fetch('https://script.google.com/macros/s/AKfycbw2ZAgxr7aILqZXLQjwiv10b99gJu0cVuZkK4dgMz9fnqZ-PrE6dU5mjmJVRZ6uVCWG/exec', {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+    }).catch(err => console.error('خطأ في الاتصال بجوجل شيت:', err));
+    
+    // 4. بناء رسالة الواتساب وتوجيه العميل
+    let m=`📋 *طلب جديد من موقع زغلولة* ☕\n━━━━━━━━━━━━━\n👤 *الاسم:* ${nm}\n📞 *الهاتف:* ${ph}\n📍 *العنوان:* ${ad}\n`;
+    if(nt) m+=`📝 *ملاحظات:* ${nt}\n`;
     m+=`\n🛒 *المنتجات:*\n━━━━━━━━━━━━━\n`;
     cart.forEach(it=>{m+=`▪️ ${it.name}\n   الحجم: ${it.size} | الكمية: ${it.qty} | السعر: ${it.price*it.qty} ج.م\n`;});
     m+=`━━━━━━━━━━━━━\n💰 *الإجمالي: ${sum} ج.م*\n\n💳 الدفع عند الاستلام`;
+    
     window.open(`https://wa.me/201008836269?text=${encodeURIComponent(m)}`,'_blank');
-    cart=[];updateCartUI();closeCheckout();
-    document.getElementById('cust-name').value='';document.getElementById('cust-phone').value='';document.getElementById('cust-address').value='';document.getElementById('cust-notes').value='';
-    showToast('تم إرسال الطلب بنجاح! 🎉');
+    
+    // 5. تصفير السلة والفورم للعمليات القادمة
+    cart=[];
+    updateCartUI();
+    closeCheckout();
+    document.getElementById('cust-name').value='';
+    document.getElementById('cust-phone').value='';
+    document.getElementById('cust-address').value='';
+    document.getElementById('cust-notes').value='';
+    showToast('تم تسجيل وإرسال طلبك بنجاح! 🎉');
 }
 
 function filterCategory(cat){
-    document.querySelectorAll('.cat-btn').forEach(b=>{b.classList.remove('active');b.classList.add('text-coffee-100/40');if(b.textContent.trim()===cat){b.classList.add('active');b.classList.remove('text-coffee-100/40');}});
+    document.querySelectorAll('.cat-btn').forEach(b=>{b.classList.remove('active');b.classList.add('text-coffee-100/40');if(b.textContent.trim()===cat){b.classList.add('active');b.classList.remove('text-coffee-100/40');}});\
     renderProducts(cat);document.getElementById('products').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
