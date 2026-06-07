@@ -592,7 +592,7 @@ function submitOrder(event){
 }
 
 function filterCategory(cat){
-    document.querySelectorAll('.cat-btn').forEach(b=>{b.classList.remove('active');b.classList.add('text-coffee-100/40');if(b.textContent.trim()===cat){b.classList.add('active');b.classList.remove('text-coffee-100/40');}});\
+    document.querySelectorAll('.cat-btn').forEach(b=>{b.classList.remove('active');b.classList.add('text-coffee-100/40');if(b.textContent.trim()===cat){b.classList.add('active');b.classList.remove('text-coffee-100/40');}});
     renderProducts(cat);document.getElementById('products').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
