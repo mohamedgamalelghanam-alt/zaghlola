@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمصة ومتجر زغلولة للبن </title>
+    <title>محمصة ومتجر زغلولة للبن</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts -->
@@ -350,25 +350,29 @@
                     <a href="#about" class="w-full sm:w-auto px-8 py-4 bg-[#17110a] text-coffee-100/80 font-bold rounded-xl text-center border border-coffee-800/20 hover:bg-[#1f170e] transition-colors">قراءة حكايتنا</a>
                 </div>
             </div>
-          <!-- Image Area / Graphic -->
-<div class="flex justify-center items-center order-1 lg:order-2 relative select-none">
-    <!-- توهج خلفي جمالي للصورة -->
-    <div class="absolute w-[80%] aspect-square bg-[#8a6242]/5 rounded-full filter blur-[100px] pointer-events-none"></div>
-    
-    <!-- إطار الصورة مع تأثير حركة الدخان -->
-    <div class="relative w-72 sm:w-96 aspect-square bg-[#17110a] rounded-[2rem] border border-coffee-800/20 shadow-2xl overflow-hidden transform lg:rotate-3 hover:rotate-0 transition-transform duration-500 group">
-        
-        <!-- الصورة المطلوبة مع تأثير زوم لطيف عند تمرير الماوس -->
-        <img src="zaghloula2.jpg" alt="محمصة زغلولة" class="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-        
-        <!-- تأثير الدخان المتصاعد فوق الصورة لشكل احترافي وجذاب -->
-        <div class="smoke-container" style="top:10px; height: 200px; z-index: 20;">
-            <div class="smoke smoke-1" style="animation-duration: 3s;"></div>
-            <div class="smoke smoke-2" style="animation-duration: 5s;"></div>
-            <div class="smoke smoke-3" style="animation-duration: 4s;"></div>
+            
+            <!-- Image Area / Graphic -->
+            <div class="flex justify-center items-center order-1 lg:order-2 relative select-none">
+                <!-- توهج خلفي جمالي للصورة -->
+                <div class="absolute w-[80%] aspect-square bg-[#8a6242]/5 rounded-full filter blur-[100px] pointer-events-none"></div>
+                
+                <!-- إطار الصورة مع تأثير حركة الدخان -->
+                <div class="relative w-72 sm:w-96 aspect-square bg-[#17110a] rounded-[2rem] border border-coffee-800/20 shadow-2xl overflow-hidden transform lg:rotate-3 hover:rotate-0 transition-transform duration-500 group">
+                    
+                    <!-- الصورة المطلوبة مع تأثير زوم لطيف عند تمرير الماوس -->
+                    <img src="zaghloula2.jpg" alt="محمصة زغلولة" class="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    
+                    <!-- تأثير الدخان المتصاعد فوق الصورة لشكل احترافي وجذاب -->
+                    <div class="smoke-container" style="top:10px; height: 200px; z-index: 20;">
+                        <div class="smoke smoke-1" style="animation-duration: 3s;"></div>
+                        <div class="smoke smoke-2" style="animation-duration: 5s;"></div>
+                        <div class="smoke smoke-3" style="animation-duration: 4s;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+
     <!-- Main Store & Dynamic Products Grid Section -->
     <section id="store" class="py-24 px-4 lg:px-8 bg-[#0c0805] relative">
         <div class="max-w-7xl mx-auto space-y-12">
@@ -440,7 +444,7 @@
             // منتجات خاصة ومساحيق مميزة
             { id: 25, name: "سحلب مكسرات فاخر جداً", category: "منتجات خاصة", description: "خلطة السحلب السرية من زغلولة، غنية بالمسمسم، جوز الهند، والمكسرات الطازجة.", image: "zaghlola.jpeg", prices: { "1 كيلو": 360, "1/2 كيلو": 180, "1/4 كيلو": 90, "1/8 كيلو": 45 } },
             { id: 26, name: "ميكس شيكولاتة زغلولة المطور", category: "منتجات خاصة", description: "مسحوق الشوكولاتة والكاكاو الخاص بنا الجاهز للتحضير مع الحليب لمتعة لا تقاوم.", image: "zaghlola.jpeg", prices: { "1 كيلو": 480, "1/2 كيلو": 240, "1/4 كيلو": 120, "1/8 كيلو": 60 } },
-            { id: 27, name: "مغات بلدي مصري أصيل", category: "منتجات خاصة", description: "بودرة مغات بلدي نقية ومجهزة بأفخر أنواع المكسرات والسمسم والسمن.", image: "zaghlola.jpeg", prices: { "1 كيلو": 720, "1/2 كيلو": 360, "1/4 كيلو": 180, "1/8 كيلو": 90 } },
+            { id: 27, name: "مغات بلدي مصري أصيل", category: "منتجات خاصة", description: "بودرة مغات بلدي نقية ومجهة بأفخر أنواع المكسرات والسمسم والسمن.", image: "zaghlola.jpeg", prices: { "1 كيلو": 720, "1/2 كيلو": 360, "1/4 كيلو": 180, "1/8 كيلو": 90 } },
             { id: 28, name: "توليفة كركديه أسواني فاخر", category: "منتجات خاصة", description: "أوراق كركديه أسواني زهرة كاملة مجففة بعناية، طعم ولون غني ونقي.", image: "zaghlola.jpeg", prices: { "1 كيلو": 320, "1/2 كيلو": 160, "1/4 كيلو": 80 } },
             
             // مشروبات زغلولة (المنيو الجديد - جاهز بالكوب والطلب السريع)
@@ -451,7 +455,7 @@
             { id: 33, name: "كوب مكياطه", category: "مشروبات", description: "إسبريسو غني مضافاً إليه بقعة صغيرة من رغوة الحليب الدافئ.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 20 } },
             { id: 34, name: "كوب مكياطه نوتيلا", category: "مشروبات", description: "المكياطه الشهيرة مضافاً إليها صوص شوكولاتة النوتيلا الأصلية الغنية.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 30 } },
             { id: 35, name: "كوب شاي عادي", category: "مشروبات", description: "شاي أحمر كلاسيكي ممتاز محضر بالطريقة التقليدية.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 5 } },
-            { id: 36, name: "كوب شاي محوج", category: "مشروبات", description: "شاي بنكهة مميزة مع توليفة من البهارات الشرقية والنعناع أو الحبهان.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 5 } },
+            { id: 36, name: "كوب شاي محوج", category: "mشروبات", description: "شاي بنكهة مميزة مع توليفة من البهارات الشرقية والنعناع أو الحبهان.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 5 } },
             { id: 37, name: "كوب اعشاب متنوع", category: "مشروبات", description: "مزيج دافئ ومريح من الأعشاب الطبيعية والطبية المفيدة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 10 } },
             { id: 38, name: "كوب اعشاب اكسترا", category: "مشروبات", description: "توليفة أعشاب خاصة ومكثفة مع إضافات صحية وممتازة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 25 } },
             { id: 39, name: "نسكافيه عادي", category: "مشروبات", description: "كوب نسكافيه كلاسيكي سريع الذوبان مع الحليب المتبخر والرغوة الخفيفة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 20 } },
@@ -499,9 +503,6 @@
                 const sizes = Object.keys(p.prices);
                 const defaultSize = sizes[0];
                 const defaultPrice = p.prices[defaultSize];
-
-                // Check if options are weights or cups to determine dynamic label lookups
-                const isDrink = p.category === "مشروبات";
 
                 let selectHTML = "";
                 if(sizes.length > 1) {
@@ -577,7 +578,6 @@
 
         // Render Cart Dynamic Engine Caching View
         function updateCartUI() {
-            // Save current state layout tracking to localstorage automatically
             localStorage.setItem('zag_cart', JSON.stringify(cart));
 
             const container = document.getElementById('cart-items');
@@ -692,7 +692,6 @@
                 </div>
             `).join('');
 
-            // Reset selection indices values state
             document.getElementById('cust-governorate').selectedIndex = 0;
             document.getElementById('checkout-total').textContent = totalPrice + ' ج.م';
 
@@ -759,10 +758,8 @@
             msg += `⭐ *الإجمالي النهائي المطلوب: ${finalTotal} ج.م*\n`;
             msg += `\n💳 *طريقة الدفع:* كاش كود عند الاستلام للمندوب`;
 
-            // Open Encoded Dynamic WhatsApp URL Endpoint API window tab target
             window.open(`https://wa.me/201008836269?text=${encodeURIComponent(msg)}`, '_blank');
 
-            // Clear states
             cart = [];
             localStorage.removeItem('zag_cart');
             updateCartUI();
