@@ -229,7 +229,7 @@
     </header>
 
     <!-- Side Cart Pane -->
-    <div id="cart-pane" class="slide-pane right-0 flex flex-col">
+    <div id="cart-pane" class="slide-pane right-0 flex flex-col w-full max-w-[450px]">
         <div class="p-6 border-b border-coffee-900/20 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <iconify-icon icon="ph:shopping-bag-fill" class="text-xl text-[#8a6242]"></iconify-icon>
@@ -263,7 +263,7 @@
     </div>
 
     <!-- Side Checkout Pane / Modal View -->
-    <div id="checkout-modal" class="slide-pane right-0 flex flex-col">
+    <div id="checkout-modal" class="slide-pane right-0 flex flex-col w-full max-w-[450px]">
         <div class="p-6 border-b border-coffee-900/20 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <iconify-icon icon="ph:notebook-fill" class="text-xl text-[#8a6242]"></iconify-icon>
@@ -354,7 +354,7 @@
             <div class="flex justify-center items-center order-1 lg:order-2 relative select-none">
                 <div class="absolute w-[80%] aspect-square bg-[#8a6242]/5 rounded-full filter blur-[100px] pointer-events-none"></div>
                 <div class="relative w-72 sm:w-96 aspect-square bg-[#17110a] rounded-[2rem] border border-coffee-800/20 shadow-2xl overflow-hidden flex items-center justify-center transform lg:rotate-3 hover:rotate-0 transition-transform duration-500">
-                    <iconify-icon icon="ph:coffee-bean-thin" class="text-[12rem] text-[#8a6242]/20 absolute animate-spin" style="animation-duration: 40s;"></iconify-icon>
+                    <iconify-icon icon="ph:coffee-bean-thin" class="text-[12rem] text-[#8a6242]/20 absolute animate-spin" style="animation-duration: 40s;"></iconify-duration>
                     <iconify-icon icon="ph:coffee-fill" class="text-[8rem] text-[#8a6242] drop-shadow-2xl z-10"></iconify-icon>
                     <div class="smoke-container" style="top:20px; height: 200px;">
                         <div class="smoke smoke-1" style="animation-duration: 3s;"></div>
@@ -417,54 +417,54 @@
             { id: 12, name: "بن خام كولومبي سوبريمو", category: "بن خام", description: "حبوب كولومبية ممتازة ومنتقاة بعناية، حموضة لطيفة وقوام حريري ناعم.", image: "zaghlola.jpeg", prices: { "1 كيلو": 580, "1/2 كيلو": 290, "1/4 كيلو": 145 } },
 
             // قهوة سريعة التحضير والفلتر
-            { id: 13, name: "قهوة إسبريسو زغلولة", category: "قهوة", description: "حبوب بن محمصة ومطحونة خصيصاً لمكاين الإسبريسو والـ Portafilter الكبس الموزون.", image: "https://picsum.photos/seed/zag-fast1/400/400.jpg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160 } },
-            { id: 14, name: "قهوة ميريكان فلتير", category: "قهوة", description: "بن مطحون خشن نسبياً ومناسب لماكينات القهوة الأمريكية والترشيح V60.", image: "https://picsum.photos/seed/zag-fast2/400/400.jpg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160 } },
-            { id: 15, name: "قهوة فرنسية كلاسيك", category: "قهوة", description: "مزيج القهوة الناعمة مع مبيض الحليب الفاخر لنكهة فرنسية هادئة.", image: "https://picsum.photos/seed/zag-fast3/400/400.jpg", prices: { "1 كيلو": 520, "1/2 كيلو": 260, "1/4 كيلو": 130, "1/8 كيلو": 65 } },
-            { id: 16, name: "قهوة فرنسية بالمكسرات", category: "قهوة", description: "القهوة الفرنسية الشهيرة مضافاً إليها نكهة البندق واللوز الغنية.", image: "https://picsum.photos/seed/zag-fast4/400/400.jpg", prices: { "1 كيلو": 560, "1/2 كيلو": 280, "1/4 كيلو": 140, "1/8 كيلو": 70 } },
-            { id: 17, name: "قهوة خضراء للتخسيس", category: "قهوة", description: "حبوب بن خضراء مطحونة غنية بحمض الكلوروجينيك للمساعدة في حرق الدهون.", image: "https://picsum.photos/seed/zag-fast5/400/400.jpg", prices: { "1 كيلو": 460, "1/2 كيلو": 230, "1/4 كيلو": 115 } },
+            { id: 13, name: "قهوة إسبريسو زغلولة", category: "قهوة", description: "حبوب بن محمصة ومطحونة خصيصاً لمكاين الإسبريسو والـ Portafilter الكبس الموزون.", image: "zaghlola.jpeg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160 } },
+            { id: 14, name: "قهوة ميريكان فلتير", category: "قهوة", description: "بن مطحون خشن نسبياً ومناسب لماكينات القهوة الأمريكية والترشيح V60.", image: "zaghlola.jpeg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160 } },
+            { id: 15, name: "قهوة فرنسية كلاسيك", category: "قهوة", description: "مزيج القهوة الناعمة مع مبيض الحليب الفاخر لنكهة فرنسية هادئة.", image: "zaghlola.jpeg", prices: { "1 كيلو": 520, "1/2 كيلو": 260, "1/4 كيلو": 130, "1/8 كيلو": 65 } },
+            { id: 16, name: "قهوة فرنسية بالمكسرات", category: "قهوة", description: "القهوة الفرنسية الشهيرة مضافاً إليها نكهة البندق واللوز الغنية.", image: "zaghlola.jpeg", prices: { "1 كيلو": 560, "1/2 كيلو": 280, "1/4 كيلو": 140, "1/8 كيلو": 70 } },
+            { id: 17, name: "قهوة خضراء للتخسيس", category: "قهوة", description: "حبوب بن خضراء مطحونة غنية بحمض الكلوروجينيك للمساعدة في حرق الدهون.", image: "zaghlola.jpeg", prices: { "1 كيلو": 460, "1/2 كيلو": 230, "1/4 كيلو": 115 } },
 
             // النسكافيه ومشروبات سريعة
-            { id: 18, name: "نسكافيه جولد زغلولة", category: "نسكافيه", description: "حبيبات قهوة مجففة بالتبريد سريعة التحضير بنكهة قوية ورائحة غنية.", image: "https://picsum.photos/seed/zag-nes1/400/400.jpg", prices: { "1 كيلو": 960, "1/2 كيلو": 480, "1/4 كيلو": 240, "1/8 كيلو": 120 } },
-            { id: 19, name: "نسكافيه بلاك كلاسيك", category: "نسكافيه", description: "القهوة المجففة الكلاسيكية سريعة الذوبان، بداية ممتازة ومثالية لصباحك.", image: "https://picsum.photos/seed/zag-nes2/400/400.jpg", prices: { "1 كيلو": 800, "1/2 كيلو": 400, "1/4 كيلو": 200, "1/8 كيلو": 100 } },
-            { id: 20, name: "نسكافيه بندق فاخر", category: "نسكافيه", description: "نسكافيه سريع التحضير بنكهة ومذاق البندق المحمص اللذيذ.", image: "https://picsum.photos/seed/zag-nes3/400/400.jpg", prices: { "1 كيلو": 880, "1/2 كيلو": 440, "1/4 كيلو": 220, "1/8 كيلو": 110 } },
-            { id: 21, name: "نسكافيه مكسرات مشكل", category: "نسكافيه", description: "مزيج رائع من النسكافيه مع توليفة نكهات المكسرات الشرقية.", image: "https://picsum.photos/seed/zag-nes4/400/400.jpg", prices: { "1 كيلو": 880, "1/2 كيلو": 440, "1/4 كيلو": 220, "1/8 كيلو": 110 } },
+            { id: 18, name: "نسكافيه جولد زغلولة", category: "نسكافيه", description: "حبيبات قهوة مجففة بالتبريد سريعة التحضير بنكهة قوية ورائحة غنية.", image: "zaghlola.jpeg", prices: { "1 كيلو": 960, "1/2 كيلو": 480, "1/4 كيلو": 240, "1/8 كيلو": 120 } },
+            { id: 19, name: "نسكافيه بلاك كلاسيك", category: "نسكافيه", description: "القهوة المجففة الكلاسيكية سريعة الذوبان، بداية ممتازة ومثالية لصباحك.", image: "zaghlola.jpeg", prices: { "1 كيلو": 800, "1/2 كيلو": 400, "1/4 كيلو": 200, "1/8 كيلو": 100 } },
+            { id: 20, name: "نسكافيه بندق فاخر", category: "نسكافيه", description: "نسكافيه سريع التحضير بنكهة ومذاق البندق المحمص اللذيذ.", image: "zaghlola.jpeg", prices: { "1 كيلو": 880, "1/2 كيلو": 440, "1/4 كيلو": 220, "1/8 كيلو": 110 } },
+            { id: 21, name: "نسكافيه مكسرات مشكل", category: "نسكافيه", description: "مزيج رائع من النسكافيه مع توليفة نكهات المكسرات الشرقية.", image: "zaghlola.jpeg", prices: { "1 كيلو": 880, "1/2 كيلو": 440, "1/4 كيلو": 220, "1/8 كيلو": 110 } },
 
             // كابتشينو وهوت شوكليت
-            { id: 22, name: "كابتشينو كلاسيك زغلولة", category: "كابتشينو", description: "مسحوق الكابتشينو الغني بالرغوة الكثيفة والمذاق الإيطالي الرائع.", image: "https://picsum.photos/seed/zag-cap1/400/400.jpg", prices: { "1 كيلو": 520, "1/2 كيلو": 260, "1/4 كيلو": 130, "1/8 كيلو": 65 } },
-            { id: 23, name: "كابتشينو بالبندق والمكسرات", category: "كابتشينو", description: "كابتشينو فاخر بنكهة البندق الطازج، رغوة ممتازة ومذاق محبب.", image: "https://picsum.photos/seed/zag-cap2/400/400.jpg", prices: { "1 كيلو": 560, "1/2 كيلو": 280, "1/4 كيلو": 140, "1/8 كيلو": 70 } },
-            { id: 24, name: "هوت شوكليت كاكاو فاخر", category: "كابتشينو", description: "مسحوق شوكولاتة ساخنة غنية، مستخلص من أجود أنواع الكاكاو الخام.", image: "https://picsum.photos/seed/zag-cap3/400/400.jpg", prices: { "1 كيلو": 440, "1/2 كيلو": 220, "1/4 كيلو": 110, "1/8 كيلو": 55 } },
+            { id: 22, name: "كابتشينو كلاسيك زغلولة", category: "كابتشينو", description: "مسحوق الكابتشينو الغني بالرغوة الكثيفة والمذاق الإيطالي الرائع.", image: "zaghlola.jpeg", prices: { "1 كيلو": 520, "1/2 كيلو": 260, "1/4 كيلو": 130, "1/8 كيلو": 65 } },
+            { id: 23, name: "كابتشينو بالبندق والمكسرات", category: "كابتشينو", description: "كابتشينو فاخر بنكهة البندق الطازج، رغوة ممتازة ومذاق محبب.", image: "zaghlola.jpeg", prices: { "1 كيلو": 560, "1/2 كيلو": 280, "1/4 كيلو": 140, "1/8 كيلو": 70 } },
+            { id: 24, name: "هوت شوكليت كاكاو فاخر", category: "كابتشينو", description: "مسحوق شوكولاتة ساخنة غنية، مستخلص من أجود أنواع الكاكاو الخام.", image: "zaghlola.jpeg", prices: { "1 كيلو": 440, "1/2 كيلو": 220, "1/4 كيلو": 110, "1/8 كيلو": 55 } },
 
             // منتجات خاصة ومساحيق مميزة
-            { id: 25, name: "سحلب مكسرات فاخر جداً", category: "منتجات خاصة", description: "خلطة السحلب السرية من زغلولة، غنية بالمسمسم، جوز الهند، والمكسرات الطازجة.", image: "https://picsum.photos/seed/zag-spec1/400/400.jpg", prices: { "1 كيلو": 360, "1/2 كيلو": 180, "1/4 كيلو": 90, "1/8 كيلو": 45 } },
-            { id: 26, name: "ميكس شيكولاتة زغلولة المطور", category: "منتجات خاصة", description: "مسحوق الشوكولاتة والكاكاو الخاص بنا الجاهز للتحضير مع الحليب لمتعة لا تقاوم.", image: "https://picsum.photos/seed/zag-spec2/400/400.jpg", prices: { "1 كيلو": 480, "1/2 كيلو": 240, "1/4 كيلو": 120, "1/8 كيلو": 60 } },
-            { id: 27, name: "مغات بلدي مصري أصيل", category: "منتجات خاصة", description: "بودرة مغات بلدي نقية ومجهزة بأفخر أنواع المكسرات والسمسم والسمن.", image: "https://picsum.photos/seed/zag-spec3/400/400.jpg", prices: { "1 كيلو": 720, "1/2 كيلو": 360, "1/4 كيلو": 180, "1/8 كيلو": 90 } },
-            { id: 28, name: "توليفة كركديه أسواني فاخر", category: "منتجات خاصة", description: "أوراق كركديه أسواني زهرة كاملة مجففة بعناية، طعم ولون غني ونقي.", image: "https://picsum.photos/seed/zag-spec4/400/400.jpg", prices: { "1 كيلو": 320, "1/2 كيلو": 160, "1/4 كيلو": 80 } },
+            { id: 25, name: "سحلب مكسرات فاخر جداً", category: "منتجات خاصة", description: "خلطة السحلب السرية من زغلولة، غنية بالمسمسم، جوز الهند، والمكسرات الطازجة.", image: "zaghlola.jpeg", prices: { "1 كيلو": 360, "1/2 كيلو": 180, "1/4 كيلو": 90, "1/8 كيلو": 45 } },
+            { id: 26, name: "ميكس شيكولاتة زغلولة المطور", category: "منتجات خاصة", description: "مسحوق الشوكولاتة والكاكاو الخاص بنا الجاهز للتحضير مع الحليب لمتعة لا تقاوم.", image: "zaghlola.jpeg", prices: { "1 كيلو": 480, "1/2 كيلو": 240, "1/4 كيلو": 120, "1/8 كيلو": 60 } },
+            { id: 27, name: "مغات بلدي مصري أصيل", category: "منتجات خاصة", description: "بودرة مغات بلدي نقية ومجهزة بأفخر أنواع المكسرات والسمسم والسمن.", image: "zaghlola.jpeg", prices: { "1 كيلو": 720, "1/2 كيلو": 360, "1/4 كيلو": 180, "1/8 كيلو": 90 } },
+            { id: 28, name: "توليفة كركديه أسواني فاخر", category: "منتجات خاصة", description: "أوراق كركديه أسواني زهرة كاملة مجففة بعناية، طعم ولون غني ونقي.", image: "zaghlola.jpeg", prices: { "1 كيلو": 320, "1/2 كيلو": 160, "1/4 كيلو": 80 } },
             
             // مشروبات زغلولة (المنيو الجديد - جاهز بالكوب والطلب السريع)
-            { id: 29, name: "كوب قهوه تركي", category: "مشروبات", description: "قهوة تركي طازجة ومحضرة بعناية فائقة ومذاق أصيل.", image: "https://picsum.photos/seed/zag-drk1/400/400.jpg", prices: { "كوب ساخن": 10 } },
-            { id: 30, name: "كوب قهوه دبل", category: "مشروبات", description: "جرعة مضاعفة من القهوة التركية الفاخرة لزيادة التركيز والانتعاش.", image: "https://picsum.photos/seed/zag-drk2/400/400.jpg", prices: { "كوب ساخن": 20 } },
-            { id: 31, name: "كوب اسبريسو", category: "مشروبات", description: "مستخلص بن زغلولة المركز والنقي بعناية فائقة لعشاق النكهة الواضحة.", image: "https://picsum.photos/seed/zag-drk3/400/400.jpg", prices: { "سنجل": 20 } },
-            { id: 32, name: "كوب اسبريسو دبل", category: "مشروبات", description: "جرعة إسبريسو مزدوجة غنية ومستخلصة باحترافية كاملة.", image: "https://picsum.photos/seed/zag-drk4/400/400.jpg", prices: { "دبل": 30 } },
-            { id: 33, name: "كوب مكياطه", category: "مشروبات", description: "إسبريسو غني مضافاً إليه بقعة صغيرة من رغوة الحليب الدافئ.", image: "https://picsum.photos/seed/zag-drk5/400/400.jpg", prices: { "كوب ساخن": 20 } },
-            { id: 34, name: "كوب مكياطه نوتيلا", category: "مشروبات", description: "المكياطه الشهيرة مضافاً إليها صوص شوكولاتة النوتيلا الأصلية الغنية.", image: "https://picsum.photos/seed/zag-drk6/400/400.jpg", prices: { "كوب ساخن": 30 } },
-            { id: 35, name: "كوب شاي عادي", category: "مشروبات", description: "شاي أحمر كلاسيكي ممتاز محضر بالطريقة التقليدية.", image: "https://picsum.photos/seed/zag-drk7/400/400.jpg", prices: { "كوب ساخن": 5 } },
-            { id: 36, name: "كوب شاي محوج", category: "مشروبات", description: "شاي بنكهة مميزة مع توليفة من البهارات الشرقية والنعناع أو الحبهان.", image: "https://picsum.photos/seed/zag-drk8/400/400.jpg", prices: { "كوب ساخن": 5 } },
-            { id: 37, name: "كوب اعشاب متنوع", category: "مشروبات", description: "مزيج دافئ ومريح من الأعشاب الطبيعية والطبية المفيدة.", image: "https://picsum.photos/seed/zag-drk9/400/400.jpg", prices: { "كوب ساخن": 10 } },
-            { id: 38, name: "كوب اعشاب اكسترا", category: "مشروبات", description: "توليفة أعشاب خاصة ومكثفة مع إضافات صحية وممتازة.", image: "https://picsum.photos/seed/zag-drk10/400/400.jpg", prices: { "كوب ساخن": 25 } },
-            { id: 39, name: "نسكافيه عادي", category: "مشروبات", description: "كوب نسكافيه كلاسيكي سريع الذوبان مع الحليب المتبخر والرغوة الخفيفة.", image: "https://picsum.photos/seed/zag-drk11/400/400.jpg", prices: { "كوب ساخن": 20 } },
-            { id: 40, name: "نسكافيه مكسرات", category: "مشروبات", description: "كوب نسكافيه دافئ ومميز مع نكهة المكسرات المحمصة اللذيذة.", image: "https://picsum.photos/seed/zag-drk12/400/400.jpg", prices: { "كوب ساخن": 30 } },
-            { id: 41, name: "كابتشينو عادي", category: "مشروبات", description: "جرعة إسبريسو مع الحليب المكثف الساخن ورغوة كريمية كثيفة.", image: "https://picsum.photos/seed/zag-drk13/400/400.jpg", prices: { "كوب ساخن": 20 } },
-            { id: 42, name: "كابتشينو مكسرات", category: "مشروبات", description: "الكابتشينو الإيطالي الفاخر مع قطع ورشة مكسرات مقرمشة على الرغوة.", image: "https://picsum.photos/seed/zag-drk14/400/400.jpg", prices: { "كوب ساخن": 30 } },
-            { id: 43, name: "قهوه بندق عادي", category: "مشروبات", description: "قهوة فرنسية ناعمة بنكهة ومذاق البندق المحبب للجميع.", image: "https://picsum.photos/seed/zag-drk15/400/400.jpg", prices: { "كوب ساخن": 20 } },
-            { id: 44, name: "قهوه بندق مكسرات", category: "مشروبات", description: "قهوة البندق الغنية مع تدعيم إضافي من قطع المكسرات الطازجة.", image: "https://picsum.photos/seed/zag-drk16/400/400.jpg", prices: { "كوب ساخن": 30 } },
-            { id: 45, name: "قهوه فرنساوى عادي", category: "مشروبات", description: "مزيج القهوة الناعمة مع مبيض الحليب الكلاسيكي الممتاز بطعم ناعم.", image: "https://picsum.photos/seed/zag-drk17/400/400.jpg", prices: { "كوب ساخن": 20 } },
-            { id: 46, name: "قهوه فرنساوى مكسرات", category: "مشروبات", description: "القهوة الفرنسية الكلاسيكية مدعومة بنكهة وتشكيلة مكسرات فاخرة.", image: "https://picsum.photos/seed/zag-drk18/400/400.jpg", prices: { "كوب ساخن": 30 } },
-            { id: 47, name: "ايس كوفي", category: "مشروبات", description: "قهوة مثلجة منعشة ومنشطة محضرة بحرفية تامة لترطيب الصيف.", image: "https://picsum.photos/seed/zag-drk19/400/400.jpg", prices: { "كوب بارد": 40 } },
-            { id: 48, name: "ايس لاتيه", category: "مشروبات", description: "إسبريسو مركز مع الحليب البارد وقطع الثلج المنعشة لقوام كريمي ناعم.", image: "https://picsum.photos/seed/zag-drk20/400/400.jpg", prices: { "كوب بارد": 50 } },
-            { id: 49, name: "ايس سبنش لاتيه", category: "مشروبات", description: "اللاتيه المثلج المميز مضافاً إليه الحليب المكثف المحلى لمذاق غني وممتع.", image: "https://picsum.photos/seed/zag-drk21/400/400.jpg", prices: { "كوب بارد": 50 } },
-            { id: 50, name: "سبسيال", category: "مشروبات", description: "مشروب زغلولة الخاص والسرّي، تشكيلة غنية مذهلة وممتعة للغاية.", image: "https://picsum.photos/seed/zag-drk22/400/400.jpg", prices: { "كوب خاص": 50 } },
-            { id: 51, name: "كانز", category: "مشروبات", description: "مشروبات غازية متنوعة ومثلجة حسب اختيارك عند الاستلام.", image: "https://picsum.photos/seed/zag-drk23/400/400.jpg", prices: { "عبوة باردة": 15 } },
-            { id: 52, name: "مياه معدنيه", category: "مشروبات", description: "زجاجة مياه معدنية نقية ومبردة بعناية.", image: "https://picsum.photos/seed/zag-drk24/400/400.jpg", prices: { "زجاجة": 5 } }
+            { id: 29, name: "كوب قهوه تركي", category: "مشروبات", description: "قهوة تركي طازجة ومحضرة بعناية فائقة ومذاق أصيل.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 10 } },
+            { id: 30, name: "كوب قهوه دبل", category: "مشروبات", description: "جرعة مضاعفة من القهوة التركية الفاخرة لزيادة التركيز والانتعاش.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 20 } },
+            { id: 31, name: "كوب اسبريسو", category: "مشروبات", description: "مستخلص بن زغلولة المركز والنقي بعناية فائقة لعشاق النكهة الواضحة.", image: "zaghlola.jpeg", prices: { "سنجل": 20 } },
+            { id: 32, name: "كوب اسبريسو دبل", category: "مشروبات", description: "جرعة إسبريسو مزدوجة غنية ومستخلصة باحترافية كاملة.", image: "zaghlola.jpeg", prices: { "دبل": 30 } },
+            { id: 33, name: "كوب مكياطه", category: "مشروبات", description: "إسبريسو غني مضافاً إليه بقعة صغيرة من رغوة الحليب الدافئ.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 20 } },
+            { id: 34, name: "كوب مكياطه نوتيلا", category: "مشروبات", description: "المكياطه الشهيرة مضافاً إليها صوص شوكولاتة النوتيلا الأصلية الغنية.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 30 } },
+            { id: 35, name: "كوب شاي عادي", category: "مشروبات", description: "شاي أحمر كلاسيكي ممتاز محضر بالطريقة التقليدية.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 5 } },
+            { id: 36, name: "كوب شاي محوج", category: "مشروبات", description: "شاي بنكهة مميزة مع توليفة من البهارات الشرقية والنعناع أو الحبهان.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 5 } },
+            { id: 37, name: "كوب اعشاب متنوع", category: "مشروبات", description: "مزيج دافئ ومريح من الأعشاب الطبيعية والطبية المفيدة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 10 } },
+            { id: 38, name: "كوب اعشاب اكسترا", category: "مشروبات", description: "توليفة أعشاب خاصة ومكثفة مع إضافات صحية وممتازة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 25 } },
+            { id: 39, name: "نسكافيه عادي", category: "مشروبات", description: "كوب نسكافيه كلاسيكي سريع الذوبان مع الحليب المتبخر والرغوة الخفيفة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 20 } },
+            { id: 40, name: "نسكافيه مكسرات", category: "مشروبات", description: "كوب نسكافيه دافئ ومميز مع نكهة المكسرات المحمصة اللذيذة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 30 } },
+            { id: 41, name: "كابتشينو عادي", category: "مشروبات", description: "جرعة إسبريسو مع الحليب المكثف الساخن ورغوة كريمية كثيفة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 20 } },
+            { id: 42, name: "كابتشينو مكسرات", category: "مشروبات", description: "الكابتشينو الإيطالي الفاخر مع قطع ورشة مكسرات مقرمشة على الرغوة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 30 } },
+            { id: 43, name: "قهوه بندق عادي", category: "مشروبات", description: "قهوة فرنسية ناعمة بنكهة ومذاق البندق المحبب للجميع.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 20 } },
+            { id: 44, name: "قهوه بندق مكسرات", category: "مشروبات", description: "قهوة البندق الغنية مع تدعيم إضافي من قطع المكسرات الطازجة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 30 } },
+            { id: 45, name: "قهوه فرنساوى عادي", category: "مشروبات", description: "مزيج القهوة الناعمة مع مبيض الحليب الكلاسيكي الممتاز بطعم ناعم.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 20 } },
+            { id: 46, name: "قهوه فرنساوى مكسرات", category: "مشروبات", description: "القهوة الفرنسية الكلاسيكية مدعومة بنكهة وتشكيلة مكسرات فاخرة.", image: "zaghlola.jpeg", prices: { "كوب ساخن": 30 } },
+            { id: 47, name: "ايس كوفي", category: "مشروبات", description: "قهوة مثلجة منعشة ومنشطة محضرة بحرفية تامة لترطيب الصيف.", image: "zaghlola.jpeg", prices: { "كوب بارد": 40 } },
+            { id: 48, name: "ايس لاتيه", category: "مشروبات", description: "إسبريسو مركز مع الحليب البارد وقطع الثلج المنعشة لقوام كريمي ناعم.", image: "zaghlola.jpeg", prices: { "كوب بارد": 50 } },
+            { id: 49, name: "ايس سبنش لاتيه", category: "مشروبات", description: "اللاتيه المثلج المميز مضافاً إليه الحليب المكثف المحلى لمذاق غني وممتع.", image: "zaghlola.jpeg", prices: { "كوب بارد": 50 } },
+            { id: 50, name: "سبسيال", category: "مشروبات", description: "مشروب زغلولة الخاص والسرّي، تشكيلة غنية مذهلة وممتعة للغاية.", image: "zaghlola.jpeg", prices: { "كوب خاص": 50 } },
+            { id: 51, name: "كانز", category: "مشروبات", description: "مشروبات غازية متنوعة ومثلجة حسب اختيارك عند الاستلام.", image: "zaghlola.jpeg", prices: { "عبوة باردة": 15 } },
+            { id: 52, name: "مياه معدنيه", category: "مشروبات", description: "زجاجة مياه معدنية نقية ومبردة بعناية.", image: "zaghlola.jpeg", prices: { "زجاجة": 5 } }
         ];
 
         // Read or Initialize Shopping Cart Array Matrix with LocalStorage caching
