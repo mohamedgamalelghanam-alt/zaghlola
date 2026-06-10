@@ -3,613 +3,769 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="زغلولة - أجود أنواع القهوة والبن المصري الفاخر">
-    <title>زغلولة | أجود أنواع القهوة الفاخرة</title>
+    <title>محمصة ومتجر زغلولة للقهوة والبهارات</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { cairo: ['Cairo', 'sans-serif'] },
-                    colors: {
-                        coffee: {
-                            50: '#f8f1e8', 100: '#ecdcc8', 200: '#d9bf9b',
-                            300: '#c9a574', 400: '#b88f5a', 500: '#8b6535',
-                            600: '#6d4d28', 700: '#4a331a', 800: '#2e1f12',
-                            900: '#1a120b', 950: '#0f0b07'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Iconify for Icons -->
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <style>
-        * { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
-        body { background: #0f0b07; color: #ecdcc8; overflow-x: hidden; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0f0b07; }
-        ::-webkit-scrollbar-thumb { background: #4a331a; border-radius: 3px; }
-
-        #loader { position: fixed; inset: 0; z-index: 9999; background: #0f0b07; display: flex; align-items: center; justify-content: center; flex-direction: column; transition: opacity 0.8s, visibility 0.8s; }
-        #loader.hidden { opacity: 0; visibility: hidden; }
-        .loader-bean { width: 60px; height: 80px; animation: beanBounce 1.2s ease-in-out infinite; }
-        .loader-bean svg { fill: #c9a574; }
-        @keyframes beanBounce { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-20px) rotate(10deg)} }
-        .loader-text { margin-top:24px; font-size:1.5rem; color:#c9a574; font-weight:700; animation:pulse 1.5s ease-in-out infinite; }
-        @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
-
-        .watermark { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-size:40vw; font-weight:900; color:transparent; -webkit-text-stroke:1px rgba(201,165,116,0.03); pointer-events:none; z-index:0; user-select:none; white-space:nowrap; }
-
-        .floating-bean { position:fixed; pointer-events:none; z-index:1; opacity:0.06; animation:floatBean linear infinite; }
-        @keyframes floatBean { 0%{transform:translateY(110vh) rotate(0deg);opacity:0} 10%{opacity:0.06} 90%{opacity:0.06} 100%{transform:translateY(-10vh) rotate(720deg);opacity:0} }
-
-        .smoke { position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(201,165,116,0.04) 0%,transparent 70%); animation:smokeRise 8s ease-in-out infinite; pointer-events:none; }
-        @keyframes smokeRise { 0%{transform:translateY(0) scale(1);opacity:0.25} 50%{transform:translateY(-80px) scale(1.5);opacity:0.08} 100%{transform:translateY(-160px) scale(2);opacity:0} }
-
-        .hero-bg { transition:transform 0.1s linear; }
-        .reveal { opacity:0; transform:translateY(40px); transition:all 0.8s cubic-bezier(0.16,1,0.3,1); }
-        .reveal.active { opacity:1; transform:translateY(0); }
-
-        .product-card { transition:all 0.5s cubic-bezier(0.16,1,0.3,1); background:rgba(26,18,11,0.5); border:1px solid rgba(201,165,116,0.07); border-radius:16px; overflow:hidden; }
-        .product-card:hover { transform:translateY(-8px); box-shadow:0 20px 60px rgba(201,165,116,0.08); border-color:rgba(201,165,116,0.12); }
-        .product-card:hover .product-img { transform:scale(1.08); }
-
-        .img-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            overflow: hidden;
-            background: linear-gradient(135deg, #2e1f12, #1a120b);
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0f0b07;
+            color: #ecdcc8;
         }
-        .product-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(236, 220, 200, 0.15);
+            color: transparent;
         }
-
-        .cat-btn { transition:all 0.3s ease; }
-        .cat-btn.active { background:linear-gradient(135deg,#c9a574,#8b6535); color:#0f0b07; box-shadow:0 4px 20px rgba(201,165,116,0.2); }
-
-        .cart-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:100; opacity:0; visibility:hidden; transition:all 0.35s; backdrop-filter:blur(4px); }
-        .cart-overlay.open { opacity:1; visibility:visible; }
-        .cart-sidebar { position:fixed; top:0; right:-100%; width:100%; max-width:420px; height:100vh; background:#1a120b; z-index:101; transition:right 0.45s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; border-left:1px solid rgba(201,165,116,0.08); }
-        .cart-sidebar.open { right:0; }
-
-        .checkout-modal { position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:all 0.35s; }
-        .checkout-modal.open { opacity:1; visibility:visible; }
-        .checkout-modal .modal-bg { position:absolute; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); }
-        .checkout-modal .modal-content { position:relative; z-index:1; background:#1a120b; border:1px solid rgba(201,165,116,0.1); border-radius:1rem; max-width:500px; width:90%; max-height:90vh; overflow-y:auto; transform:scale(0.9) translateY(20px); transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); }
-        .checkout-modal.open .modal-content { transform:scale(1) translateY(0); }
-
-        .wa-float { position:fixed; bottom:28px; left:28px; z-index:90; display:flex; align-items:center; gap:10px; cursor:pointer; text-decoration:none; }
-        .wa-float-btn { width:58px; height:58px; border-radius:50%; background:#25d366; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 24px rgba(37,211,102,0.35); transition:transform 0.3s,box-shadow 0.3s; }
-        .wa-float:hover .wa-float-btn { transform:scale(1.1); box-shadow:0 6px 30px rgba(37,211,102,0.45); }
-        .wa-float-pulse { position:absolute; width:58px; height:58px; border-radius:50%; background:rgba(37,211,102,0.25); animation:waPulse 2s ease-out infinite; }
-        @keyframes waPulse { 0%{transform:scale(1);opacity:0.6} 100%{transform:scale(1.8);opacity:0} }
-        .wa-float-label { background:#1a120b; border:1px solid rgba(201,165,116,0.1); color:#ecdcc8; padding:8px 16px; border-radius:10px; font-size:13px; font-weight:600; white-space:nowrap; box-shadow:0 4px 16px rgba(0,0,0,0.3); transition:all 0.3s; opacity:0; transform:translateX(10px); }
-        .wa-float:hover .wa-float-label { opacity:1; transform:translateX(0); }
-
-        .size-btn { transition:all 0.2s; }
-        .size-btn.active { background:#c9a574; color:#0f0b07; border-color:#c9a574; }
-
-        .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.4s ease,padding 0.4s ease; }
-        .faq-item.open .faq-answer { max-height:200px; padding-top:12px; }
-        .faq-item.open .faq-icon { transform:rotate(45deg); }
-        .faq-icon { transition:transform 0.3s; }
-
-        .navbar { transition:all 0.3s; }
-        .navbar.scrolled { background:rgba(15,11,7,0.92); backdrop-filter:blur(20px); box-shadow:0 2px 20px rgba(0,0,0,0.2); border-bottom:1px solid rgba(201,165,116,0.05); }
-
-        .hero-gradient { background:linear-gradient(to bottom,rgba(15,11,7,0.2) 0%,rgba(15,11,7,0.55) 50%,rgba(15,11,7,0.98) 100%); }
-
-        .toast { position:fixed; bottom:100px; left:50%; transform:translateX(-50%) translateY(20px); background:linear-gradient(135deg,#c9a574,#8b6535); color:#0f0b07; padding:12px 28px; border-radius:10px; font-weight:700; z-index:300; opacity:0; transition:all 0.4s; pointer-events:none; box-shadow:0 4px 20px rgba(201,165,116,0.3); }
-        .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
-        .mobile-menu { position:fixed; inset:0; background:rgba(15,11,7,0.98); z-index:99; transform:translateX(100%); transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); }
-        .mobile-menu.open { transform:translateX(0); }
-
-        .testimonial-card { background:linear-gradient(145deg,rgba(46,31,18,0.5),rgba(26,18,11,0.7)); border:1px solid rgba(201,165,116,0.06); }
-
-        .form-input { background:rgba(46,31,18,0.5); border:1px solid rgba(201,165,116,0.12); color:#ecdcc8; border-radius:0.75rem; padding:14px 18px; width:100%; transition:border-color 0.3s,box-shadow 0.3s; outline:none; font-size:14px; }
-        .form-input:focus { border-color:#c9a574; box-shadow:0 0 0 3px rgba(201,165,116,0.08); }
-        .form-input::placeholder { color:rgba(236,220,200,0.25); }
-
-        .cat-icon-wrap { transition:all 0.3s; }
-        .cat-card:hover .cat-icon-wrap { background:linear-gradient(135deg,#c9a574,#8b6535); box-shadow:0 4px 20px rgba(201,165,116,0.2); }
-        .cat-card:hover .cat-icon-wrap iconify-icon { color:#0f0b07; }
-        .cat-card { transition:all 0.3s; cursor:pointer; }
-        .cat-card:hover { transform:translateY(-4px); border-color:rgba(201,165,116,0.12); }
-
-        .cart-item { transition:background 0.2s; border-radius:12px; padding:14px; }
-        .cart-item:hover { background:rgba(201,165,116,0.03); }
-        .qty-btn { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; transition:all 0.2s; cursor:pointer; border:none; }
-        .qty-minus { background:rgba(201,165,116,0.08); color:#c9a574; }
-        .qty-minus:hover { background:rgba(201,165,116,0.15); }
-        .qty-plus { background:rgba(201,165,116,0.08); color:#c9a574; }
-        .qty-plus:hover { background:rgba(201,165,116,0.15); }
-
-        .cart-item-img { width:48px; height:48px; border-radius:10px; object-fit:cover; object-position:center; flex-shrink:0; }
-
-        /* تأثير تحميل الصور */
-        .img-container::before {
-            content: '';
-            position: absolute;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #17110a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3c2a1a;
+            border-radius: 10px;
+        }
+        /* Loader */
+        #loader {
+            position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, #2e1f12, #1a120b);
-            z-index: 0;
+            background: #0f0b07;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        .product-img {
-            position: relative;
-            z-index: 1;
+        #loader.fade-out {
+            opacity: 0;
+            visibility: hidden;
         }
-        .product-img.loading {
+        .loader-bean {
+            animation: spin-pulse 2s infinite linear;
+        }
+        @keyframes spin-pulse {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+        /* Smoke Effect */
+        .smoke-container {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 150px;
+            pointer-events: none;
+        }
+        .smoke {
+            position: absolute;
+            bottom: 0;
+            width: 8px;
+            height: 30px;
+            background: rgba(236, 220, 200, 0.08);
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: rise 4s infinite linear;
             opacity: 0;
         }
-        .product-img.loaded {
+        .smoke-1 { left: 30%; animation-delay: 0s; }
+        .smoke-2 { left: 50%; animation-delay: 1.5s; width: 12px; }
+        .smoke-3 { left: 70%; animation-delay: 0.8s; }
+        @keyframes rise {
+            0% { bottom: 0; transform: translateX(0) scaleX(1); opacity: 0; }
+            15% { opacity: 0.5; }
+            50% { transform: translateX(10px) scaleX(1.5); }
+            100% { bottom: 120px; transform: translateX(-10px) scaleX(2); opacity: 0; }
+        }
+        /* Floating Beans */
+        .floating-bean {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.15;
+            animation: float-around 20s infinite linear;
+        }
+        @keyframes float-around {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, -50px) rotate(180deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        /* Sliders */
+        .slide-pane {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 450px;
+            background: #130e09;
+            border-right: 1px solid rgba(60, 42, 26, 0.3);
+            border-left: 1px solid rgba(60, 42, 26, 0.3);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        html[dir="rtl"] .slide-pane {
+            transform: translateX(100%);
+        }
+        html[dir="rtl"] .slide-pane.open {
+            transform: translateX(0);
+        }
+        .pane-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .pane-overlay.open {
             opacity: 1;
-            transition: opacity 0.5s ease;
+            pointer-events: auto;
+        }
+        /* Custom UI Components */
+        .cat-btn.active {
+            background-color: #5c3d24;
+            color: #ecdcc8;
+            border-color: #8a6242;
+            box-shadow: 0 4px 20px rgba(92, 61, 36, 0.3);
+        }
+        /* Form Inputs */
+        .form-input {
+            width: 100%;
+            background: #1a140e;
+            border: 1px solid rgba(92, 61, 36, 0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #ecdcc8;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            border-color: #8a6242;
+            box-shadow: 0 0 0 3px rgba(138, 98, 66, 0.15);
+        }
+        select.form-input option {
+            background: #1a140e;
+            color: #ecdcc8;
+        }
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #5c3d24;
+            color: #ecdcc8;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 1100;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(138, 98, 66, 0.3);
+        }
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
-<body>
+<body class="custom-scrollbar overflow-x-hidden">
 
-<div id="loader">
-    <div class="loader-bean"><svg viewBox="0 0 40 60"><ellipse cx="20" cy="30" rx="15" ry="25" fill="#c9a574"/><path d="M20 5 Q14 30 20 55" stroke="#0f0b07" fill="none" stroke-width="2.5"/></svg></div>
-    <div class="loader-text">زغلولة</div>
-</div>
-
-<div class="watermark">زغلولة</div>
-<div id="beans-container"></div>
-<div id="toast" class="toast"></div>
-
-<nav class="navbar fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-        <a href="#hero" class="text-2xl md:text-3xl font-bold text-coffee-300 hover:text-coffee-200 transition-colors">زغلولة</a>
-        <div class="hidden md:flex items-center gap-8">
-            <a href="#hero" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">الرئيسية</a>
-            <a href="#categories" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">الأقسام</a>
-            <a href="#products" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">المنتجات</a>
-            <a href="#testimonials" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">آراء العملاء</a>
-            <a href="#faq" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">الأسئلة الشائعة</a>
-            <a href="#contact" class="text-coffee-100/50 hover:text-coffee-300 transition-colors text-sm font-medium">تواصل معنا</a>
+    <!-- Loader -->
+    <div id="loader">
+        <iconify-icon icon="ph:coffee-bean-fill" class="loader-bean text-6xl text-[#8a6242] mb-4"></iconify-icon>
+        <h2 class="text-xl font-black tracking-widest text-coffee-100/80">زغلولة الفخامة والتميز</h2>
+        <div class="w-24 h-1 bg-[#1c150e] rounded-full mt-3 overflow-hidden">
+            <div class="h-full bg-[#8a6242] w-1/2 rounded-full animate-[loading_1.5s_infinite_ease-in-out]"></div>
         </div>
-        <div class="flex items-center gap-4">
-            <button onclick="openCart()" class="relative p-2 text-coffee-100/50 hover:text-coffee-300 transition-colors">
-                <iconify-icon icon="lucide:shopping-bag" width="24"></iconify-icon>
-                <span id="cart-count" class="absolute -top-1 -right-1 min-w-[20px] h-[20px] bg-coffee-300 text-coffee-950 text-[11px] font-bold rounded-full flex items-center justify-center hidden">0</span>
+        <style>@keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }</style>
+    </div>
+
+    <!-- Navigation Overlay -->
+    <div id="pane-overlay" class="pane-overlay" onclick="closeAllPanes()"></div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-[#0f0b07]/80 backdrop-blur-md border-b border-coffee-900/10 px-4 lg:px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-[#17110a] flex items-center justify-center border border-coffee-800/20 shadow-inner relative overflow-hidden">
+                <iconify-icon icon="ph:coffee-fill" class="text-2xl text-[#8a6242] z-10"></iconify-icon>
+                <div class="smoke-container">
+                    <div class="smoke smoke-1"></div>
+                    <div class="smoke smoke-2"></div>
+                    <div class="smoke smoke-3"></div>
+                </div>
+            </div>
+            <div>
+                <h1 class="text-lg font-black tracking-wide leading-none text-[#ecdcc8]">ZAGHLOULA</h1>
+                <span class="text-[10px] text-[#8a6242] font-bold tracking-widest">COFFEE & SPICES</span>
+            </div>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-coffee-100/60">
+            <a href="#hero" class="hover:text-[#ecdcc8] transition-colors">الرئيسية</a>
+            <a href="#store" class="hover:text-[#ecdcc8] transition-colors">المتجر</a>
+            <a href="#about" class="hover:text-[#ecdcc8] transition-colors">حكايتنا</a>
+            <a href="#faq" class="hover:text-[#ecdcc8] transition-colors">الأسئلة الشائعة</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+            <button onclick="openCart()" class="w-11 h-11 rounded-xl bg-[#17110a] border border-coffee-800/20 flex items-center justify-center relative hover:bg-[#1f170e] transition-colors group">
+                <iconify-icon icon="ph:shopping-bag-bold" class="text-xl text-coffee-100/70 group-hover:text-[#ecdcc8] transition-colors"></iconify-icon>
+                <span id="cart-count" class="absolute -top-1.5 -right-1.5 bg-[#8a6242] text-[#0f0b07] font-black text-[11px] w-5 h-5 rounded-full flex items-center justify-center shadow-lg">0</span>
             </button>
-            <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-coffee-100/50 hover:text-coffee-300 transition-colors"><iconify-icon icon="lucide:menu" width="24"></iconify-icon></button>
         </div>
-    </div>
-</nav>
+    </header>
 
-<div id="mobile-menu" class="mobile-menu flex flex-col items-center justify-center gap-8">
-    <button onclick="toggleMobileMenu()" class="absolute top-6 left-6 text-coffee-100/50 hover:text-coffee-300"><iconify-icon icon="lucide:x" width="28"></iconify-icon></button>
-    <a href="#hero" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">الرئيسية</a>
-    <a href="#categories" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">الأقسام</a>
-    <a href="#products" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">المنتجات</a>
-    <a href="#testimonials" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">آراء العملاء</a>
-    <a href="#faq" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">الأسئلة الشائعة</a>
-    <a href="#contact" onclick="toggleMobileMenu()" class="text-2xl font-semibold text-coffee-100 hover:text-coffee-300 transition-colors">تواصل معنا</a>
-</div>
-
-<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <div class="hero-bg absolute inset-0"><img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1920&q=80" alt="" class="w-full h-full object-cover opacity-35"></div>
-    <div class="hero-gradient absolute inset-0"></div>
-    <div class="smoke" style="top:20%;right:10%;animation-delay:0s;"></div>
-    <div class="smoke" style="top:30%;right:60%;animation-delay:3s;"></div>
-    <div class="smoke" style="top:40%;right:30%;animation-delay:5s;"></div>
-    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <div class="mb-6 inline-block"><span class="text-coffee-300/70 text-sm md:text-base font-medium tracking-widest border border-coffee-300/20 px-5 py-2 rounded-full">☕ منذ الأزل</span></div>
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight"><span class="bg-gradient-to-l from-coffee-200 via-coffee-300 to-coffee-400 bg-clip-text text-transparent">زغلولة</span></h1>
-        <p class="text-lg md:text-2xl text-coffee-100/55 mb-4 font-light max-w-2xl mx-auto">أجود أنواع القهوة والبن الفاخر</p>
-        <p class="text-base md:text-lg text-coffee-100/35 mb-10 max-w-xl mx-auto">نقدم لك أفضل توليفات القهوة المختارة بعناية من أشهر مزارع العالم</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#products" class="bg-gradient-to-l from-coffee-300 to-coffee-400 text-coffee-950 px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-coffee-400/15 transition-all hover:-translate-y-1">تسوق الآن</a>
-            <a href="#categories" class="border border-coffee-300/20 text-coffee-300 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-coffee-300/5 transition-all hover:-translate-y-1">تصفح الأقسام</a>
-        </div>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce"><span class="text-coffee-300/30 text-xs">اكتشف المزيد</span><iconify-icon icon="lucide:chevron-down" width="20" class="text-coffee-300/30"></iconify-icon></div>
-</section>
-
-<section id="categories" class="relative py-20 md:py-28 px-4">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-14 reveal"><span class="text-coffee-300/60 text-sm font-medium tracking-widest">تصفح حسب النوع</span><h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">أقسام المنتجات</h2></div>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal">
-            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('توليفات')"><div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center"><iconify-icon icon="lucide:flame" width="28" class="text-coffee-300"></iconify-icon></div><h3 class="font-semibold text-coffee-100">توليفات</h3><p class="text-xs text-coffee-100/30 mt-1">6 منتجات</p></div>
-            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('بن خام')"><div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center"><iconify-icon icon="lucide:bean" width="28" class="text-coffee-300"></iconify-icon></div><h3 class="font-semibold text-coffee-100">بن خام</h3><p class="text-xs text-coffee-100/30 mt-1">9 منتجات</p></div>
-            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('قهوة')"><div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center"><iconify-icon icon="lucide:coffee" width="28" class="text-coffee-300"></iconify-icon></div><h3 class="font-semibold text-coffee-100">قهوة</h3><p class="text-xs text-coffee-100/30 mt-1">3 منتجات</p></div>
-            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('نسكافيه')"><div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center"><iconify-icon icon="lucide:cup-soda" width="28" class="text-coffee-300"></iconify-icon></div><h3 class="font-semibold text-coffee-100">نسكافيه</h3><p class="text-xs text-coffee-100/30 mt-1">5 منتجات</p></div>
-            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('كابتشينو')"><div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center"><iconify-icon icon="lucide:glass-water" width="28" class="text-coffee-300"></iconify-icon></div><h3 class="font-semibold text-coffee-100">كابتشينو</h3><p class="text-xs text-coffee-100/30 mt-1">3 منتجات</p></div>
-            <div class="cat-card bg-coffee-900/40 border border-coffee-700/15 rounded-xl p-6 text-center" onclick="filterCategory('منتجات خاصة')"><div class="cat-icon-wrap w-16 h-16 mx-auto mb-4 rounded-full bg-coffee-800/40 flex items-center justify-center"><iconify-icon icon="lucide:sparkles" width="28" class="text-coffee-300"></iconify-icon></div><h3 class="font-semibold text-coffee-100">منتجات خاصة</h3><p class="text-xs text-coffee-100/30 mt-1">2 منتجات</p></div>
-        </div>
-    </div>
-</section>
-
-<section id="products" class="relative py-20 md:py-28 px-4">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-10 reveal"><span class="text-coffee-300/60 text-sm font-medium tracking-widest">تشكيلة فاخرة</span><h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">منتجاتنا</h2></div>
-        <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
-            <button class="cat-btn active px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15" onclick="filterCategory('الكل')">الكل</button>
-            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('توليفات')">توليفات</button>
-            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('بن خام')">بن خام</button>
-            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('قهوة')">قهوة</button>
-            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('نسكافيه')">نسكافيه</button>
-            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('كابتشينو')">كابتشينو</button>
-            <button class="cat-btn px-5 py-2 rounded-full text-sm font-medium border border-coffee-300/15 text-coffee-100/40" onclick="filterCategory('منتجات خاصة')">منتجات خاصة</button>
-        </div>
-        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-    </div>
-</section>
-
-<section id="testimonials" class="relative py-20 md:py-28 px-4" style="background:rgba(26,18,11,0.3);">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-14 reveal"><span class="text-coffee-300/60 text-sm font-medium tracking-widest">ماذا يقول عملاؤنا</span><h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">آراء العملاء</h2></div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
-            <div class="testimonial-card rounded-xl p-6">
-                <div class="flex items-center gap-1 mb-4"><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon></div>
-                <p class="text-coffee-100/50 text-sm leading-relaxed mb-4">"أحسن قهوة جربتها! التوليفه البرازيلي مذاقها فوق الممتاز والتوصيل سريع جداً."</p>
-                <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-coffee-300/10 flex items-center justify-center"><iconify-icon icon="lucide:user" width="18" class="text-coffee-300/50"></iconify-icon></div><div><p class="font-semibold text-coffee-100 text-sm">أحمد محمد</p><p class="text-xs text-coffee-100/30">القاهرة</p></div></div>
+    <!-- Side Cart Pane -->
+    <div id="cart-pane" class="slide-pane right-0 flex flex-col">
+        <div class="p-6 border-b border-coffee-900/20 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <iconify-icon icon="ph:shopping-bag-fill" class="text-xl text-[#8a6242]"></iconify-icon>
+                <h3 class="font-black text-lg">سلة المشتريات</h3>
             </div>
-            <div class="testimonial-card rounded-xl p-6">
-                <div class="flex items-center gap-1 mb-4"><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon></div>
-                <p class="text-coffee-100/50 text-sm leading-relaxed mb-4">"البن اليمني الخام عظيم جداً، ريحته تملأ المكان. جودة عالية وأسعار مناسبة."</p>
-                <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-coffee-300/10 flex items-center justify-center"><iconify-icon icon="lucide:user" width="18" class="text-coffee-300/50"></iconify-icon></div><div><p class="font-semibold text-coffee-100 text-sm">سارة علي</p><p class="text-xs text-coffee-100/30">الإسكندرية</p></div></div>
-            </div>
-            <div class="testimonial-card rounded-xl p-6">
-                <div class="flex items-center gap-1 mb-4"><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon><iconify-icon icon="lucide:star" width="18" class="text-amber-400"></iconify-icon></div>
-                <p class="text-coffee-100/50 text-sm leading-relaxed mb-4">"النسكافيه جولد عندهم حاجة تانية! طعمه غني ومركز. والكابتشينو بندق أولادي بيطلبوه كل يوم."</p>
-                <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-coffee-300/10 flex items-center justify-center"><iconify-icon icon="lucide:user" width="18" class="text-coffee-300/50"></iconify-icon></div><div><p class="font-semibold text-coffee-100 text-sm">محمد حسن</p><p class="text-xs text-coffee-100/30">الجيزة</p></div></div>
+            <button onclick="closeCart()" class="w-8 h-8 rounded-lg bg-coffee-950/20 flex items-center justify-center hover:bg-coffee-950/40">
+                <iconify-icon icon="ph:x-bold" class="text-sm"></iconify-icon>
+            </button>
+        </div>
+        <!-- Items Container -->
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
+            <!-- Empty Cart UI -->
+            <div class="h-full flex flex-col justify-center items-center text-center text-coffee-100/30 space-y-3">
+                <iconify-icon icon="ph:shopping-bag-open-light" class="text-6xl opacity-40"></iconify-icon>
+                <p class="text-sm font-semibold">السلة فارغة حالياً.. املأها بالحب والقهوة</p>
             </div>
         </div>
-    </div>
-</section>
-
-<section id="faq" class="relative py-20 md:py-28 px-4">
-    <div class="max-w-3xl mx-auto">
-        <div class="text-center mb-14 reveal"><span class="text-coffee-300/60 text-sm font-medium tracking-widest">إجابات سريعة</span><h2 class="text-3xl md:text-5xl font-bold mt-3 bg-gradient-to-l from-coffee-200 to-coffee-300 bg-clip-text text-transparent">الأسئلة الشائعة</h2></div>
-        <div class="space-y-4 reveal">
-            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden"><button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right"><span class="font-semibold text-coffee-100">كيف يمكنني الطلب؟</span><iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon></button><div class="faq-answer px-5 pb-5"><p class="text-coffee-100/45 text-sm leading-relaxed">اختار المنتجات وأضفها للسلة، ثم ملأ بياناتك واضغط تأكيد. هيتم تحويلك للواتساب مباشرة لإرسال طلبك.</p></div></div>
-            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden"><button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right"><span class="font-semibold text-coffee-100">ما هي طرق الدفع المتاحة؟</span><iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon></button><div class="faq-answer px-5 pb-5"><p class="text-coffee-100/45 text-sm leading-relaxed">الدفع عند الاستلام فقط. نؤكد طلبك عبر الواتساب ويدفع المندوب عند التوصيل.</p></div></div>
-            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden"><button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right"><span class="font-semibold text-coffee-100">كم تستغرق مدة التوصيل؟</span><iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon></button><div class="faq-answer px-5 pb-5"><p class="text-coffee-100/45 text-sm leading-relaxed">القاهرة والجيزة خلال 24-48 ساعة. باقي المحافظات من 2-4 أيام عمل.</p></div></div>
-            <div class="faq-item border border-coffee-700/12 rounded-xl overflow-hidden"><button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-right"><span class="font-semibold text-coffee-100">هل المنتجات طازجة؟</span><iconify-icon icon="lucide:plus" width="20" class="faq-icon text-coffee-300/40 shrink-0"></iconify-icon></button><div class="faq-answer px-5 pb-5"><p class="text-coffee-100/45 text-sm leading-relaxed">نعم! جميع منتجاتنا طازجة ومحمصة حديثاً. نحرص على توفير أجود أنواع البن.</p></div></div>
-        </div>
-    </div>
-</section>
-
-<footer id="contact" class="relative border-t border-coffee-700/10 py-16 px-4" style="background:rgba(15,11,7,0.8);">
-    <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-            <div class="md:col-span-2">
-                <h3 class="text-3xl font-bold text-coffee-300 mb-4">زغلولة</h3>
-                <p class="text-coffee-100/35 text-sm leading-relaxed max-w-md">علامة تجارية مصرية متخصصة في أجود أنواع القهوة والبن الفاخر.</p>
-                <div class="flex items-center gap-4 mt-6">
-                    <a href="https://wa.me/201008836269" target="_blank" class="w-10 h-10 rounded-full bg-coffee-800/40 flex items-center justify-center hover:bg-coffee-300/15 transition-colors"><iconify-icon icon="lucide:message-circle" width="18" class="text-coffee-300/60"></iconify-icon></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-coffee-800/40 flex items-center justify-center hover:bg-coffee-300/15 transition-colors"><iconify-icon icon="lucide:instagram" width="18" class="text-coffee-300/60"></iconify-icon></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-coffee-800/40 flex items-center justify-center hover:bg-coffee-300/15 transition-colors"><iconify-icon icon="lucide:facebook" width="18" class="text-coffee-300/60"></iconify-icon></a>
+        <!-- Summary & Checkout Button -->
+        <div class="p-6 border-t border-coffee-900/20 bg-coffee-950/10 space-y-4">
+            <div class="space-y-2">
+                <div class="flex justify-between text-sm text-coffee-100/50">
+                    <span>إجمالي المنتجات:</span>
+                    <span id="cart-subtotal" class="font-bold">0 ج.م</span>
                 </div>
             </div>
-            <div><h4 class="font-bold text-coffee-100 mb-4">روابط سريعة</h4><ul class="space-y-3"><li><a href="#hero" class="text-coffee-100/35 hover:text-coffee-300 transition-colors text-sm">الرئيسية</a></li><li><a href="#products" class="text-coffee-100/35 hover:text-coffee-300 transition-colors text-sm">المنتجات</a></li><li><a href="#categories" class="text-coffee-100/35 hover:text-coffee-300 transition-colors text-sm">الأقسام</a></li><li><a href="#faq" class="text-coffee-100/35 hover:text-coffee-300 transition-colors text-sm">الأسئلة الشائعة</a></li></ul></div>
-            <div><h4 class="font-bold text-coffee-100 mb-4">تواصل معنا</h4><ul class="space-y-3"><li class="flex items-center gap-2 text-coffee-100/35 text-sm"><iconify-icon icon="lucide:phone" width="16" class="text-coffee-300/40"></iconify-icon><span dir="ltr">01008836269</span></li><li class="flex items-center gap-2 text-coffee-100/35 text-sm"><iconify-icon icon="lucide:message-circle" width="16" class="text-coffee-300/40"></iconify-icon>واتساب</li><li class="flex items-center gap-2 text-coffee-100/35 text-sm"><iconify-icon icon="lucide:map-pin" width="16" class="text-coffee-300/40"></iconify-icon>مصر</li><li class="flex items-center gap-2 text-coffee-100/35 text-sm"><iconify-icon icon="lucide:clock" width="16" class="text-coffee-300/40"></iconify-icon>السبت - الخميس: 9ص - 10م</li></ul></div>
+            <button onclick="openCheckout()" class="w-full bg-[#8a6242] hover:bg-[#a3744f] text-[#0f0b07] font-black py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg transition-colors group">
+                <span>تأكيد الطلب عبر الواتساب</span>
+                <iconify-icon icon="ph:whatsapp-logo-bold" class="text-xl"></iconify-icon>
+            </button>
         </div>
-        <div class="border-t border-coffee-700/10 pt-8 text-center"><p class="text-coffee-100/20 text-sm">© 2025 زغلولة. جميع الحقوق محفوظة ☕</p></div>
     </div>
-</footer>
 
-<div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
-<div id="cart-sidebar" class="cart-sidebar">
-    <div class="p-6 border-b border-coffee-300/8 flex items-center justify-between" style="background:rgba(201,165,116,0.03);">
-        <div class="flex items-center gap-3"><iconify-icon icon="lucide:shopping-bag" width="22" class="text-coffee-300"></iconify-icon><h3 class="text-xl font-bold text-coffee-100">سلة التسوق</h3></div>
-        <button onclick="closeCart()" class="w-9 h-9 rounded-full bg-coffee-800/40 flex items-center justify-center text-coffee-100/30 hover:text-coffee-300 hover:bg-coffee-800/60 transition-all"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-    </div>
-    <div id="cart-items" class="flex-1 p-4"></div>
-    <div id="cart-footer" class="p-6 border-t border-coffee-300/8 hidden" style="background:rgba(201,165,116,0.03);">
-        <div class="flex items-center justify-between mb-2"><span class="text-coffee-100/40 text-sm">المجموع الفرعي</span><span id="cart-subtotal" class="text-coffee-100/60 font-semibold">0 ج.م</span></div>
-        <div class="flex items-center justify-between mb-5"><span class="text-coffee-100 font-bold">الإجمالي</span><span id="cart-total" class="text-2xl font-black text-coffee-300">0 ج.م</span></div>
-        <button onclick="openCheckout()" class="w-full bg-gradient-to-l from-coffee-300 to-coffee-400 text-coffee-950 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-coffee-300/15 transition-all flex items-center justify-center gap-2"><iconify-icon icon="lucide:credit-card" width="20"></iconify-icon>إتمام الطلب</button>
-        <a href="https://wa.me/201008836269" target="_blank" class="w-full mt-3 border border-green-500/20 text-green-400 py-3 rounded-xl font-semibold text-sm hover:bg-green-500/5 transition-all flex items-center justify-center gap-2"><iconify-icon icon="lucide:message-circle" width="18"></iconify-icon>أو اطلب عبر واتساب مباشرة</a>
-    </div>
-</div>
-
-<div id="checkout-modal" class="checkout-modal">
-    <div class="modal-bg" onclick="closeCheckout()"></div>
-    <div class="modal-content p-6 md:p-8">
-        <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-coffee-300/10 flex items-center justify-center"><iconify-icon icon="lucide:clipboard-list" width="20" class="text-coffee-300"></iconify-icon></div><h3 class="text-xl font-bold text-coffee-100">تأكيد الطلب</h3></div>
-            <button onclick="closeCheckout()" class="w-9 h-9 rounded-full bg-coffee-800/40 flex items-center justify-center text-coffee-100/30 hover:text-coffee-300 hover:bg-coffee-800/60 transition-all"><iconify-icon icon="lucide:x" width="18"></iconify-icon></button>
-        </div>
-        <div class="mb-6 p-4 rounded-xl border border-coffee-300/8" style="background:rgba(46,31,18,0.4);">
-            <h4 class="font-semibold text-coffee-300/60 mb-3 text-xs tracking-wide">ملخص الطلب</h4>
-            <div id="checkout-items" class="space-y-2.5 text-sm"></div>
-            <div class="mt-4 pt-4 border-t border-coffee-300/8 flex justify-between items-center"><span class="font-bold text-coffee-100">الإجمالي</span><span id="checkout-total" class="text-lg font-black text-coffee-300">0 ج.م</span></div>
-        </div>
-        <form class="space-y-4" onsubmit="submitOrder(event); return false;">
-            <div><label class="block text-sm font-semibold text-coffee-100/50 mb-2">الاسم الكامل *</label><input type="text" id="cust-name" class="form-input" placeholder="أدخل اسمك بالكامل" required></div>
-            <div><label class="block text-sm font-semibold text-coffee-100/50 mb-2">رقم الهاتف *</label><input type="tel" id="cust-phone" class="form-input" placeholder="01xxxxxxxxx" dir="ltr" required></div>
-            <div><label class="block text-sm font-semibold text-coffee-100/50 mb-2">العنوان بالتفصيل *</label><input type="text" id="cust-address" class="form-input" placeholder="المحافظة - المنطقة - الشارع - رقم العمارة" required></div>
-            <div><label class="block text-sm font-semibold text-coffee-100/50 mb-2">ملاحظات <span class="text-coffee-100/25">(اختياري)</span></label><textarea id="cust-notes" class="form-input" rows="2" placeholder="أي ملاحظات إضافية..."></textarea></div>
-            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/15"><iconify-icon icon="lucide:message-circle" width="22"></iconify-icon>تأكيد الطلب عبر واتساب</button>
-            <p class="text-xs text-coffee-100/20 text-center">سيتم تحويلك للواتساب لإرسال تفاصيل الطلب • الدفع عند الاستلام</p>
-        </form>
-    </div>
-</div>
-
-<a href="https://wa.me/201008836269" target="_blank" class="wa-float">
-    <div class="wa-float-label">تواصل معنا</div>
-    <div style="position:relative;"><div class="wa-float-pulse"></div><div class="wa-float-btn"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div></div>
-</a>
-
-<script>
-// ═══════════════════════════════════════════════════
-// ★  جميع الصور من Unsplash - قهوة وبن احترافي  ★
-// ═══════════════════════════════════════════════════
-
-const products = [
-    // ─── توليفات (6 منتجات) ───
-    {id:1, name:'توليفه اندونيسي', category:'توليفات', prices:{'1 كيلو':480,'1/4 كيلو':120,'1/8 كيلو':60},
-     img:'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&h=400&fit=crop&q=80'},
-    {id:2, name:'توليفه برازيلي', category:'توليفات', prices:{'1 كيلو':560,'1/4 كيلو':140,'1/8 كيلو':70},
-     img:'https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=400&h=400&fit=crop&q=80'},
-    {id:3, name:'توليفه كولومبي', category:'توليفات', prices:{'1 كيلو':680,'1/4 كيلو':170,'1/8 كيلو':85},
-     img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop&q=80'},
-    {id:4, name:'اسبيشيل', category:'توليفات', prices:{'1 كيلو':640,'1/4 كيلو':160,'1/8 كيلو':80},
-     img:'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&h=400&fit=crop&q=80'},
-    {id:5, name:'بن محوج برازيلي', category:'توليفات', prices:{'1 كيلو':600,'1/4 كيلو':150,'1/8 كيلو':75},
-     img:'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=400&h=400&fit=crop&q=80'},
-    {id:6, name:'اسبريسو', category:'توليفات', prices:{'1 كيلو':640,'1/4 كيلو':160,'1/8 كيلو':80},
-     img:'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=400&fit=crop&q=80'},
-
-    // ─── بن خام (9 منتجات) ───
-    {id:7, name:'بن اندونيسي خام', category:'بن خام', prices:{'1 كيلو':400,'1/4 كيلو':100,'1/8 كيلو':50},
-     img:'https://images.unsplash.com/photo-1611854779393-1b2a9c8d0f5b?w=400&h=400&fit=crop&q=80'},
-    {id:8, name:'بن برازيلي ريو', category:'بن خام', prices:{'1 كيلو':600,'1/4 كيلو':150,'1/8 كيلو':75},
-     img:'https://images.unsplash.com/photo-1569949381669-ecf31d8e5130?w=400&h=400&fit=crop&q=80'},
-    {id:9, name:'بن برازيلي سانتوس', category:'بن خام', prices:{'1 كيلو':720,'1/4 كيلو':180,'1/8 كيلو':90},
-     img:'https://images.unsplash.com/photo-1521302200778-33500795e319?w=400&h=400&fit=crop&q=80'},
-    {id:10, name:'بن كولومبي خام', category:'بن خام', prices:{'1 كيلو':800,'1/4 كيلو':200,'1/8 كيلو':100},
-     img:'https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=400&h=400&fit=crop&q=80'},
-    {id:11, name:'بن فيتنامي خام', category:'بن خام', prices:{'1 كيلو':480,'1/4 كيلو':120,'1/8 كيلو':60},
-     img:'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=400&h=400&fit=crop&q=80'},
-    {id:12, name:'بن هندي ارابيكا', category:'بن خام', prices:{'1 كيلو':760,'1/4 كيلو':190,'1/8 كيلو':95},
-     img:'https://images.unsplash.com/photo-1511920170033-f248f71e9bf1?w=400&h=400&fit=crop&q=80'},
-    {id:13, name:'بن هندي AA', category:'بن خام', prices:{'1 كيلو':480,'1/4 كيلو':120,'1/8 كيلو':60},
-     img:'https://images.unsplash.com/photo-1544441893-675973e31985?w=400&h=400&fit=crop&q=80'},
-    {id:14, name:'بن حبشي خام', category:'بن خام', prices:{'1 كيلو':600,'1/4 كيلو':150,'1/8 كيلو':75},
-     img:'https://images.unsplash.com/photo-1600595654210-8794c7e0a096?w=400&h=400&fit=crop&q=80'},
-    {id:15, name:'بن يمني خام', category:'بن خام', prices:{'1 كيلو':1600,'1/4 كيلو':400,'1/8 كيلو':200},
-     img:'https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?w=400&h=400&fit=crop&q=80'},
-
-    // ─── قهوة (3 منتجات) ───
-    {id:16, name:'قهوه فرنساوي', category:'قهوة', prices:{'1 كيلو':400,'1/4 كيلو':100,'1/8 كيلو':50},
-     img:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop&q=80'},
-    {id:17, name:'قهوه بندق', category:'قهوة', prices:{'1 كيلو':400,'1/4 كيلو':100,'1/8 كيلو':50},
-     img:'https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=400&h=400&fit=crop&q=80'},
-    {id:18, name:'قهوه عربي', category:'قهوة', prices:{'1 كيلو':680,'1/4 كيلو':170,'1/8 كيلو':85},
-     img:'https://images.unsplash.com/photo-1578899544667-0a3c0e0ee2fa?w=400&h=400&fit=crop&q=80'},
-
-    // ─── نسكافيه (5 منتجات) ───
-    {id:19, name:'نسكافيه جولد', category:'نسكافيه', prices:{'1 كيلو':1200,'1/4 كيلو':300,'1/8 كيلو':150},
-     img:'https://images.unsplash.com/photo-1592996753495-0c8d8b28bb63?w=400&h=400&fit=crop&q=80'},
-    {id:20, name:'نسكافيه بالك', category:'نسكافيه', prices:{'1 كيلو':760,'1/4 كيلو':190,'1/8 كيلو':95},
-     img:'https://images.unsplash.com/photo-1562886889-50faa693c05a?w=400&h=400&fit=crop&q=80'},
-    {id:21, name:'نسكافيه 2x1', category:'نسكافيه', prices:{'1 كيلو':280,'1/4 كيلو':70,'1/8 كيلو':35},
-     img:'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400&h=400&fit=crop&q=80'},
-    {id:22, name:'نسكافيه 3x1', category:'نسكافيه', prices:{'1 كيلو':280,'1/4 كيلو':70,'1/8 كيلو':35},
-     img:'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=400&fit=crop&q=80'},
-    {id:23, name:'مبيض قهوه', category:'نسكافيه', prices:{'1 كيلو':280,'1/4 كيلو':70,'1/8 كيلو':35},
-     img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=400&fit=crop&q=80'},
-
-    // ─── كابتشينو (3 منتجات) ───
-    {id:24, name:'كابتشينو فانيليا', category:'كابتشينو', prices:{'1 كيلو':240,'1/4 كيلو':60,'1/8 كيلو':30},
-     img:'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&h=400&fit=crop&q=80'},
-    {id:25, name:'كابتشينو بندق', category:'كابتشينو', prices:{'1 كيلو':240,'1/4 كيلو':60,'1/8 كيلو':30},
-     img:'https://images.unsplash.com/photo-1572932491814-4833690788ad?w=400&h=400&fit=crop&q=80'},
-    {id:26, name:'هوت شوكلت', category:'كابتشينو', prices:{'1 كيلو':360,'1/4 كيلو':90,'1/8 كيلو':45},
-     img:'https://images.unsplash.com/photo-1517578239113-b03992dcdd25?w=400&h=400&fit=crop&q=80'},
-
-    // ─── منتجات خاصة (2 منتجات) ───
-    {id:27, name:'جينسينج', category:'منتجات خاصة', prices:{'1 كيلو':6000,'1/4 كيلو':1500,'1/8 كيلو':750},
-     img:'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400&h=400&fit=crop&q=80'},
-    {id:28, name:'بن اخضر تخسيس', category:'منتجات خاصة', prices:{'1 كيلو':600,'1/4 كيلو':150,'1/8 كيلو':75},
-     img:'https://images.unsplash.com/photo-1580927755657-3f4fbd3e7a76?w=400&h=400&fit=crop&q=80'}
-];
-
-let cart = [];
-let selectedSizes = {};
-
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 1500);
-    renderProducts('الكل');
-    createFloatingBeans();
-    const observer = new IntersectionObserver(es => { es.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); }); }, {threshold:0.1});
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    window.addEventListener('scroll', () => {
-        document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
-        const hb = document.querySelector('.hero-bg'); if(hb) hb.style.transform = `translateY(${window.scrollY*0.3}px)`;
-    });
-});
-
-function createFloatingBeans() {
-    const c = document.getElementById('beans-container');
-    const s = `<svg viewBox="0 0 40 60" width="28" height="42"><ellipse cx="20" cy="30" rx="14" ry="24" fill="#c9a574"/><path d="M20 6 Q14 30 20 54" stroke="#6d4d28" fill="none" stroke-width="2"/></svg>`;
-    for(let i=0;i<8;i++){const b=document.createElement('div');b.className='floating-bean';b.innerHTML=s;b.style.left=Math.random()*100+'%';b.style.animationDuration=(15+Math.random()*20)+'s';b.style.animationDelay=(Math.random()*15)+'s';c.appendChild(b);}
-}
-
-function renderProducts(category) {
-    const grid = document.getElementById('products-grid');
-    const filtered = category === 'الكل' ? products : products.filter(p => p.category === category);
-    grid.innerHTML = filtered.map(p => {
-        if(!selectedSizes[p.id]) selectedSizes[p.id] = '1/4 كيلو';
-        const currentPrice = p.prices[selectedSizes[p.id]];
-        return `
-        <div class="product-card" data-category="${p.category}">
-            <div class="img-container">
-                <img src="${p.img}" alt="${p.name}" class="product-img loading" loading="lazy"
-                     onload="this.classList.remove('loading');this.classList.add('loaded');"
-                     onerror="this.onerror=null;this.classList.remove('loading');this.classList.add('loaded');this.src='https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&h=400&fit=crop&q=80';">
-                <div class="absolute top-3 right-3 bg-coffee-950/60 backdrop-blur-sm text-coffee-300/70 text-xs px-3 py-1 rounded-full font-medium z-10">${p.category}</div>
+    <!-- Side Checkout Pane / Modal View -->
+    <div id="checkout-modal" class="slide-pane right-0 flex flex-col">
+        <div class="p-6 border-b border-coffee-900/20 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <iconify-icon icon="ph:notebook-fill" class="text-xl text-[#8a6242]"></iconify-icon>
+                <h3 class="font-black text-lg">تفاصيل الشحن والتوصيل</h3>
             </div>
-            <div class="p-5">
-                <h3 class="font-bold text-coffee-100 text-lg mb-3">${p.name}</h3>
-                <div class="flex gap-2 mb-4">
-                    ${Object.keys(p.prices).map(size => `
-                        <button class="size-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-coffee-300/12 text-coffee-100/40 ${selectedSizes[p.id]===size?'active':''}"
-                            onclick="selectSize(${p.id},'${size}')">${size.replace(' كيلو','')}</button>
-                    `).join('')}
+            <button onclick="closeCheckout()" class="w-8 h-8 rounded-lg bg-coffee-950/20 flex items-center justify-center hover:bg-coffee-950/40">
+                <iconify-icon icon="ph:x-bold" class="text-sm"></iconify-icon>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+            <form id="checkout-form" class="space-y-4" onsubmit="event.preventDefault(); submitOrder();">
+                <div>
+                    <label class="block text-sm font-semibold text-coffee-100/50 mb-2">الاسم بالكامل *</label>
+                    <input type="text" id="cust-name" class="form-input" placeholder="محمد جمال" required>
                 </div>
-                <div class="flex items-center justify-between">
-                    <div><span class="text-2xl font-black text-coffee-300" id="price-${p.id}">${currentPrice}</span><span class="text-sm text-coffee-100/25 mr-1">ج.م</span></div>
-                    <button onclick="addToCart(${p.id})" class="bg-coffee-300/8 border border-coffee-300/12 text-coffee-300 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-coffee-300 hover:text-coffee-950 hover:border-coffee-300 transition-all flex items-center gap-2">
-                        <iconify-icon icon="lucide:plus" width="16"></iconify-icon>أضف للسلة
-                    </button>
+                <div>
+                    <label class="block text-sm font-semibold text-coffee-100/50 mb-2">رقم الهاتف (واتساب) *</label>
+                    <input type="tel" id="cust-phone" class="form-input" placeholder="01000000000" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-coffee-100/50 mb-2">المحافظة *</label>
+                    <select id="cust-governorate" class="form-input" onchange="updateShippingAndTotal()" required>
+                        <option value="" disabled selected>اختر محافظتك</option>
+                        <option value="البحيرة" data-fee="30">البحيرة (30 ج.م)</option>
+                        <option value="القاهرة" data-fee="50">القاهرة (50 ج.م)</option>
+                        <option value="الجيزة" data-fee="50">الجيزة (50 ج.م)</option>
+                        <option value="الإسكندرية" data-fee="55">الإسكندرية (55 ج.م)</option>
+                        <option value="الغربية / طنطا" data-fee="35">الغربية / طنطا (35 ج.م)</option>
+                        <option value="المنوفية / شبين الكوم" data-fee="40">المنوفية / شبين الكوم (40 ج.م)</option>
+                        <option value="محافظة أخرى" data-fee="70">محافظة أخرى (70 ج.م)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-coffee-100/50 mb-2">العنوان بالتفصيل *</label>
+                    <textarea id="cust-address" rows="3" class="form-input custom-scrollbar" placeholder="اسم الشارع، رقم المنزل، علامة مميزة" required></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-coffee-100/50 mb-2">ملاحظات إضافية (اختياري)</label>
+                    <textarea id="cust-notes" rows="2" class="form-input custom-scrollbar" placeholder="درجة الطحن، رغبة خاصة، بهارات معينة.."></textarea>
+                </div>
+                <div class="p-4 rounded-xl bg-coffee-950/20 border border-coffee-900/10 space-y-2 mt-6">
+                    <h4 class="font-bold text-sm text-[#8a6242] mb-2">ملخص الطلب المالي:</h4>
+                    <div id="checkout-items" class="space-y-1 mb-2"></div>
+                    <div class="h-px bg-coffee-900/10 my-2"></div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="font-bold">الإجمالي النهائي:</span>
+                        <span id="checkout-total" class="text-lg font-black text-[#8a6242]">0 ج.م</span>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-[#8a6242] hover:bg-[#a3744f] text-[#0f0b07] font-black py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg transition-all mt-6">
+                    <span>إرسال وتأكيد الطلب</span>
+                    <iconify-icon icon="ph:paper-plane-right-bold" class="text-xl"></iconify-icon>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-[90vh] flex items-center justify-center px-4 lg:px-8 overflow-hidden bg-gradient-to-b from-[#0f0b07] to-[#140e09]">
+        <!-- Watermark Back Texts -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+            <span class="text-stroke text-[15vw] font-black opacity-10 tracking-widest leading-none">ZAGHLOULA</span>
+        </div>
+        <!-- Decorative Floating Beans -->
+        <iconify-icon icon="ph:coffee-bean-fill" class="floating-bean text-5xl text-[#8a6242]" style="top: 20%; left: 15%; animation-delay: 0s;"></iconify-icon>
+        <iconify-icon icon="ph:coffee-bean-fill" class="floating-bean text-3xl text-[#5c3d24]" style="top: 60%; right: 10%; animation-delay: 3s;"></iconify-icon>
+        <iconify-icon icon="ph:coffee-bean-fill" class="floating-bean text-4xl text-[#3c2a1a]" style="bottom: 15%; left: 25%; animation-delay: 5s;"></iconify-icon>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 w-full py-12">
+            <div class="text-center lg:text-right space-y-6 order-2 lg:order-1">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1c150e] border border-coffee-800/30 text-xs font-bold text-[#8a6242]">
+                    <iconify-icon icon="ph:sparkle-fill" class="animate-pulse"></iconify-icon>
+                    <span>أصالة المذاق وفخامة الاختيار منذ سنوات</span>
+                </div>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                    سر التوليفة الفاخرة <br class="hidden sm:inline">تبدأ من <span class="text-[#8a6242]">زغلولة</span>
+                </h2>
+                <p class="text-base text-coffee-100/60 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                    من قلب أجود مزارع البن العالمية، نختار حباتنا بعناية ونحمصها بشغف، لنقدم لكم تجربة قهوة تفوق التوقعات، بجانب أرقى أنواع البهارات والتوليفات العشبية الخاصة.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#store" class="w-full sm:w-auto px-8 py-4 bg-[#8a6242] text-[#0f0b07] font-black rounded-xl text-center shadow-lg shadow-coffee-900/40 hover:bg-[#a3744f] transition-all hover:-translate-y-0.5">تصفح المتجر الآن</a>
+                    <a href="#about" class="w-full sm:w-auto px-8 py-4 bg-[#17110a] text-coffee-100/80 font-bold rounded-xl text-center border border-coffee-800/20 hover:bg-[#1f170e] transition-colors">قراءة حكايتنا</a>
                 </div>
             </div>
-        </div>`;
-    }).join('');
-}
-
-function selectSize(id,size) {
-    selectedSizes[id]=size;
-    const p=products.find(x=>x.id===id);
-    const el=document.getElementById('price-'+id); if(el) el.textContent=p.prices[size];
-    const card=el.closest('.product-card');
-    card.querySelectorAll('.size-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim()===size.replace(' كيلو','')));
-}
-
-function addToCart(id) {
-    const p=products.find(x=>x.id===id); const s=selectedSizes[id]; const pr=p.prices[s];
-    const ex=cart.find(i=>i.id===id&&i.size===s);
-    if(ex)ex.qty++;else cart.push({id:p.id,name:p.name,img:p.img,size:s,price:pr,qty:1});
-    updateCartUI(); showToast('تمت الإضافة للسلة ✓');
-}
-function removeFromCart(i){cart.splice(i,1);updateCartUI();}
-function updateQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);updateCartUI();}
-
-function updateCartUI() {
-    const badge=document.getElementById('cart-count');
-    const tot=cart.reduce((a,i)=>a+i.qty,0);
-    const sum=cart.reduce((a,i)=>a+i.price*i.qty,0);
-    badge.textContent=tot; badge.classList.toggle('hidden',tot===0);
-
-    const list=document.getElementById('cart-items');
-    const ft=document.getElementById('cart-footer');
-
-    if(!cart.length){
-        list.innerHTML=`<div class="flex flex-col items-center justify-center py-20 text-center"><div class="w-20 h-20 rounded-full bg-coffee-300/5 flex items-center justify-center mb-5"><iconify-icon icon="lucide:shopping-bag" width="36" class="text-coffee-300/20"></iconify-icon></div><p class="text-coffee-100/30 font-semibold mb-1">السلة فارغة</p><p class="text-coffee-100/15 text-sm">أضف منتجات للبدء</p></div>`;
-        ft.classList.add('hidden');
-    } else {
-        list.innerHTML=cart.map((it,i)=>`
-            <div class="cart-item flex items-center gap-3 border-b border-coffee-300/5 last:border-0">
-                <img src="${it.img}" class="cart-item-img" onerror="this.style.display='none'">
-                <div class="flex-1 min-w-0 py-3">
-                    <p class="font-bold text-coffee-100 text-sm truncate">${it.name}</p>
-                    <p class="text-xs text-coffee-100/25 mt-0.5">${it.size}</p>
+            <!-- Image Area / Graphic -->
+            <div class="flex justify-center items-center order-1 lg:order-2 relative select-none">
+                <div class="absolute w-[80%] aspect-square bg-[#8a6242]/5 rounded-full filter blur-[100px] pointer-events-none"></div>
+                <div class="relative w-72 sm:w-96 aspect-square bg-[#17110a] rounded-[2rem] border border-coffee-800/20 shadow-2xl overflow-hidden flex items-center justify-center transform lg:rotate-3 hover:rotate-0 transition-transform duration-500">
+                    <iconify-icon icon="ph:coffee-bean-thin" class="text-[12rem] text-[#8a6242]/20 absolute animate-spin" style="animation-duration: 40s;"></iconify-icon>
+                    <iconify-icon icon="ph:coffee-fill" class="text-[8rem] text-[#8a6242] drop-shadow-2xl z-10"></iconify-icon>
+                    <div class="smoke-container" style="top:20px; height: 200px;">
+                        <div class="smoke smoke-1" style="animation-duration: 3s;"></div>
+                        <div class="smoke smoke-2" style="animation-duration: 5s;"></div>
+                        <div class="smoke smoke-3" style="animation-duration: 4s;"></div>
+                    </div>
                 </div>
-                <div class="flex items-center gap-1.5">
-                    <button onclick="updateQty(${i},-1)" class="qty-btn qty-minus">−</button>
-                    <span class="text-coffee-100 font-bold text-sm w-7 text-center">${it.qty}</span>
-                    <button onclick="updateQty(${i},1)" class="qty-btn qty-plus">+</button>
-                </div>
-                <div class="text-left min-w-[60px]"><p class="font-black text-coffee-300 text-sm">${it.price*it.qty}</p><p class="text-[10px] text-coffee-100/20">ج.م</p></div>
-                <button onclick="removeFromCart(${i})" class="text-coffee-100/15 hover:text-red-400/60 transition-colors p-1"><iconify-icon icon="lucide:trash-2" width="14"></iconify-icon></button>
-            </div>`).join('');
-        ft.classList.remove('hidden');
-    }
-    document.getElementById('cart-subtotal').textContent=sum+' ج.م';
-    document.getElementById('cart-total').textContent=sum+' ج.m';
-}
+            </div>
+        </div>
+    </section>
 
-function openCart(){document.getElementById('cart-overlay').classList.add('open');document.getElementById('cart-sidebar').classList.add('open');document.body.style.overflow='hidden';}
-function closeCart(){document.getElementById('cart-overlay').classList.remove('open');document.getElementById('cart-sidebar').classList.remove('open');document.body.style.overflow='';}
+    <!-- Main Store & Dynamic Products Grid Section -->
+    <section id="store" class="py-24 px-4 lg:px-8 bg-[#0c0805] relative">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div class="text-center max-w-xl mx-auto space-y-3">
+                <h3 class="text-3xl font-black">متجر زغلولة الإلكتروني</h3>
+                <p class="text-sm text-coffee-100/50">اختر من تشكيلاتنا الفاخرة، حدد الوزن والحجم، وسيصلك طلبك طازجاً حتى باب المنزل بالدفع عند الاستلام كاش.</p>
+            </div>
 
-function openCheckout(){
-    if(!cart.length)return;closeCart();
-    const sum=cart.reduce((a,i)=>a+i.price*i.qty,0);
-    document.getElementById('checkout-items').innerHTML=cart.map(it=>`<div class="flex justify-between items-center text-coffee-100/45"><span class="flex-1 text-xs">${it.name} (${it.size}) × ${it.qty}</span><span class="text-coffee-100/70 font-bold text-xs">${it.price*it.qty} ج.م</span></div>`).join('');
-    document.getElementById('checkout-total').textContent=sum+' ج.م';
-    setTimeout(()=>{document.getElementById('checkout-modal').classList.add('open');document.body.style.overflow='hidden';},300);
-}
-function closeCheckout(){document.getElementById('checkout-modal').classList.remove('open');document.body.style.overflow='';}
+            <!-- Categories Grid Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterCategory('الكل')" class="cat-btn active px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">الكل</button>
+                <button onclick="filterCategory('توليفات')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">توليفات زغلولة</button>
+                <button onclick="filterCategory('بن خام')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">بن خام</button>
+                <button onclick="filterCategory('قهوة')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">قهوة سريعة</button>
+                <button onclick="filterCategory('نسكافيه')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">نسكافيه</button>
+                <button onclick="filterCategory('كابتشينو')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">كابتشينو</button>
+                <button onclick="filterCategory('منتجات خاصة')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">منتجات خاصة</button>
+                <button onclick="filterCategory('مشروبات')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">مشروبات زغلولة</button>
+            </div>
 
-// دالة تأكيد المبيعات المحدثة لربط جوجل شيت والواتساب معاً
-function submitOrder(event){
-    if(event) event.preventDefault(); // منع إعادة تحميل الصفحة لضمان عمل الـ Fetch
+            <!-- Products Render Container -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Javascript Injection -->
+            </div>
+        </div>
+    </section>
 
-    const nm=document.getElementById('cust-name').value.trim();
-    const ph=document.getElementById('cust-phone').value.trim();
-    const ad=document.getElementById('cust-address').value.trim();
-    const nt=document.getElementById('cust-notes').value.trim();
-    
-    if(!nm||!ph||!ad){
-        return; // يتوقف في حال لم يكتمل الـ HTML Validation التلقائي
-    }
-    
-    const sum=cart.reduce((a,i)=>a+i.price*i.qty,0);
-    
-    // 1. صياغة قائمة المنتجات في سطر واحد مميز لتسجيله في الشيت
-    let productsList = cart.map(it => `${it.name} (${it.size}) x${it.qty}`).join(' - ');
-    
-    // 2. تجميع البيانات في FormData لإرسالها لـ Google Script API
-    const formData = new FormData();
-    formData.append('name', nm);
-    formData.append('phone', ph);
-    formData.append('address', ad);
-    formData.append('notes', nt);
-    formData.append('products', productsList);
-    formData.append('total', sum + ' ج.م');
-    
-    // 3. إرسال البيانات فوراً للشيت بالخلفية
-    fetch('https://script.google.com/macros/s/AKfycbyfKN21sLL5DejR1wqCpDF-nnEJI2NqWpkRuMcnN9A9wlafahbyIoqTG26aOk48bKEQ/exec', {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors'
-    }).catch(err => console.error('خطأ في الاتصال بجوجل شيت:', err));
-    
-    // 4. بناء رسالة الواتساب وتوجيه العميل
-    let m=`📋 *طلب جديد من موقع زغلولة* ☕\n━━━━━━━━━━━━━\n👤 *الاسم:* ${nm}\n📞 *الهاتف:* ${ph}\n📍 *العنوان:* ${ad}\n`;
-    if(nt) m+=`📝 *ملاحظات:* ${nt}\n`;
-    m+=`\n🛒 *المنتجات:*\n━━━━━━━━━━━━━\n`;
-    cart.forEach(it=>{m+=`▪️ ${it.name}\n   الحجم: ${it.size} | الكمية: ${it.qty} | السعر: ${it.price*it.qty} ج.م\n`;});
-    m+=`━━━━━━━━━━━━━\n💰 *الإجمالي: ${sum} ج.م*\n\n💳 الدفع عند الاستلام`;
-    
-    window.open(`https://wa.me/201008836269?text=${encodeURIComponent(m)}`,'_blank');
-    
-    // 5. تصفير السلة والفورم للعمليات القادمة
-    cart=[];
-    updateCartUI();
-    closeCheckout();
-    document.getElementById('cust-name').value='';
-    document.getElementById('cust-phone').value='';
-    document.getElementById('cust-address').value='';
-    document.getElementById('cust-notes').value='';
-    showToast('تم تسجيل وإرسال طلبك بنجاح! 🎉');
-}
+    <!-- Toast Component -->
+    <div id="toast">تمت العملية بنجاح 🎉</div>
 
-function filterCategory(cat) {
-    document.querySelectorAll('.cat-btn').forEach(b => {
-        b.classList.remove('active');
-        b.classList.add('text-coffee-100/40');
-        if (b.textContent.trim() === cat) {
-            b.classList.add('active');
-            b.classList.remove('text-coffee-100/40');
+    <!-- Scripts Section Logic -->
+    <script>
+        // Products Dataset Matrix
+        const products = [
+            // توليفات زغلولة الفاخرة
+            { id: 1, name: "توليفة زغلولة الفاخرة - فاتح سادة", category: "توليفات", description: "بن فاتح محمص بعناية فائقة بدون إضافات لمذاق نقي وأصيل.", image: "https://picsum.photos/seed/zag-ind1/400/400.jpg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160, "1/8 كيلو": 80 } },
+            { id: 2, name: "توليفة زغلولة الفاخرة - وسط سادة", category: "توليفات", description: "بن متوسط التحميص، نكهة معتدلة وقوام متوازن وممتاز لكافة الأوقات.", image: "https://picsum.photos/seed/zag-ind2/400/400.jpg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160, "1/8 كيلو": 80 } },
+            { id: 3, name: "توليفة زغلولة الفاخرة - غامق سادة", category: "توليفات", description: "بن داكن التحميص، قوام ثقيل ونكهة قوية لعشاق مرارة القهوة التقليدية.", image: "https://picsum.photos/seed/zag-ind3/400/400.jpg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160, "1/8 كيلو": 80 } },
+            { id: 4, name: "توليفة زغلولة الفاخرة - فاتح محوج", category: "توليفات", description: "توليفة فاتحة مضافاً إليها الحبهان والبهارات الشرقية المميزة بنسب موزونة.", image: "https://picsum.photos/seed/zag-ind4/400/400.jpg", prices: { "1 كيلو": 800, "1/2 كيلو": 400, "1/4 كيلو": 200, "1/8 كيلو": 100 } },
+            { id: 5, name: "توليفة زغلولة الفاخرة - وسط محوج", category: "توليفات", description: "توليفة متوسطة التحميص غنية بالتحويجة الشرقية الخاصة بمحمصة زغلولة.", image: "https://picsum.photos/seed/zag-ind5/400/400.jpg", prices: { "1 كيلو": 800, "1/2 كيلو": 400, "1/4 كيلو": 200, "1/8 كيلو": 100 } },
+            { id: 6, name: "توليفة زغلولة الفاخرة - غامق محوج", category: "توليفات", description: "بن داكن القوام والتحميص مع توليفة التحويج الفاخرة لنكهة شرقية حادة ومركزة.", image: "https://picsum.photos/seed/zag-ind6/400/400.jpg", prices: { "1 كيلو": 800, "1/2 كيلو": 400, "1/4 كيلو": 200, "1/8 كيلو": 100 } },
+            
+            // البن الخام الأخضر والمستورد
+            { id: 7, name: "بن خام إندونيسي فاخر", category: "بن خام", description: "حبوب بن إندونيسية خضراء مستوردة ممتازة للتحميص المنزلي أو التجاري.", image: "https://picsum.photos/seed/zag-green1/400/400.jpg", prices: { "1 كيلو": 460, "1/2 كيلو": 230, "1/4 كيلو": 115 } },
+            { id: 8, name: "بن خام فيتنامي نقي", category: "بن خام", description: "بن أخضر فيتنامي من فئة الروبوستا القوية، قوام ممتاز ونسبة كافيين عالية.", image: "https://picsum.photos/seed/zag-green2/400/400.jpg", prices: { "1 كيلو": 420, "1/2 كيلو": 210, "1/4 كيلو": 105 } },
+            { id: 9, name: "بن خام برازيلي أرابيكا", category: "بن خام", description: "أجود حبوب الأرابيكا البرازيلية الخضراء ذات الحموضة المتوازنة والنكهة العميقة.", image: "https://picsum.photos/seed/zag-green3/400/400.jpg", prices: { "1 كيلو": 560, "1/2 كيلو": 280, "1/4 كيلو": 140 } },
+            { id: 10, name: "بن خام هندي فاخر", category: "بن خام", description: "حبوب بن هندي مستوردة ذات طابع خاص ونكهة غنية بعد التحميص.", image: "https://picsum.photos/seed/zag-green4/400/400.jpg", prices: { "1 كيلو": 480, "1/2 كيلو": 240, "1/4 كيلو": 120 } },
+            { id: 11, name: "بن خام إثيوبي هيرلوم", category: "بن خام", description: "بن إثيوبي أرابيكا سلالة فاخرة، نكهات فاكهية وزهرية واضحة للغاية.", image: "https://picsum.photos/seed/zag-green5/400/400.jpg", prices: { "1 كيلو": 600, "1/2 كيلو": 300, "1/4 كيلو": 150 } },
+            { id: 12, name: "بن خام كولومبي سوبريمو", category: "بن خام", description: "حبوب كولومبية ممتازة ومنتقاة بعناية، حموضة لطيفة وقوام حريري ناعم.", image: "https://picsum.photos/seed/zag-green6/400/400.jpg", prices: { "1 كيلو": 580, "1/2 كيلو": 290, "1/4 كيلو": 145 } },
+
+            // قهوة سريعة التحضير والفلتر
+            { id: 13, name: "قهوة إسبريسو زغلولة", category: "قهوة", description: "حبوب بن محمصة ومطحونة خصيصاً لمكاين الإسبريسو والـ Portafilter الكبس الموزون.", image: "https://picsum.photos/seed/zag-fast1/400/400.jpg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160 } },
+            { id: 14, name: "قهوة ميريكان فلتير", category: "قهوة", description: "بن مطحون خشن نسبياً ومناسب لماكينات القهوة الأمريكية والترشيح V60.", image: "https://picsum.photos/seed/zag-fast2/400/400.jpg", prices: { "1 كيلو": 640, "1/2 كيلو": 320, "1/4 كيلو": 160 } },
+            { id: 15, name: "قهوة فرنسية كلاسيك", category: "قهوة", description: "مزيج القهوة الناعمة مع مبيض الحليب الفاخر لنكهة فرنسية هادئة.", image: "https://picsum.photos/seed/zag-fast3/400/400.jpg", prices: { "1 كيلو": 520, "1/2 كيلو": 260, "1/4 كيلو": 130, "1/8 كيلو": 65 } },
+            { id: 16, name: "قهوة فرنسية بالمكسرات", category: "قهوة", description: "القهوة الفرنسية الشهيرة مضافاً إليها نكهة البندق واللوز الغنية.", image: "https://picsum.photos/seed/zag-fast4/400/400.jpg", prices: { "1 كيلو": 560, "1/2 كيلو": 280, "1/4 كيلو": 140, "1/8 كيلو": 70 } },
+            { id: 17, name: "قهوة خضراء للتخسيس", category: "قهوة", description: "حبوب بن خضراء مطحونة غنية بحمض الكلوروجينيك للمساعدة في حرق الدهون.", image: "https://picsum.photos/seed/zag-fast5/400/400.jpg", prices: { "1 كيلو": 460, "1/2 كيلو": 230, "1/4 كيلو": 115 } },
+
+            // النسكافيه ومشروبات سريعة
+            { id: 18, name: "نسكافيه جولد زغلولة", category: "نسكافيه", description: "حبيبات قهوة مجففة بالتبريد سريعة التحضير بنكهة قوية ورائحة غنية.", image: "https://picsum.photos/seed/zag-nes1/400/400.jpg", prices: { "1 كيلو": 960, "1/2 كيلو": 480, "1/4 كيلو": 240, "1/8 كيلو": 120 } },
+            { id: 19, name: "نسكافيه بلاك كلاسيك", category: "نسكافيه", description: "القهوة المجففة الكلاسيكية سريعة الذوبان، بداية ممتازة ومثالية لصباحك.", image: "https://picsum.photos/seed/zag-nes2/400/400.jpg", prices: { "1 كيلو": 800, "1/2 كيلو": 400, "1/4 كيلو": 200, "1/8 كيلو": 100 } },
+            { id: 20, name: "نسكافيه بندق فاخر", category: "نسكافيه", description: "نسكافيه سريع التحضير بنكهة ومذاق البندق المحمص اللذيذ.", image: "https://picsum.photos/seed/zag-nes3/400/400.jpg", prices: { "1 كيلو": 880, "1/2 كيلو": 440, "1/4 كيلو": 220, "1/8 كيلو": 110 } },
+            { id: 21, name: "نسكافيه مكسرات مشكل", category: "نسكافيه", description: "مزيج رائع من النسكافيه مع توليفة نكهات المكسرات الشرقية.", image: "https://picsum.photos/seed/zag-nes4/400/400.jpg", prices: { "1 كيلو": 880, "1/2 كيلو": 440, "1/4 كيلو": 220, "1/8 كيلو": 110 } },
+
+            // كابتشينو وهوت شوكليت
+            { id: 22, name: "كابتشينو كلاسيك زغلولة", category: "كابتشينو", description: "مسحوق الكابتشينو الغني بالرغوة الكثيفة والمذاق الإيطالي الرائع.", image: "https://picsum.photos/seed/zag-cap1/400/400.jpg", prices: { "1 كيلو": 520, "1/2 كيلو": 260, "1/4 كيلو": 130, "1/8 كيلو": 65 } },
+            { id: 23, name: "كابتشينو بالبندق والمكسرات", category: "كابتشينو", description: "كابتشينو فاخر بنكهة البندق الطازج، رغوة ممتازة ومذاق محبب.", image: "https://picsum.photos/seed/zag-cap2/400/400.jpg", prices: { "1 كيلو": 560, "1/2 كيلو": 280, "1/4 كيلو": 140, "1/8 كيلو": 70 } },
+            { id: 24, name: "هوت شوكليت كاكاو فاخر", category: "كابتشينو", description: "مسحوق شوكولاتة ساخنة غنية، مستخلص من أجود أنواع الكاكاو الخام.", image: "https://picsum.photos/seed/zag-cap3/400/400.jpg", prices: { "1 كيلو": 440, "1/2 كيلو": 220, "1/4 كيلو": 110, "1/8 كيلو": 55 } },
+
+            // منتجات خاصة ومساحيق مميزة
+            { id: 25, name: "سحلب مكسرات فاخر جداً", category: "منتجات خاصة", description: "خلطة السحلب السرية من زغلولة، غنية بالمسمسم، جوز الهند، والمكسرات الطازجة.", image: "https://picsum.photos/seed/zag-spec1/400/400.jpg", prices: { "1 كيلو": 360, "1/2 كيلو": 180, "1/4 كيلو": 90, "1/8 كيلو": 45 } },
+            { id: 26, name: "ميكس شيكولاتة زغلولة المطور", category: "منتجات خاصة", description: "مسحوق الشوكولاتة والكاكاو الخاص بنا الجاهز للتحضير مع الحليب لمتعة لا تقاوم.", image: "https://picsum.photos/seed/zag-spec2/400/400.jpg", prices: { "1 كيلو": 480, "1/2 كيلو": 240, "1/4 كيلو": 120, "1/8 كيلو": 60 } },
+            { id: 27, name: "مغات بلدي مصري أصيل", category: "منتجات خاصة", description: "بودرة مغات بلدي نقية ومجهزة بأفخر أنواع المكسرات والسمسم والسمن.", image: "https://picsum.photos/seed/zag-spec3/400/400.jpg", prices: { "1 كيلو": 720, "1/2 كيلو": 360, "1/4 كيلو": 180, "1/8 كيلو": 90 } },
+            { id: 28, name: "توليفة كركديه أسواني فاخر", category: "منتجات خاصة", description: "أوراق كركديه أسواني زهرة كاملة مجففة بعناية، طعم ولون غني ونقي.", image: "https://picsum.photos/seed/zag-spec4/400/400.jpg", prices: { "1 كيلو": 320, "1/2 كيلو": 160, "1/4 كيلو": 80 } },
+            
+            // مشروبات زغلولة (المنيو الجديد - جاهز بالكوب والطلب السريع)
+            { id: 29, name: "كوب قهوه تركي", category: "مشروبات", description: "قهوة تركي طازجة ومحضرة بعناية فائقة ومذاق أصيل.", image: "https://picsum.photos/seed/zag-drk1/400/400.jpg", prices: { "كوب ساخن": 10 } },
+            { id: 30, name: "كوب قهوه دبل", category: "مشروبات", description: "جرعة مضاعفة من القهوة التركية الفاخرة لزيادة التركيز والانتعاش.", image: "https://picsum.photos/seed/zag-drk2/400/400.jpg", prices: { "كوب ساخن": 20 } },
+            { id: 31, name: "كوب اسبريسو", category: "مشروبات", description: "مستخلص بن زغلولة المركز والنقي بعناية فائقة لعشاق النكهة الواضحة.", image: "https://picsum.photos/seed/zag-drk3/400/400.jpg", prices: { "سنجل": 20 } },
+            { id: 32, name: "كوب اسبريسو دبل", category: "مشروبات", description: "جرعة إسبريسو مزدوجة غنية ومستخلصة باحترافية كاملة.", image: "https://picsum.photos/seed/zag-drk4/400/400.jpg", prices: { "دبل": 30 } },
+            { id: 33, name: "كوب مكياطه", category: "مشروبات", description: "إسبريسو غني مضافاً إليه بقعة صغيرة من رغوة الحليب الدافئ.", image: "https://picsum.photos/seed/zag-drk5/400/400.jpg", prices: { "كوب ساخن": 20 } },
+            { id: 34, name: "كوب مكياطه نوتيلا", category: "مشروبات", description: "المكياطه الشهيرة مضافاً إليها صوص شوكولاتة النوتيلا الأصلية الغنية.", image: "https://picsum.photos/seed/zag-drk6/400/400.jpg", prices: { "كوب ساخن": 30 } },
+            { id: 35, name: "كوب شاي عادي", category: "مشروبات", description: "شاي أحمر كلاسيكي ممتاز محضر بالطريقة التقليدية.", image: "https://picsum.photos/seed/zag-drk7/400/400.jpg", prices: { "كوب ساخن": 5 } },
+            { id: 36, name: "كوب شاي محوج", category: "مشروبات", description: "شاي بنكهة مميزة مع توليفة من البهارات الشرقية والنعناع أو الحبهان.", image: "https://picsum.photos/seed/zag-drk8/400/400.jpg", prices: { "كوب ساخن": 5 } },
+            { id: 37, name: "كوب اعشاب متنوع", category: "مشروبات", description: "مزيج دافئ ومريح من الأعشاب الطبيعية والطبية المفيدة.", image: "https://picsum.photos/seed/zag-drk9/400/400.jpg", prices: { "كوب ساخن": 10 } },
+            { id: 38, name: "كوب اعشاب اكسترا", category: "مشروبات", description: "توليفة أعشاب خاصة ومكثفة مع إضافات صحية وممتازة.", image: "https://picsum.photos/seed/zag-drk10/400/400.jpg", prices: { "كوب ساخن": 25 } },
+            { id: 39, name: "نسكافيه عادي", category: "مشروبات", description: "كوب نسكافيه كلاسيكي سريع الذوبان مع الحليب المتبخر والرغوة الخفيفة.", image: "https://picsum.photos/seed/zag-drk11/400/400.jpg", prices: { "كوب ساخن": 20 } },
+            { id: 40, name: "نسكافيه مكسرات", category: "مشروبات", description: "كوب نسكافيه دافئ ومميز مع نكهة المكسرات المحمصة اللذيذة.", image: "https://picsum.photos/seed/zag-drk12/400/400.jpg", prices: { "كوب ساخن": 30 } },
+            { id: 41, name: "كابتشينو عادي", category: "مشروبات", description: "جرعة إسبريسو مع الحليب المكثف الساخن ورغوة كريمية كثيفة.", image: "https://picsum.photos/seed/zag-drk13/400/400.jpg", prices: { "كوب ساخن": 20 } },
+            { id: 42, name: "كابتشينو مكسرات", category: "مشروبات", description: "الكابتشينو الإيطالي الفاخر مع قطع ورشة مكسرات مقرمشة على الرغوة.", image: "https://picsum.photos/seed/zag-drk14/400/400.jpg", prices: { "كوب ساخن": 30 } },
+            { id: 43, name: "قهوه بندق عادي", category: "مشروبات", description: "قهوة فرنسية ناعمة بنكهة ومذاق البندق المحبب للجميع.", image: "https://picsum.photos/seed/zag-drk15/400/400.jpg", prices: { "كوب ساخن": 20 } },
+            { id: 44, name: "قهوه بندق مكسرات", category: "مشروبات", description: "قهوة البندق الغنية مع تدعيم إضافي من قطع المكسرات الطازجة.", image: "https://picsum.photos/seed/zag-drk16/400/400.jpg", prices: { "كوب ساخن": 30 } },
+            { id: 45, name: "قهوه فرنساوى عادي", category: "مشروبات", description: "مزيج القهوة الناعمة مع مبيض الحليب الكلاسيكي الممتاز بطعم ناعم.", image: "https://picsum.photos/seed/zag-drk17/400/400.jpg", prices: { "كوب ساخن": 20 } },
+            { id: 46, name: "قهوه فرنساوى مكسرات", category: "مشروبات", description: "القهوة الفرنسية الكلاسيكية مدعومة بنكهة وتشكيلة مكسرات فاخرة.", image: "https://picsum.photos/seed/zag-drk18/400/400.jpg", prices: { "كوب ساخن": 30 } },
+            { id: 47, name: "ايس كوفي", category: "مشروبات", description: "قهوة مثلجة منعشة ومنشطة محضرة بحرفية تامة لترطيب الصيف.", image: "https://picsum.photos/seed/zag-drk19/400/400.jpg", prices: { "كوب بارد": 40 } },
+            { id: 48, name: "ايس لاتيه", category: "مشروبات", description: "إسبريسو مركز مع الحليب البارد وقطع الثلج المنعشة لقوام كريمي ناعم.", image: "https://picsum.photos/seed/zag-drk20/400/400.jpg", prices: { "كوب بارد": 50 } },
+            { id: 49, name: "ايس سبنش لاتيه", category: "مشروبات", description: "اللاتيه المثلج المميز مضافاً إليه الحليب المكثف المحلى لمذاق غني وممتع.", image: "https://picsum.photos/seed/zag-drk21/400/400.jpg", prices: { "كوب بارد": 50 } },
+            { id: 50, name: "سبسيال", category: "مشروبات", description: "مشروب زغلولة الخاص والسرّي، تشكيلة غنية مذهلة وممتعة للغاية.", image: "https://picsum.photos/seed/zag-drk22/400/400.jpg", prices: { "كوب خاص": 50 } },
+            { id: 51, name: "كانز", category: "مشروبات", description: "مشروبات غازية متنوعة ومثلجة حسب اختيارك عند الاستلام.", image: "https://picsum.photos/seed/zag-drk23/400/400.jpg", prices: { "عبوة باردة": 15 } },
+            { id: 52, name: "مياه معدنيه", category: "مشروبات", description: "زجاجة مياه معدنية نقية ومبردة بعناية.", image: "https://picsum.photos/seed/zag-drk24/400/400.jpg", prices: { "زجاجة": 5 } }
+        ];
+
+        // Read or Initialize Shopping Cart Array Matrix with LocalStorage caching
+        let cart = JSON.parse(localStorage.getItem('zag_cart')) || [];
+        let currentCategory = "الكل";
+
+        // DOM Loader Handler Action
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('fade-out');
+                renderProducts();
+                updateCartUI();
+            }, 1000);
+        });
+
+        // Main Render Products Layout Core UI
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = "";
+
+            const filtered = currentCategory === "الكل" ? products : products.filter(p => p.category === currentCategory);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-coffee-100/30 font-bold">لا توجد منتجات في هذا القسم حالياً..</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const sizes = Object.keys(p.prices);
+                const defaultSize = sizes[0];
+                const defaultPrice = p.prices[defaultSize];
+
+                // Check if options are weights or cups to determine dynamic label lookups
+                const isDrink = p.category === "مشروبات";
+
+                let selectHTML = "";
+                if(sizes.length > 1) {
+                    selectHTML = `
+                        <div class="relative mb-4">
+                            <select id="size-select-${p.id}" onchange="updateProductPrice(${p.id})" class="w-full bg-[#17110a] text-xs font-bold text-coffee-100/70 border border-coffee-800/20 py-2.5 px-3 rounded-lg outline-none appearance-none">
+                                ${sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
+                            </select>
+                            <iconify-icon icon="ph:caret-down-bold" class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-coffee-100/40 pointer-events-none"></iconify-icon>
+                        </div>
+                    `;
+                } else {
+                    selectHTML = `<div class="text-[11px] font-black text-[#8a6242] tracking-wider uppercase bg-coffee-950/10 inline-block px-2.5 py-1 rounded-md mb-4">${defaultSize}</div>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = "bg-[#130e09] border border-coffee-900/10 rounded-2xl p-4 flex flex-col justify-between hover:border-coffee-800/30 transition-all duration-300 group";
+                card.innerHTML = `
+                    <div class="space-y-3 relative">
+                        <div class="w-full aspect-square bg-[#1a140e] rounded-xl overflow-hidden relative border border-coffee-950/40">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" loading="lazy">
+                            <span class="absolute top-2 right-2 text-[10px] font-black bg-[#0f0b07]/80 backdrop-blur-md text-[#8a6242] px-2.5 py-1 rounded-md border border-coffee-800/10">${p.category}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-sm text-coffee-100/90 group-hover:text-[#ecdcc8] transition-colors line-clamp-1">${p.name}</h4>
+                            <p class="text-[11px] text-coffee-100/40 mt-1 line-clamp-2 leading-relaxed min-h-[32px]">${p.description}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-coffee-900/10">
+                        ${selectHTML}
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-[10px] text-coffee-100/30 block font-bold">السعر</span>
+                                <span id="price-display-${p.id}" class="text-base font-black text-[#8a6242]">${defaultPrice} ج.م</span>
+                            </div>
+                            <button onclick="addProductToCart(${p.id})" class="h-9 px-4 rounded-lg bg-[#1a140e] border border-coffee-800/20 text-xs font-bold text-coffee-100/70 hover:bg-[#8a6242] hover:text-[#0f0b07] hover:border-transparent transition-all flex items-center gap-1.5 active:scale-95">
+                                <iconify-icon icon="ph:plus-bold"></iconify-icon>
+                                <span>إضافة</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
         }
-    });
-    renderProducts(cat);
-    const prodElem = document.getElementById('products');
-    if (prodElem) {
-        prodElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-}
 
-function toggleFaq(btn){const item=btn.closest('.faq-item');const was=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open');}
-function toggleMobileMenu(){document.getElementById('mobile-menu').classList.toggle('open');}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-</script>
+        // Handle Change Select Option Weights Trigger Live Update Display Prices Lookups
+        function updateProductPrice(id) {
+            const p = products.find(prod => prod.id === id);
+            const select = document.getElementById(`size-select-${id}`);
+            const chosenSize = select.value;
+            document.getElementById(`price-display-${id}`).textContent = p.prices[chosenSize] + " ج.م";
+        }
+
+        // Add Selected Item to Cart Pipeline Logic
+        function addProductToCart(id) {
+            const p = products.find(prod => prod.id === id);
+            const select = document.getElementById(`size-select-${id}`);
+            const size = select ? select.value : Object.keys(p.prices)[0];
+            const price = p.prices[size];
+
+            const existingIndex = cart.findIndex(item => item.id === id && item.size === size);
+
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += 1;
+            } else {
+                cart.push({ id: p.id, name: p.name, size: size, price: price, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast(`تمت إضافة ${p.name} إلى السلة 🛒`);
+        }
+
+        // Render Cart Dynamic Engine Caching View
+        function updateCartUI() {
+            // Save current state layout tracking to localstorage automatically
+            localStorage.setItem('zag_cart', JSON.stringify(cart));
+
+            const container = document.getElementById('cart-items');
+            const countBadge = document.getElementById('cart-count');
+            const subtotalText = document.getElementById('cart-subtotal');
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            countBadge.textContent = totalQty;
+
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            subtotalText.textContent = totalPrice + " ج.م";
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col justify-center items-center text-center text-coffee-100/30 space-y-3">
+                        <iconify-icon icon="ph:shopping-bag-open-light" class="text-6xl opacity-40"></iconify-icon>
+                        <p class="text-sm font-semibold">السلة فارغة حالياً.. املأها بالحب والقهوة</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="flex items-center gap-3 bg-[#1a140e] p-3 rounded-xl border border-coffee-950/40 relative group">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-xs font-black text-coffee-100/90 truncate">${item.name}</h4>
+                        <span class="text-[10px] text-[#8a6242] font-black block mt-0.5">${item.size} - ${item.price} ج.م</span>
+                        <div class="flex items-center gap-2 mt-2">
+                            <button onclick="alterQty(${index}, -1)" class="w-6 h-6 rounded bg-coffee-950/50 flex items-center justify-center text-xs hover:bg-coffee-950 text-coffee-100/70">-</button>
+                            <span class="text-xs font-black text-coffee-100/80 w-4 text-center">${item.qty}</span>
+                            <button onclick="alterQty(${index}, 1)" class="w-6 h-6 rounded bg-coffee-950/50 flex items-center justify-center text-xs hover:bg-coffee-950 text-coffee-100/70">+</button>
+                        </div>
+                    </div>
+                    <div class="text-right flex flex-col justify-between items-end h-full min-h-[60px]">
+                        <button onclick="removeCartItem(${index})" class="text-coffee-100/20 hover:text-red-400 transition-colors">
+                            <iconify-icon icon="ph:trash-bold" class="text-sm"></iconify-icon>
+                        </button>
+                        <span class="text-xs font-black text-coffee-100/70">${item.price * item.qty} ج.م</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Alter Quantity Handler
+        function alterQty(index, amount) {
+            cart[index].qty += amount;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        // Remove Single Item
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        // Categories Filtering Pipeline View Engine Actions
+        function filterCategory(catName) {
+            currentCategory = catName;
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.includes(catName)) {
+                    btn.classList.add('active');
+                    btn.classList.remove('text-coffee-100/40');
+                } else {
+                    btn.classList.remove('active');
+                    btn.classList.add('text-coffee-100/40');
+                }
+            });
+            renderProducts();
+        }
+
+        // Open Side Cart Drawer View Layout
+        function openCart() {
+            closeAllPanes();
+            document.getElementById('cart-pane').classList.add('open');
+            document.getElementById('pane-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Side Cart Drawer
+        function closeCart() {
+            document.getElementById('cart-pane').classList.remove('open');
+            document.getElementById('pane-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Live Update Shipping Logic Handler Output Updates inside Modal View
+        function updateShippingAndTotal() {
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const govSelect = document.getElementById('cust-governorate');
+            const shippingFee = govSelect.selectedIndex > 0 ? parseInt(govSelect.options[govSelect.selectedIndex].getAttribute('data-fee')) : 0;
+            
+            document.getElementById('checkout-total').textContent = (totalPrice + shippingFee) + ' ج.م';
+        }
+
+        // Open Checkout Order Side Sheet Dynamic Loader
+        function openCheckout() {
+            if (cart.length === 0) {
+                showToast('السلة فارغة حالياً.. أضف منتجات أولاً ⚠️');
+                return;
+            }
+            closeCart();
+            
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('checkout-items').innerHTML = cart.map(item => `
+                <div class="flex justify-between items-center text-coffee-100/45">
+                    <span class="flex-1 text-xs truncate">${item.name} (${item.size}) × ${item.qty}</span>
+                    <span class="text-coffee-100/70 font-bold text-xs">${item.price * item.qty} ج.م</span>
+                </div>
+            `).join('');
+
+            // Reset selection indices values state
+            document.getElementById('cust-governorate').selectedIndex = 0;
+            document.getElementById('checkout-total').textContent = totalPrice + ' ج.م';
+
+            setTimeout(() => {
+                document.getElementById('checkout-modal').classList.add('open');
+                document.getElementById('pane-overlay').classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }, 200);
+        }
+
+        // Close Checkout Order Modal Sheet
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.remove('open');
+            document.getElementById('pane-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Close All Panels Triggers
+        function closeAllPanes() {
+            closeCart();
+            closeCheckout();
+        }
+
+        // Toast Messages Dynamic Engine Pipeline Handler Action Utility
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => { t.classList.remove('show'); }, 3500);
+        }
+
+        // Submit Payload Orders Directly Encoded to WhatsApp Pipeline Engine Link API
+        function submitOrder() {
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+            const notes = document.getElementById('cust-notes').value.trim();
+            const govSelect = document.getElementById('cust-governorate');
+
+            if (!name || !phone || !address || govSelect.selectedIndex === 0) {
+                showToast('من فضلك املأ جميع الحقول المطلوبة واختر المحافظة ⚠️');
+                return;
+            }
+
+            const govName = govSelect.value;
+            const shippingFee = parseInt(govSelect.options[govSelect.selectedIndex].getAttribute('data-fee'));
+            const itemsPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const finalTotal = itemsPrice + shippingFee;
+
+            let msg = `☕ *طلب جديد من متجر زغلولة*\n\n`;
+            msg += `👤 *الاسم:* ${name}\n`;
+            msg += `📱 *الهاتف:* ${phone}\n`;
+            msg += `📍 *المحافظة:* ${govName}\n`;
+            msg += `🏠 *العنوان بالتفصيل:* ${address}\n`;
+            if (notes) msg += `📝 *ملاحظات العميل:* ${notes}\n`;
+            msg += `\n🛒 *المنتجات المطلوبة:*\n`;
+            msg += `━━━━━━━━━━━━━\n`;
+            cart.forEach(item => {
+                msg += `▪️ ${item.name}\n   المواصفة: ${item.size} | العدد: ${item.qty} × | الحساب: ${item.price * item.qty} ج.م\n`;
+            });
+            msg += `━━━━━━━━━━━━━\n`;
+            msg += `💰 *إجمالي حساب المنتجات:* ${itemsPrice} ج.م\n`;
+            msg += `🚚 *مصاريف تكلفة الشحن:* ${shippingFee} ج.م\n`;
+            msg += `⭐ *الإجمالي النهائي المطلوب: ${finalTotal} ج.م*\n`;
+            msg += `\n💳 *طريقة الدفع:* كاش كود عند الاستلام للمندوب`;
+
+            // Open Encoded Dynamic WhatsApp URL Endpoint API window tab target
+            window.open(`https://wa.me/201008836269?text=${encodeURIComponent(msg)}`, '_blank');
+
+            // Clear states
+            cart = [];
+            localStorage.removeItem('zag_cart');
+            updateCartUI();
+            closeCheckout();
+            document.getElementById('checkout-form').reset();
+            showToast('تم تحويلك للواتساب لتأكيد طلبك بنجاح! 🎉');
+        }
+    </script>
 </body>
 </html>
