@@ -784,15 +784,16 @@
         <span id="site-counter">جاري حساب الزيارات...</span>
     </div>
 
-    <script>
-        // سكريبت سريع وسهل لعد الزوار بدون مواقع خارجية
+   <script>
         async function getCounter() {
             try {
-                // بنستخدم خدمة عداد مجانية ومباشرة للمتجر بتاعك
                 const response = await fetch('https://api.counterapi.dev/v1/zaghloula-store/visits/up');
                 const data = await response.json();
-                // الرقم هيظهر بخط صغير وباهت جداً في قاع الصفحة عندك عشان تتابعه لوحدك
-                document.getElementById('site-counter').textContent = `إجمالي الزوار: ${data.value}`;
+                
+                // التعديل هنا: بنجرب نقرأ data.count لو الـ value مش موجودة
+                const countValue = data.count || data.value || 0;
+                
+                document.getElementById('site-counter').textContent = `إجمالي الزوار: ${countValue}`;
             } catch (error) {
                 document.getElementById('site-counter').style.display = 'none';
             }
