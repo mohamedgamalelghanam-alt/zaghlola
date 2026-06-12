@@ -277,11 +277,11 @@
             <form id="checkout-form" class="space-y-4" onsubmit="event.preventDefault(); submitOrder();">
                 <div>
                     <label class="block text-sm font-semibold text-coffee-100/50 mb-2">الاسم بالكامل *</label>
-                    <input type="text" id="cust-name" class="form-input" placeholder="محمد جمال" required>
+                    <input type="text" id="cust-name" class="form-input" placeholder="اكنب اسمك هنا" required>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-coffee-100/50 mb-2">رقم الهاتف (واتساب) *</label>
-                    <input type="tel" id="cust-phone" class="form-input" placeholder="01008836269" required>
+                    <input type="tel" id="cust-phone" class="form-input" placeholder="01000000000" required>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-coffee-100/50 mb-2">المحافظة *</label>
@@ -392,7 +392,19 @@
                 <button onclick="filterCategory('منتجات خاصة')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">منتجات خاصة</button>
                 <button onclick="filterCategory('مشروبات')" class="cat-btn text-coffee-100/40 px-6 py-2.5 rounded-full text-sm font-bold border border-coffee-800/30 transition-all duration-300">مشروبات زغلولة</button>
             </div>
-
+<!-- Footer / Credits Section -->
+    <footer class="py-6 border-t border-coffee-900/10 bg-[#0b0805] text-center text-xs text-coffee-100/30">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>© 2026 محمصة زغلولة الفاخرة. جميع الحقوق محفوظة.</p>
+            <!-- سطر المطور المميز والخفيف -->
+            <a href="tel:01029796096" class="inline-flex items-center gap-1.5 hover:text-[#8a6242] transition-colors font-semibold group">
+                <iconify-icon icon="ph:code-bold" class="text-sm text-[#8a6242]/70 group-hover:animate-pulse"></iconify-icon>
+                <span>تم الإنشاء بواسطة المهندس:</span>
+                <span class="text-coffee-100/60 font-bold border-b border-dashed border-coffee-800/40 pb-0.5 group-hover:text-[#ecdcc8]">محمد جمال</span>
+                <span class="text-[11px] tracking-wide text-[#8a6242]/80 font-mono">(01029796096)</span>
+            </a>
+        </div>
+    </footer>
             <!-- Products Render Container -->
             <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <!-- Javascript Injection -->
