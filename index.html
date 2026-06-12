@@ -779,5 +779,25 @@
             showToast('تم تحويلك للواتساب لتأكيد طلبك بنجاح! 🎉');
         }
     </script>
+    <!-- العداد المخفي التلقائي لمتجر زغلولة -->
+    <div style="text-align: center; font-size: 11px; color: rgba(236, 220, 200, 0.2); margin-top: 10px;">
+        <span id="site-counter">جاري حساب الزيارات...</span>
+    </div>
+
+    <script>
+        // سكريبت سريع وسهل لعد الزوار بدون مواقع خارجية
+        async function getCounter() {
+            try {
+                // بنستخدم خدمة عداد مجانية ومباشرة للمتجر بتاعك
+                const response = await fetch('https://api.counterapi.dev/v1/zaghloula-store/visits/up');
+                const data = await response.json();
+                // الرقم هيظهر بخط صغير وباهت جداً في قاع الصفحة عندك عشان تتابعه لوحدك
+                document.getElementById('site-counter').textContent = `إجمالي الزوار: ${data.value}`;
+            } catch (error) {
+                document.getElementById('site-counter').style.display = 'none';
+            }
+        }
+        window.addEventListener('DOMContentLoaded', getCounter);
+    </script>
 </body>
 </html>
